@@ -1,0 +1,29 @@
+
+Master:
+  ServiceType: NodePort
+  RunAsUser: 1000
+  FsGroup: 1000
+  HostName: jenkins.stage.k8s.feversocial.com
+
+  Ingress:
+    ApiVersion: extensions/v1beta1
+    Annotations:
+      kubernetes.io/ingress.class: nginx
+      kubernetes.io/tls-acme: "true"
+
+    TLS:
+    - secretName: jenkins.tls
+      hosts:
+        - jenkins.stage.k8s.feversocial.com
+
+Persistence:
+  Size: 100Gi
+  
+## Install Default RBAC roles and bindings
+rbac:
+  install: true
+  serviceAccountName: jenkins
+  # Role reference
+  roleRef: cluster-admin
+  # Role kind (RoleBinding or ClusterRoleBinding)
+  roleBindingKind: ClusterRoleBinding

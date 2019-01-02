@@ -93,6 +93,8 @@ kops edit ig nodes
 kops edit ig master-ap-southeast-1a
 kops update cluster --yes
 kops rolling-update cluster --yes
+kops rolling-update cluster --cloudonly --force --yes
+
 ```
 
 ### kubectl
