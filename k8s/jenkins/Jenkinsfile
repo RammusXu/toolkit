@@ -1,0 +1,51 @@
+pipeline {
+    parameters {
+        string(name: 'fever', defaultValue: '', description: 'Fever image')
+        string(name: 'newCanvas', defaultValue: '', description: 'New Canvas image')
+        string(name: 'zinesApi', defaultValue: '', description: 'Zines API image')
+  }
+  agent {
+    kubernetes {
+      label 'jenksin-helm'
+      serviceAccount 'jenkins'
+      containerTemplate {
+        name 'helm'
+        image 'alpine/helm:2.11.0'
+        ttyEnabled true
+        command 'cat'
+      }
+    }
+  }
+  stages {
+    stage('Run helm') {
+      steps {
+        container('helm') {
+          git url: 'https://gitlab.com/xxxxxx.git',
+              branch: 'master',
+              credentialsId: 'your-jenkins-credentials-id'
+          sh '''
+          helmArgs=''
+          if [[ "$fever" ]]; then
+              echo "image.fever: $fever" >> new-value.yaml
+              helmArgs="--set image.fever=$fever"
+          fi
+          if [[ "$newCanvas" ]]; then
+              echo "image.newCanvas: $newCanvas" >> new-value.yaml
+              helmArgs="--set image.newCanvas=$newCanvas $helmArgs"
+          fi
+          if [[ "$zinesApi" ]]; then
+              echo "image.zinesApi: $zinesApi" >> new-value.yaml
+              helmArgs="--set image.zinesApi=$zinesApi $helmArgs"
+          fi
+          if [[ -f new-value.yaml ]]; then
+              helm upgrade demo . $helmArgs --reuse-values --description $BUILD_TAG
+          else
+              echo "沒有做任何事..."
+          fi
+
+          '''
+        }
+      }
+    }
+  }
+}
