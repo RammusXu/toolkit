@@ -26,10 +26,17 @@ kubectl describe secret kubernetes-dashboard-token-rkq9g -n kube-system
 ## nginx-ingress
 ```
 helm install --name nginx-ingress stable/nginx-ingress \
-  --set controller.kind=DaemonSet \
-  --set controller.hostNetwork=true \
-  --namespace kube-system
+    --set controller.kind=DaemonSet \
+    --set controller.hostNetwork=true \
+    --namespace kube-system
+
+helm install --name nginx-ingress stable/nginx-ingress \
+    --set controller.kind=DaemonSet \
+    --set controller.hostNetwork=true \
+    --set rbac.create=true \
+    --namespace kube-system
 ```
+https://medium.com/containerum/how-to-launch-nginx-ingress-and-cert-manager-in-kubernetes-55b182a80c8f
 
 ## cert-manager
 ```
