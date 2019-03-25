@@ -25,3 +25,22 @@ build:
     - docker build -t $CI_REGISTRY_IMAGE:master .
     - docker push $CI_REGISTRY_IMAGE:master
 ```
+
+
+## Quick build
+```
+image: docker:18.09-git
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+build:
+  stage: build
+  script:
+    - docker images
+    - docker build .
+    - docker images
+```
