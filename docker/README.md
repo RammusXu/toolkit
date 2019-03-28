@@ -5,6 +5,9 @@ For Gitlab CI
 docker run -it --rm -v $PWD:/app docker:18.09-git sh
 ```
 
+```
+rammusxu/docker-box:python 
+```
 
 ```
 image: docker:stable
