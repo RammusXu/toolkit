@@ -2,7 +2,15 @@ FROM docker:18.09-git
 
 RUN apk add --update python py-pip yarn bash curl 
 
-RUN pip install awscli
+# Install docker-compose
+RUN apk add --update \
+    libffi-dev \
+    openssl-dev \
+    python-dev \
+    python3-dev \
+    build-base \
+  && pip install virtualenv \
+  && pip install docker-compose \
+  && rm -rf /var/cache/apk/*
 
-RUN curl -L --fail https://github.com/docker/compose/releases/download/1.23.2/run.sh -o /usr/local/bin/docker-compose \
-    && chmod +x /usr/local/bin/docker-compose
+RUN pip install awscli
