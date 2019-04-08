@@ -6,6 +6,9 @@ git remote -v
 git pull --rebase
 git checkout -t origin/20190320_for_ssl
 git checkout master
+git push -u origin feature_branch_name
+git push -u origin HEAD:20190401_add_k8s_stage
+
 git remote prune origin --dry-run
 git remote prune origin
 
@@ -45,4 +48,10 @@ curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total
 /etc/sudoers
 userdel ashish
 userdel -r ashish # and Home Directory
+```
+
+# apt-get
+```
+apt-get install iputils-ping
+apt-get install mysql-client
 ```

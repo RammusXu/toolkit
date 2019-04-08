@@ -6,7 +6,8 @@ docker run -it --rm -v $PWD:/app docker:18.09-git sh
 ```
 
 ```
-rammusxu/docker-box:python 
+rammusxu/docker-box:python
+rammusxu/docker-box:node
 ```
 
 ```
