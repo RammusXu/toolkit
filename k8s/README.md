@@ -84,6 +84,12 @@ kops create cluster \
 ```
 
 ```
+kops delete cluster \
+    --state ${KOPS_STATE_STORE} \
+    ${NAME}
+```
+
+```
 kops edit cluster
   additionalPolicies:
     node: |
