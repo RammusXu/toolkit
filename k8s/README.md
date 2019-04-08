@@ -61,6 +61,14 @@ kubectl create secret docker-registry gitlab-auth \
 ## Commands
 
 ### kops
+
+Install
+```
+curl -Lo kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod +x ./kops
+sudo mv ./kops /usr/local/bin/
+```
+
 ```
 export NAME=k8s.rammus.com
 export KOPS_STATE_STORE=s3://k8s.rammus.com
@@ -81,10 +89,18 @@ kops edit cluster
     node: |
       [
         {
-            "Sid": "Stmt1505293246000",
             "Effect": "Allow",
             "Action": [
                 "cloudwatch:PutMetricData"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:*"
             ],
             "Resource": [
                 "*"
