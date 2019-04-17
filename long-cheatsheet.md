@@ -55,3 +55,9 @@ userdel -r ashish # and Home Directory
 apt-get install iputils-ping
 apt-get install mysql-client
 ```
+
+# terraform
+```
+terraform state list
+terraform state rm aws_lb.stage
+```

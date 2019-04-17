@@ -14,11 +14,12 @@ helm init --service-account tiller
 helm install stable/kubernetes-dashboard --name kubernetes-dashboard --namespace kube-system --set rbac.clusterAdminRole=true
 ```
 
-URL https://api.stage.k8s.feversocial.com/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/login
 
 取得 token
 ```
 kubectl config view
+kubectl get secret
 kubectl describe secret kubernetes-dashboard-token-rkq9g -n kube-system
 
 ```
@@ -46,16 +47,6 @@ helm install \
     --set ingressShim.defaultIssuerName=issuer-prod \
     --set ingressShim.defaultIssuerKind=ClusterIssuer \
     stable/cert-manager
-```
-
-# Cheat sheet
-
-```
-kubectl create secret docker-registry gitlab-auth \
-  --docker-server=https://registry.gitlab.com \
-  --docker-username=xxxxxxxx \
-  --docker-password=xxxxxxxx \
-  --docker-email=xxxxxxxx@gmail.com
 ```
 
 ## Commands
@@ -127,9 +118,25 @@ kops rolling-update cluster --cloudonly --force --yes
 ```
 
 ### kubectl
+
 ```
+kubectl create secret docker-registry gitlab-auth \
+  --docker-server=https://registry.gitlab.com \
+  --docker-username=xxxxxxxx \
+  --docker-password=xxxxxxxx \
+  --docker-email=xxxxxxxx@gmail.com
+```
+
+```
+kubectl version
+kubectl get nodes
 kubectl cluster-info
+kubectl config get-contexts
 kubectl config set-context $(kubectl config current-context) --namespace=kube-system
+kubectl run -it busybox --image=busybox -- sh
+
+kubectl get pod,deploy
+
 ```
 
 ### helm
@@ -137,4 +144,8 @@ kubectl config set-context $(kubectl config current-context) --namespace=kube-sy
 helm package .  
 helm install -n demo --namespace dev .
 helm upgrade demo .
+
+helm delete demo
+helm list
+helm delete demo --purge
 ```
