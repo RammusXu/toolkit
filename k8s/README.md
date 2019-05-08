@@ -6,6 +6,7 @@ kubectl apply -f setup
 
 ## Helm
 ```
+brew install kubernetes-helm
 helm init --service-account tiller
 ```
 
@@ -135,7 +136,9 @@ kubectl config get-contexts
 kubectl config set-context $(kubectl config current-context) --namespace=kube-system
 kubectl run -it busybox --image=busybox -- sh
 
+kubectl get all
 kubectl get pod,deploy
+kubectl logs -f -l app=kibana
 
 ```
 
@@ -148,4 +151,12 @@ helm upgrade demo .
 helm delete demo
 helm list
 helm delete demo --purge
+
+mkdir values manifests
+helm fetch --repo https://helm.elastic.co --untar --untardir ./charts --version 7.0.0-alpha1 elasticsearch
+cp ./charts/elasticsearch/values.yaml ./values/elasticsearch.yaml
+helm template --values ./values/elasticsearch.yaml --output-dir ./manifests ./charts/elasticsearch
+
+helm install --name elasticsearch elastic/elasticsearch --version 7.0.0-alpha1 --set imageTag=7.0.0
+
 ```
