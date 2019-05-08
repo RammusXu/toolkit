@@ -27,6 +27,15 @@ pgrep -f "java -jar build/libs/Hello-1.0.jar" | xargs kill
 pkill -f "java -jar build/libs/Hello-1.0.jar" || true
 ```
 
+# System config
+```
+screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
+sysctl -w vm.max_map_count=262144
+
+sysctl -a|grep vm
+sysctl -a|grep vm.max_map_count
+```
+
 # Disk
 
 # Monitor
@@ -60,4 +69,11 @@ apt-get install mysql-client
 ```
 terraform state list
 terraform state rm aws_lb.stage
+```
+
+# wget/ curl
+```
+wget -qO- your_link_here | tar xvz -
+wget -qO- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -
+
 ```
