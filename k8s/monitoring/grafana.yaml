@@ -1,0 +1,153 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  serviceName: grafana
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grafana
+  updateStrategy:
+    type: RollingUpdate
+        
+  volumeClaimTemplates:
+  - metadata:
+      name: grafana-data
+    spec:
+      storageClassName: ssd-xfs
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+
+  template:
+    metadata:
+      name: grafana
+      labels:
+        app: grafana
+    spec:
+      securityContext:
+        fsGroup: 472
+        runAsUser: 472
+      containers:
+        - name: grafana
+          image: "grafana/grafana:6.1.6"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config
+              mountPath: "/etc/grafana/grafana.ini"
+              subPath: grafana.ini
+            - name: config
+              mountPath: "/etc/grafana/provisioning/datasources/datasource.yaml"
+              subPath: datasource.yaml
+            - name: ldap
+              mountPath: "/etc/grafana/ldap.toml"
+              subPath: ldap.toml
+            - name: grafana-data
+              mountPath: "/var/lib/grafana"
+          ports:
+            - name: grafana
+              containerPort: 3000
+              protocol: TCP
+          env:
+          #   - name: GF_SECURITY_ADMIN_USER
+          #     valueFrom:
+          #       secretKeyRef:
+          #         name: grafana
+          #         key: admin-user
+            - name: GF_SECURITY_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: grafana
+                  key: admin-password
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /api/health
+              port: 3000
+            initialDelaySeconds: 60
+            timeoutSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /api/health
+              port: 3000
+            
+      volumes:
+        - name: config
+          configMap:
+            name: grafana
+        - name: ldap
+          secret:
+            secretName: grafana
+            items:
+              - key: ldap-toml
+                path: ldap.toml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+spec:
+  type: LoadBalancer
+  ports:
+    - name: service
+      port: 80
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    app: grafana
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    ;level = debug
+    ;filters = png-renderer:debug
+    [paths]
+    data = /var/lib/grafana/data
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+    [external_image_storage]
+    ;provider = gcs
+    [external_image_storage.gcs]
+    ;key_file =
+    ;bucket = asia.sandbox.swag.live
+    ;path = grafana
+  datasource.yaml: |
+    apiVersion: 1
+    datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://prometheus:9090
+      editable: true
+      isDefault: true
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: grafana
+  labels:
+    app: grafana
+type: Opaque
+data:
+  admin-user: "YWRtaW4="
+  admin-password: "MW5xOG1Wam40VW9ueHVHTDFOZkRLblNma0lob0pvYW16UlZxeEd3WA=="
+  ldap-toml: ""

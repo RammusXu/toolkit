@@ -1,0 +1,74 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    app: kibana
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+    
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      volumes:
+      containers:
+      - name: kibana
+        image: kibana:6.7.1
+        env:
+          - name: ELASTICSEARCH_HOSTS
+            value: "http://elasticsearch-client.elasticsearch:9200"
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 3
+          timeoutSeconds: 5
+          
+          exec:
+            command: 
+              - sh
+              - -c
+              - |
+                #!/usr/bin/env bash -e
+                http () {
+                    local path="${1}"
+                    set -- -XGET -s --fail
+
+                    if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
+                      set -- "$@" -u "${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
+                    fi
+
+                    curl -k "$@" "http://localhost:5601${path}"
+                }
+  
+                http "/app/kibana"
+        ports:
+        - containerPort: 5601
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500m
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  labels:
+    app: kibana
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5601
+      protocol: TCP
+      name: http
+  selector:
+    app: kibana

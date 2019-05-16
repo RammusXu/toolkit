@@ -1,0 +1,17 @@
+namespace: monitoring
+bases:
+- ../../base
+
+resources:
+- kibana.yaml
+- grafana.yaml
+- prometheus.yaml
+- elasticsearch-exporter.yaml
+
+# patches:
+# - client.yaml
+# - data.yaml
+
+images: 
+- name: kibana
+  newTag: 7.0.0

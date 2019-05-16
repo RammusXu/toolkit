@@ -1,0 +1,138 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  serviceName: prometheus
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  updateStrategy:
+    type: RollingUpdate
+
+  volumeClaimTemplates:
+  - metadata:
+      name: prometheus-data
+    spec:
+      storageClassName: ssd-xfs
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 30Gi
+
+  template:
+    metadata:
+      name: "prometheus"
+      labels:
+        app: prometheus
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 2000
+        
+      containers:
+        - name: prometheus
+          image: "prom/prometheus:v2.9.2"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: prometheus-data
+              mountPath: "/prometheus"
+            - name: config
+              mountPath: /etc/prometheus/prometheus.yml
+              subPath: prometheus.yml
+          ports:
+            - name: prometheus
+              containerPort: 9090
+              protocol: TCP
+
+          livenessProbe:
+            failureThreshold: 10
+            httpGet:
+              path: /-/healthy
+              port: prometheus
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              path: /-/ready
+              port: prometheus
+              scheme: HTTP
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 3
+            
+      volumes:
+        - name: config
+          configMap:
+            name: prometheus
+        # - name: ldap
+        #   secret:
+        #     secretName: prometheus
+        #     items:
+        #       - key: ldap-toml
+        #         path: ldap.toml
+        # - name: storage
+        #   emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+spec:
+  type: ClusterIP
+  ports:
+    - name: prometheus
+      port: 9090
+  selector:
+    app: prometheus
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus
+  labels:
+    app: prometheus
+data:
+  prometheus.yml: |-
+    # my global config
+    global:
+      scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
+      evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
+      # scrape_timeout is set to the global default (10s).
+
+    # Alertmanager configuration
+    alerting:
+      alertmanagers:
+      - static_configs:
+        - targets:
+          # - alertmanager:9093
+
+    # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+    rule_files:
+      # - "first_rules.yml"
+      # - "second_rules.yml"
+
+    # A scrape configuration containing exactly one endpoint to scrape:
+    # Here it's Prometheus itself.
+    scrape_configs:
+      # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+      - job_name: 'prometheus'
+
+        # metrics_path defaults to '/metrics'
+        # scheme defaults to 'http'.
+        static_configs:
+        - targets: ['localhost:9090']
+
+      - job_name: 'elasticsearch-exporter'
+        static_configs:
+        - targets: ['elasticsearch-exporter:9108']
