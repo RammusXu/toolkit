@@ -25,6 +25,12 @@ pkill -f "java -jar build/libs/Hello-1.0.jar"
 echo $?
 pgrep -f "java -jar build/libs/Hello-1.0.jar" | xargs kill
 pkill -f "java -jar build/libs/Hello-1.0.jar" || true
+
+lsof -i :27017
+
+ps aux | grep node
+kill -9 PID
+killall node
 ```
 
 # System config
