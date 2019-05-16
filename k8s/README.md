@@ -140,6 +140,15 @@ kubectl get all
 kubectl get pod,deploy
 kubectl logs -f -l app=kibana
 
+kubectl run -i --tty python3 --image=python:3.7 -- bash
+
+```
+
+### Doc
+```
+curl elasticsearch-client.elasticsearch:9200
+
+my-xn-service.default.svc.cluster.local 
 ```
 
 ### helm
@@ -157,6 +166,8 @@ helm fetch --repo https://helm.elastic.co --untar --untardir ./charts --version 
 cp ./charts/elasticsearch/values.yaml ./values/elasticsearch.yaml
 helm template --values ./values/elasticsearch.yaml --output-dir ./manifests ./charts/elasticsearch
 
-helm install --name elasticsearch elastic/elasticsearch --version 7.0.0-alpha1 --set imageTag=7.0.0
 
+helm fetch --untar --untardir ./charts --version 3.3.6 stable/grafana
+cp ./charts/grafana/values.yaml ./values/grafana.yaml
+helm template --values ./values/grafana.yaml --output-dir ./manifests ./charts/grafana
 ```

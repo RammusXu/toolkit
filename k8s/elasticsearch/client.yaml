@@ -1,0 +1,149 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: elasticsearch-client
+  labels:
+    app: "elasticsearch"
+    component: "client"
+spec:
+  selector:
+    matchLabels:
+      app: "elasticsearch"
+      component: "client"
+  replicas: 2
+  template:
+    metadata:
+      name: "elasticsearch-client"
+      labels:
+        app: "elasticsearch"
+        component: "client"
+        
+    spec:
+      securityContext:
+        fsGroup: 1000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: component
+                operator: In
+                values:
+                - client
+            topologyKey: kubernetes.io/hostname
+      terminationGracePeriodSeconds: 120
+      volumes:
+      - name: plugindir
+        emptyDir: {}
+      initContainers:
+      - name: configure-sysctl
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        image: "elasticsearch:7.0.0"
+        command: ["sysctl", "-w", "vm.max_map_count=262144"]
+      - name: install-plugin
+        image: "elasticsearch:7.0.0"
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/plugins/
+          name: plugindir
+        command:
+          - sh
+          - -c
+          - |
+            # /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip
+            /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://storage.googleapis.com/asia.public.swag.live/plugins/elasticsearch-jieba-plugin-7.0.0.zip
+      containers:
+      - name: "elasticsearch-client"
+        image: "elasticsearch:7.0.0"
+        imagePullPolicy: "IfNotPresent"
+        readinessProbe:
+          failureThreshold: 3
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          successThreshold: 3
+          timeoutSeconds: 5
+          
+          exec:
+            command:
+              - sh
+              - -c
+              - |
+                #!/usr/bin/env bash -e
+                # If the node is starting up wait for the cluster to be ready (request params: 'wait_for_status=green&timeout=1s' )
+                # Once it has started only check that the node itself is responding
+                START_FILE=/tmp/.es_start_file
+
+                http () {
+                    local path="${1}"
+                    if [ -n "${ELASTIC_USERNAME}" ] && [ -n "${ELASTIC_PASSWORD}" ]; then
+                      BASIC_AUTH="-u ${ELASTIC_USERNAME}:${ELASTIC_PASSWORD}"
+                    else
+                      BASIC_AUTH=''
+                    fi
+                    curl -XGET -s -k --fail ${BASIC_AUTH} http://127.0.0.1:9200${path}
+                }
+
+                if [ -f "${START_FILE}" ]; then
+                    echo 'Elasticsearch is already running, lets check the node is healthy'
+                    http "/"
+                else
+                    echo 'Waiting for elasticsearch cluster to become cluster to be ready (request params: "wait_for_status=green&timeout=1s" )'
+                    if http "/_cluster/health?wait_for_status=green&timeout=1s" ; then
+                        touch ${START_FILE}
+                        exit 0
+                    else
+                        echo 'Cluster is not yet ready (request params: "wait_for_status=green&timeout=1s" )'
+                        exit 1
+                    fi
+                fi
+        ports:
+        - name: http
+          containerPort: 9200
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/plugins/
+          name: plugindir
+        resources:
+          requests:
+            cpu: 500m
+            memory: 2Gi
+        env:
+          - name: node.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: discovery.zen.minimum_master_nodes
+            value: "2"
+          - name: discovery.zen.ping.unicast.hosts
+            value: "elasticsearch-master"
+          - name: cluster.name
+            value: "elasticsearch"
+          - name: xpack.monitoring.collection.enabled
+            value: "false"
+          - name: network.host
+            value: "0.0.0.0"
+          - name: ES_JAVA_OPTS
+            value: "-Xms1g -Xmx1g"
+          - name: node.data
+            value: "false"
+          - name: node.ingest
+            value: "false"
+          - name: node.master
+            value: "false"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-client
+  labels:
+    app: "elasticsearch"
+    component: "client"
+spec:
+  ports:
+  - port: 9200
+    name: http
+  # clusterIP: None
+  type: ClusterIP
+  selector:
+    app: "elasticsearch"
+    component: "client"

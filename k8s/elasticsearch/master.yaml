@@ -1,0 +1,131 @@
+apiVersion: apps/v1beta1
+kind: StatefulSet
+metadata:
+  name: elasticsearch-master
+  labels:
+    app: "elasticsearch"
+    component: "master"
+spec:
+  serviceName: elasticsearch-master
+  selector:
+    matchLabels:
+      app: "elasticsearch"
+      component: "master"
+  replicas: 3
+  podManagementPolicy: Parallel
+  updateStrategy:
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - metadata:
+      name: es-master
+    spec:
+      storageClassName: ssd-xfs
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      
+  template:
+    metadata:
+      name: "elasticsearch-master"
+      labels:
+        app: "elasticsearch"
+        component: "master"
+        
+    spec:
+      securityContext:
+        fsGroup: 1000
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: component
+                operator: In
+                values:
+                - data
+            topologyKey: kubernetes.io/hostname
+      terminationGracePeriodSeconds: 120
+      volumes:
+      - name: plugindir
+        emptyDir: {}
+      initContainers:
+      - name: configure-sysctl
+        image: "elasticsearch:7.0.0"
+        securityContext:
+          runAsUser: 0
+          privileged: true
+        command: ["sysctl", "-w", "vm.max_map_count=262144"]
+      - name: install-plugin
+        image: "elasticsearch:7.0.0"
+        volumeMounts:
+        - mountPath: /usr/share/elasticsearch/plugins/
+          name: plugindir
+        command:
+          - sh
+          - -c
+          - |
+            # /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip
+            /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://storage.googleapis.com/asia.public.swag.live/plugins/elasticsearch-jieba-plugin-7.0.0.zip
+
+      containers:
+      - name: "elasticsearch-master"
+        image: "elasticsearch:7.0.0"
+        imagePullPolicy: "IfNotPresent"
+        ports:
+        - name: transport
+          containerPort: 9300
+        resources:
+          requests:
+            cpu: 100m
+            memory: 2Gi
+        volumeMounts:
+          - name: "es-master"
+            mountPath: /usr/share/elasticsearch/data
+          - name: plugindir
+            mountPath: /usr/share/elasticsearch/plugins/
+        env:
+          - name: node.name
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          # - name: discovery.zen.minimum_master_nodes
+          #   value: "2"
+          # - name: discovery.zen.ping.unicast.hosts
+          - name: discovery.seed_hosts
+            value: "elasticsearch-master"
+          - name: cluster.initial_master_nodes
+            value: "elasticsearch-master-0,elasticsearch-master-1,elasticsearch-master-2"
+
+          - name: cluster.name
+            value: "elasticsearch"
+          - name: xpack.monitoring.collection.enabled
+            value: "false"
+          - name: network.host
+            value: "0.0.0.0"
+          - name: ES_JAVA_OPTS
+            value: "-Xms1g -Xmx1g"
+          - name: node.data
+            value: "false"
+          - name: node.ingest
+            value: "false"
+          - name: node.master
+            value: "true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch-master
+  labels:
+    app: "elasticsearch"
+    component: "master"
+spec:
+  publishNotReadyAddresses: true
+  ports:
+  - port: 9300
+    name: transport
+  clusterIP: None
+  selector:
+    app: "elasticsearch"
+    component: "master"

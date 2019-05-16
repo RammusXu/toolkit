@@ -76,4 +76,8 @@ terraform state rm aws_lb.stage
 wget -qO- your_link_here | tar xvz -
 wget -qO- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -
 
+
+
+wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && unzip tmp.zip && rm tmp.zip
+
 ```
