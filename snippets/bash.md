@@ -9,3 +9,7 @@ FILE="/backup/backup-$DATE"
 export A_VARIBALE
 unset A_VARIBALE
 ```
+
+```
+while true; do echo "hi" ; done;
+```
