@@ -1,0 +1,14 @@
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: cloud.google.com/gke-preemptible
+                operator: NotIn
+                values:
+                - "true"
+              - key: sysctl/vm.max_map_count
+                operator: In
+                values:
+                - "262144"

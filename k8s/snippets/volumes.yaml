@@ -1,0 +1,13 @@
+spec:
+  template:
+    spec:
+      volumes:
+      - name: plugindir
+        emptyDir: {}
+        
+      containers:
+      - name: mongos
+        image: mongo:4.0.2
+        volumeMounts:
+        - name: mongo-socket
+          mountPath: /tmp

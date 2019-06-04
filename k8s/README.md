@@ -141,6 +141,10 @@ kubectl get pod,deploy
 kubectl logs -f -l app=kibana
 
 kubectl run -i --tty python3 --image=python:3.7 -- bash
+kubectl run -i --tty --image python dns-test --restart=Never --rm /bin/bash
+
+kubectl apply -R -f .
+kubectl delete  -R -f mongo-sh0/ --cascade
 
 ```
 
@@ -148,7 +152,8 @@ kubectl run -i --tty python3 --image=python:3.7 -- bash
 ```
 curl elasticsearch-client.elasticsearch:9200
 
-my-xn-service.default.svc.cluster.local 
+my-svc.my-namespace.svc.cluster.local
+auto-generated-name.my-svc.my-namespace.svc.cluster.local
 ```
 
 ### helm
