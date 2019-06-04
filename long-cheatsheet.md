@@ -40,6 +40,7 @@ sysctl -w vm.max_map_count=262144
 
 sysctl -a|grep vm
 sysctl -a|grep vm.max_map_count
+sysctl vm.max_map_count
 ```
 
 # Disk
@@ -65,9 +66,24 @@ userdel ashish
 userdel -r ashish # and Home Directory
 ```
 
+# cp
+```
+# Copy folder content to another folder
+cp -ar plugins/. share-plugins
+```
+
 # apt-get
 ```
+# ping
 apt-get install iputils-ping
+
+# dig, nslookup
+apt-get install dnsutils -y
+
+# ps
+apt-get install procps
+
+# mysql
 apt-get install mysql-client
 ```
 
@@ -83,6 +99,9 @@ wget -qO- your_link_here | tar xvz -
 wget -qO- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -
 
 
+wget -O- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -C .
+
+wget -O- https://github.com/sing1ee/elasticsearch-jieba-plugin/archive/v7.0.0.tar.gz| tar -xzv -C . --strip 1
 
 wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && unzip tmp.zip && rm tmp.zip
 
