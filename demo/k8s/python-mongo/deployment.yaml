@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-mongo
+  labels:
+    app: python-mongo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: python-mongo
+  template:
+    metadata:
+      labels:
+        app: python-mongo
+    spec:
+      volumes:
+      - name: app
+        configMap:
+          name: python-mongo
+      - name: mongo-socket
+        emptyDir: {}
+      containers:
+      - name: mongos
+        image: mongo:4.0.2
+        volumeMounts:
+        - name: mongo-socket
+          mountPath: /tmp
+        command: ["mongos"]
+        args: ["--bind_ip_all", "--configdb", "configReplSet/mongo-configsvr-0.mongo-configsvr:27019,mongo-configsvr-1.mongo-configsvr:27019,mongo-configsvr-2.mongo-configsvr:27019"]
+        ports:
+        - name: mongos
+          containerPort: 27017
+        readinessProbe:
+          exec:
+            command: ["mongo", "--quiet", "--eval", "quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)"]
+        resources:
+          requests:
+            cpu: 1
+            memory: 2G
+          limits:
+            cpu: 2
+            memory: 2G

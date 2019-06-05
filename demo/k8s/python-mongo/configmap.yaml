@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-mongo
+  labels:
+    app: python-mongo
+data:
+  requirements.txt: |+
+    pymongo
+    # Flask
+    # namegenerator
+    wheel
+    gevent
+  app.py: |+
+    # from flask import Flask
+    from pymongo import MongoClient
+    import datetime
+    import random
+    # import namegenerator
+    import pprint
+    import os
+    import gevent
+    from gevent import monkey
+
+    monkey.patch_all()
+
+    # app = Flask(__name__)
+
+    # HOST = 'mongodb://mongo-mongos-0.mongo-mongos:27017'
+    # HOST = 'mongodb://mongo-mongos-0.mongo-mongos:27017,mongo-mongos-1.mongo-mongos:27017,mongo-mongos-2.mongo-mongos:27017'
+    HOST = '/tmp/mongodb-27017.sock'
+    ACTION = os.getenv('ACTION')
+
+    # client = MongoClient(HOST,minPoolSize=10)
+    client = MongoClient(
+      HOST,
+      readPreference='secondaryPreferred')
+    db = client.rammus
+
+    def loop_find(number):
+
+      while ACTION == "READ":
+          # new_doc = db.demo.insert_one({"name": namegenerator.gen()})
+          # print(datetime.datetime.now(),new_doc)
+
+          # find_doc = db.demo.find_one({"_id": new_doc.inserted_id})
+          # find_doc = db.demo.aggregate([
+          #   { "$sample": { "size": 1 } }
+          # ])
+          # print("event" + str(number) ,datetime.datetime.now(),list(find_doc))
+
+          print("event" + str(number) ,datetime.datetime.now(),db.demo.find_one())
+
+          # for doc in db.demo.find().sort("_id", -1).limit(1):
+          #     print(datetime.datetime.now(),doc)
+    
+    jobs = [gevent.spawn(loop_find, x) for x in range(100)]
+    gevent.joinall(jobs)
+
+
+
+    # @app.route("/")
+    # def hello():
+    #     # resp = db.demo.find().sort({"_id":-1}).limit(1)
+    #     print(datetime.datetime.now(),db.demo.find_one())
+    #     return "Hello World!"
+
+    # @app.route("/create")
+    # def create():
+    #     doc = db.demo.insert_one({"name": namegenerator.gen()})
+    #     print(datetime.datetime.now(), doc)
+    #     pprint.pprint(doc)
+    #     return "Created!"
+
+
+    # if __name__ == "__main__":
+    #     app.run(debug=True)
+

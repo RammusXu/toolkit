@@ -1,0 +1,5 @@
+
+## Run
+```
+kubectl apply -f .
+```
