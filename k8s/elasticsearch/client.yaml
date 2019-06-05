@@ -51,8 +51,7 @@ spec:
           - sh
           - -c
           - |
-            # /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip
-            /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://storage.googleapis.com/asia.public.swag.live/plugins/elasticsearch-jieba-plugin-7.0.0.zip
+            /usr/share/elasticsearch/bin/elasticsearch-plugin install -b https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip
       containers:
       - name: "elasticsearch-client"
         image: "elasticsearch:7.0.0"
