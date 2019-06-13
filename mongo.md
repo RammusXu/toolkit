@@ -81,6 +81,41 @@ db.demo.createIndex({name:1})
 db.demo.createIndex({name:1},{background:true})
 
 db.demo.dropIndex({name:1})
+
+db.demo.getIndexes()
+
+```
+
+Array
+```
+db.getCollection('feat.rammus').insertOne(
+    {name:"rammus"}
+)
+db.getCollection('feat.rammus').update(
+    {name:"rammus"},
+    { 
+        $addToSet: {tags: { $each : ["ban","hid","3"]}}
+    }
+)
+db.getCollection('feat.rammus').update(
+    {name:"rammus"},
+    { 
+        $pull: {tags: { $in : ["ban","3"]}}
+    }
+)
+```
+
+Find
+```
+db.getCollection('feat.rammus').find(
+    { tags: /cover/i }
+)
+
+```
+
+Log
+```
+db.getCollection('oplog.rs').find({}).sort({$natural: -1})
 ```
 
 Test

@@ -105,4 +105,8 @@ wget -O- https://github.com/sing1ee/elasticsearch-jieba-plugin/archive/v7.0.0.ta
 
 wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && unzip tmp.zip && rm tmp.zip
 
+
+https://httpbin.org/
+curl -X GET "https://httpbin.org/ip" -H "accept: application/json"
+curl https://httpbin.org/ip
 ```
