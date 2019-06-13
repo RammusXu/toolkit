@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: hello
+spec:
+  schedule: "* * * * *"
+  # Allow | Forbid | Replace
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          # Always | OnFailure | Never
+          restartPolicy: Never
+          containers:
+          - name: hello
+            image: busybox
+            args:
+            - /bin/sh
+            - -c
+            - | 
+              date
+              echo "sleep $SLEEP_TIME"
+              sleep $SLEEP_TIME
+              echo "awake"
+              date
+            env: 
+            - name: SLEEP_TIME
+              value: "80"

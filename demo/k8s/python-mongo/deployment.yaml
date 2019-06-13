@@ -41,3 +41,18 @@ spec:
           limits:
             cpu: 2
             memory: 2G
+
+      - name: python
+        image: python:3.7-alpine
+        volumeMounts:
+        - name: app
+          mountPath: /app
+        args: 
+        - sh
+        - -c
+        - |
+          cd /app
+          pip install -r requirements.txt
+          python app.py
+        
+        
