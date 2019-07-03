@@ -1,0 +1,69 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: demo
+  namespace: default
+spec:
+  selector:
+    app: demo
+  type:  ClusterIP
+  ports:
+  - name:  http
+    port:  80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo
+  template:
+    metadata:
+      labels:
+        app: demo
+    spec:
+      containers:
+      - name: demo
+        image: nginx
+        ports:
+        - name: http
+          containerPort: 80
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: echo
+  namespace: default
+spec:
+  selector:
+    app: echo
+  type:  ClusterIP
+  ports:
+  - name:  http
+    port:  80
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echo
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      containers:
+      - name: echo
+        image: nginx
+        ports:
+        - name: http
+          containerPort: 80
