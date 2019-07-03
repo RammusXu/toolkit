@@ -66,6 +66,11 @@ userdel ashish
 userdel -r ashish # and Home Directory
 ```
 
+# Storage
+```
+du folder
+```
+
 # cp
 ```
 # Copy folder content to another folder
@@ -109,4 +114,20 @@ wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && un
 https://httpbin.org/
 curl -X GET "https://httpbin.org/ip" -H "accept: application/json"
 curl https://httpbin.org/ip
+```
+
+# String(Text) Processing
+```
+# -P: Perl regex
+# -o: Only match
+# \K: Only match Perl regex will show
+grep -oP 'foobar \K\w+' test.txt
+
+# curl is wired. https://stackoverflow.com/questions/37014430/awk-how-to-concat-number-with-strings
+# -P: multi process
+# -I: input stream as a variable
+xargs -P 10 -I username curl -sI https://xxxxxxxxxxx/username | grep 'Location: ' | awk '{print $2 "/a_string"}'
+
+# -F: multi delimiter
+awk -F' |\r' '{print $2 "/cover.jpg"}'
 ```
