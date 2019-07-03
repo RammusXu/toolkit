@@ -1,0 +1,20 @@
+version: "3"
+services:
+  vpn:
+    image: cmulk/wireguard-docker
+    # build: github.com/cmulk/wireguard-docker
+    volumes:
+    - ./.config:/etc/wireguard
+    networks:
+    - net
+    ports:
+    - 5555:5555/udp
+    restart: unless-stopped
+    cap_add:
+    - NET_ADMIN
+    - SYS_MODULE
+  web:
+    image: nginx
+
+networks:
+  net:
