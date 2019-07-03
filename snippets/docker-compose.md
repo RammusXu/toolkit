@@ -8,3 +8,13 @@ services:
   redis:
     image: "redis:alpine"
 ```
+
+```
+
+    networks:
+      - frontend
+ 
+networks:
+  frontend:
+    name: custom_frontend
+```

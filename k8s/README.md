@@ -146,6 +146,9 @@ kubectl run -i --tty --image python dns-test --restart=Never --rm /bin/bash
 kubectl apply -R -f .
 kubectl delete  -R -f mongo-sh0/ --cascade
 
+# Get secret
+kubectl get secrets flux-git-deploy -o=jsonpath={.data.identity} | base64 -D
+
 ```
 
 ### Doc
