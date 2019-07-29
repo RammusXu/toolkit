@@ -20,6 +20,17 @@ brew upgrade
 pyenv install 3.6.8
 ```
 
+Terminal
+```
+brew cask install iterm2
+brew install zsh zsh-completions
+```
+`iTerm2 > Preferences > Profiles > Keys`
+https://medium.com/@jonnyhaynes/jump-forwards-backwards-and-delete-a-word-in-iterm2-on-mac-os-43821511f0a
+⌥+←
+⌥+→
+escape
+
 ## Software
 - source tree
 - vs code

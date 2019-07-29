@@ -179,3 +179,10 @@ helm fetch --untar --untardir ./charts --version 3.3.6 stable/grafana
 cp ./charts/grafana/values.yaml ./values/grafana.yaml
 helm template --values ./values/grafana.yaml --output-dir ./manifests ./charts/grafana
 ```
+
+## Troubleshooting
+```
+https://github.com/kubernetes/kubectl/issues/151
+kubectl api-resources --verbs=list --namespaced -o name \
+  | xargs -n 1 kubectl get --show-kind --ignore-not-found -l <label>=<value> -n <namespace>
+```

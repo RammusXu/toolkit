@@ -12,4 +12,5 @@ unset A_VARIBALE
 
 ```
 while true; do echo "hi" ; done;
+watch -n 1 -d http http://localhost/
 ```
