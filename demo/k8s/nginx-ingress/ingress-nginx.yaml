@@ -20,25 +20,13 @@ metadata:
     # nginx.ingress.kubernetes.io/lua-resty-waf: "simulate"
     # nginx.ingress.kubernetes.io/lua-resty-waf-allow-unknown-content-types: "true"
 
-    nginx.ingress.kubernetes.io/configuration-snippet: |
+    # nginx.ingress.kubernetes.io/configuration-snippet: |
       # more_set_headers "Debug-String: $allowed_country";
       # more_set_headers "Debug-String: $remote_addr";
-      more_set_headers "Debug-By: Rammus";
+      # more_set_headers "Debug-By: Rammus";
       
 spec:
   rules:
-  - host: ddos.demo
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: echoserver
-          servicePort: 80
-      - path: /coffee
-        backend:
-          serviceName: echoserver
-          servicePort: 80
-
   - host: grafana.staging
     http:
       paths:

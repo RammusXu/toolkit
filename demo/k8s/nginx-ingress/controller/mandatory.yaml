@@ -28,22 +28,29 @@ data:
   ## Real IP
   use-forwarded-headers: "true"
 
+  # Tune nginx keepalives to work with the GCP HTTP(S) Load Balancer:
+  # https://blog.percy.io/tuning-nginx-behind-google-cloud-platform-http-s-load-balancer-305982ddb340
+  keep-alive: "650"
+  keep-alive-requests: "10000"
+
+
   ## ModSecurity
   # enable-modsecurity: "true"
   # enable-owasp-modsecurity-crs: "true"
 
   ## Map
-  # http-snippet: |
-  #   map $geoip_country_code $allowed_country {
-  #     default yes;
-  #     RU no;
-  #     CN no;
-  #     # TW no;
-  #   }
-  # server-snippet: |
-  #   if ($allowed_country = no) {
-  #       return 403;
-  #   }
+  http-snippet: |
+    map $geoip_country_code $allowed_country {
+      default yes;
+      RU no;
+      CN no;
+      # US no;
+      # TW no;
+    }
+  server-snippet: |
+    if ($allowed_country = no) {
+        return 429;
+    }
 
   ## Block
   # block-cidrs: 118.160.49.111
@@ -226,7 +233,7 @@ metadata:
     app.kubernetes.io/name: ingress-nginx
     app.kubernetes.io/part-of: ingress-nginx
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app.kubernetes.io/name: ingress-nginx
@@ -297,8 +304,8 @@ spec:
           resources:
             limits:
               cpu: 4
-              memory: 16G
+              memory: 1G
             requests:
               cpu: 1
-              memory: 16G
+              memory: 1G
 ---
