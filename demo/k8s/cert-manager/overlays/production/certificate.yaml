@@ -1,0 +1,21 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: certificate
+spec:
+  secretName: secret-prod-cert
+  # Change this to your own domain
+  commonName: rammus.cf
+  dnsNames:
+  # Change this to your own domain
+  - rammus.cf
+  issuerRef:
+    name: issuer
+    kind: Issuer
+  acme:
+    config:
+    - http01:
+        ingress: gcp-ingress
+      domains:
+      # Change this to your own domain
+      - rammus.cf

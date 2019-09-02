@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gcp-ingress
+spec:
+  tls:
+  - hosts:
+    # Change this to your own domain
+    - demo.example.net
+    secretName: secret-demo

@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: gcp-ingress
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    kubernetes.io/tls-acme: "true"
+spec:
+  tls:
+  - hosts:
+    # Change this to your own domain
+    - rammus.cf
+    secretName: secret-prod-cert
+  rules:
+  - http:
+      paths:
+      - path: /echo
+        backend:
+          serviceName: echoserver
+          servicePort: 80
+      - backend:
+          serviceName: ingress-nginx
+          servicePort: 80
+          

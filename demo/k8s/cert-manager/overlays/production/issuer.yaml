@@ -1,0 +1,17 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Issuer
+metadata:
+  name: issuer
+spec:
+  acme:
+
+    # Change this to your own email
+    email: comte_ken@hotmail.com
+    server: https://acme-v02.api.letsencrypt.org/directory
+    privateKeySecretRef:
+      name: issuer-letsencrypt-account-key-secret-production
+    # Add a single challenge solver, HTTP01 using nginx
+    # solvers:
+    # - http01:
+    #     ingress:
+    #       class: nginx
