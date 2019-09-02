@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wrk-busybox
+  labels:
+    app: wrk-busybox
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: wrk-busybox
+  template:
+    metadata:
+      labels:
+        app: wrk-busybox
+    spec:
+      initContainers:
+      - name: wrk
+        image: williamyeh/wrk:4.0.2
+        args: 
+        - -t10
+        - -c100
+        - -d180
+        - http://rammus.cf
+      containers:
+      - name: busybox
+        image: busybox
+        args: 
+        - sh
+        - -c
+        - |
+          tail -f /dev/null
+        
+        
