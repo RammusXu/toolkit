@@ -2,20 +2,23 @@ apiVersion: certmanager.k8s.io/v1alpha1
 kind: Certificate
 metadata:
   name: certificate
+  labels:
+    use-cloudflare-solver: "true"
 spec:
-  secretName: secret-prod-cert
+  secretName: secret-prod-tls
   # Change this to your own domain
   commonName: rammus.cf
   dnsNames:
   # Change this to your own domain
   - rammus.cf
+  - "*.rammus.cf"
   issuerRef:
-    name: issuer
-    kind: Issuer
-  acme:
-    config:
-    - http01:
-        ingress: gcp-ingress
-      domains:
-      # Change this to your own domain
-      - rammus.cf
+    name: issuer-production
+    kind: ClusterIssuer
+  # acme:
+  #   config:
+  #   - http01:
+  #       ingress: gcp-ingress
+  #     domains:
+  #     # Change this to your own domain
+  #     - rammus.cf

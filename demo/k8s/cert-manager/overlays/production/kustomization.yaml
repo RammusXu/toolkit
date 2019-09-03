@@ -1,9 +1,11 @@
-bases:
-  - ../cert-manager
+# bases:
+#   - ../cert-manager
 
 namespace: ingress-nginx
 
-patchesStrategicMerge:
+
+# patchesStrategicMerge:
+resources:
 - ingress.yaml
 - issuer.yaml
 - certificate.yaml

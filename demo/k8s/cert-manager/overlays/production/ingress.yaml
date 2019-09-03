@@ -4,13 +4,14 @@ metadata:
   name: gcp-ingress
   annotations:
     kubernetes.io/ingress.class: "gce"
-    kubernetes.io/tls-acme: "true"
+    # kubernetes.io/tls-acme: "true"
 spec:
   tls:
   - hosts:
     # Change this to your own domain
     - rammus.cf
-    secretName: secret-prod-cert
+    - "*.rammus.cf"
+    secretName: secret-prod-tls
   rules:
   - http:
       paths:
@@ -21,4 +22,3 @@ spec:
       - backend:
           serviceName: ingress-nginx
           servicePort: 80
-          

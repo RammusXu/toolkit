@@ -1,17 +1,42 @@
 apiVersion: certmanager.k8s.io/v1alpha1
-kind: Issuer
+kind: ClusterIssuer
 metadata:
-  name: issuer
+  name: issuer-production
 spec:
   acme:
-
     # Change this to your own email
     email: comte_ken@hotmail.com
     server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: issuer-letsencrypt-account-key-secret-production
-    # Add a single challenge solver, HTTP01 using nginx
-    # solvers:
-    # - http01:
-    #     ingress:
-    #       class: nginx
+      name: secret-prod-tls
+
+    # Configure the challenge solvers.
+    solvers:
+    # An empty selector will 'match' all Certificate resources that
+    # reference this Issuer.
+    - selector: {}
+      http01:
+        ingress:
+          class: nginx
+    - selector:
+        # Any Certificate resources, or Ingress resources that use
+        # ingress-shim and match the below label selector will use this
+        # configured solver type instead of the default nginx based HTTP01
+        # solver above.
+        # You can continue to add new solver types if needed.
+        # The most specific 'match' will be used.
+        matchLabels:
+          use-cloudflare-solver: "true"
+
+        # dnsNames:
+        # - rammus.cf
+        # - '*.rammus.cf'
+      dns01:
+        # Adjust the configuration below according to your environment.
+        # You can view more example configurations for different DNS01
+        # providers in the documentation: https://docs.cert-manager.io/en/latest/tasks/issuers/setup-acme/dns01/index.html
+        cloudflare:
+          email: comte_ken@hotmail.com
+          apiKeySecretRef:
+            name: cloudflare-api-key
+            key: api-key

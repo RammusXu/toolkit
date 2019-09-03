@@ -40,15 +40,6 @@ helm install --name nginx-ingress stable/nginx-ingress \
 ```
 https://medium.com/containerum/how-to-launch-nginx-ingress-and-cert-manager-in-kubernetes-55b182a80c8f
 
-## cert-manager
-```
-helm install \
-    --name cert-manager \
-    --namespace kube-system \
-    --set ingressShim.defaultIssuerName=issuer-prod \
-    --set ingressShim.defaultIssuerKind=ClusterIssuer \
-    stable/cert-manager
-```
 
 ## Commands
 
