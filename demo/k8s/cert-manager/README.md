@@ -6,8 +6,8 @@ install:
 https://github.com/jetstack/cert-manager/releases/download/v0.9.1/cert-manager.yaml
 ```
 
-
 ## Add Ingress, Certificate, issuer
+From: https://github.com/jetstack/kustomize-cert-manager-demo
 ```
 kustomize build overlays/production |kubectl apply -f -
 ```
