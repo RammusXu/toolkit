@@ -2,7 +2,7 @@
 ## Add static manifest
 install:
 ```
-https://github.com/jetstack/cert-manager/releases/download/<version>/cert-manager.yaml
+# https://github.com/jetstack/cert-manager/releases/download/<version>/cert-manager.yaml
 https://github.com/jetstack/cert-manager/releases/download/v0.9.1/cert-manager.yaml
 ```
 
@@ -38,4 +38,30 @@ EOF
           apiKeySecretRef:
             name: cloudflare-api-key
             key: api-key
+```
+
+## Note
+
+[backup](https://docs.cert-manager.io/en/latest/tasks/backup-restore-crds.html#backing-up-and-restoring):
+```
+kubectl get -o yaml \
+   --all-namespaces \
+   issuer,clusterissuer,certificates,orders,challenges > cert-manager-backup.yaml
+```
+
+[restore](https://docs.cert-manager.io/en/latest/tasks/upgrading/index.html#upgrading-using-static-manifests):
+```
+kubectl apply -f cert-manager-backup.yaml
+```
+
+[install](https://docs.cert-manager.io/en/latest/tasks/upgrading/index.html#upgrading-using-static-manifests):
+```
+https://github.com/jetstack/cert-manager/releases/download/<version>/cert-manager.yaml
+https://github.com/jetstack/cert-manager/releases/download/v0.9.1/cert-manager.yaml
+```
+
+[check old format](https://docs.cert-manager.io/en/release-0.9/tasks/upgrading/upgrading-0.7-0.8.html?highlight=upgrade#removing-old-configuration-altogether):
+```
+kubectl get certificate --all-namespaces \
+  -o custom-columns="NAMESPACE:.metadata.namespace,NAME:.metadata.name,OWNER:.metadata.ownerReferences[0].kind,OLD FORMAT:.spec.acme"
 ```
