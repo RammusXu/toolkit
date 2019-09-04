@@ -1,17 +1,22 @@
-
-
-## Deploy
-
-https://github.com/kubernetes/ingress-nginx/blob/master/docs/deploy/index.md
+## [Nginx Ingress Controller](https://github.com/kubernetes/ingress-nginx/blob/master/docs/deploy/index.md)
 ```
-kubectl apply -f controller
+kubectl apply -k nginx-ingress/controller/
 ```
 
-https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/
+## Nginx Ingress
 ```
-kubectl apply -k prometheus
-kubectl apply -k grafanaa
+kubectl apply -f nginx-ingress/ingress-nginx.yaml 
 ```
+
+## [Metrics](https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/)
+```
+kubectl apply -k nginx-ingress/grafana
+kubectl apply -k nginx-ingress/prometheus
+```
+
+Grafana:
+- datasource: http://prometheus-server:9090
+- dashboard: ./nginx-ingress/grafana/dashboards/nginx.json
 
 ## Configs, Annotations
 https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
