@@ -4,7 +4,6 @@ metadata:
   name: gcp-ingress
   annotations:
     kubernetes.io/ingress.class: "gce"
-    # kubernetes.io/tls-acme: "true"
 spec:
   tls:
   - hosts:

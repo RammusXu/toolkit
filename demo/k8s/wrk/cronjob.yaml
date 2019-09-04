@@ -1,0 +1,29 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: wrk-cronjob
+spec:
+  schedule: "0 * * * *"
+  # Allow | Forbid | Replace
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          # Always | OnFailure | Never
+          restartPolicy: Never
+          containers:
+          - name: wrk
+            image: williamyeh/wrk:4.0.2
+            args: 
+            - -t2
+            - -c30
+            - -d3000
+            - https://rammus.cf
+            resources:
+              limits:
+                cpu: 2
+                memory: 1G
+              requests:
+                cpu: 1
+                memory: 1G

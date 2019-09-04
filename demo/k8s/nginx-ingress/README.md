@@ -18,22 +18,7 @@ https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annota
 https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/
 
 
-## Can be useful
-
-
 ## Note
-
-Ban IP: Not work, it looks `x-real-ip` -> `remote_addr`, not `x-original-forwarded-for`
-
-```
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-    deny 118.160.49.111;
-```
-
-https://devops.webres.wang/2017/03/nginx-using-set_real_ip_from-get-client-ip/
-
-
-## Test
 ```
 curl http://rammus.cf -H "Host: ddos.demo" -H "User-Agent:A" -v
 ```
