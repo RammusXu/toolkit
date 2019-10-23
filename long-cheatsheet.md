@@ -114,6 +114,8 @@ wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && un
 https://httpbin.org/
 curl -X GET "https://httpbin.org/ip" -H "accept: application/json"
 curl https://httpbin.org/ip
+
+curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 ```
 
 # String(Text) Processing

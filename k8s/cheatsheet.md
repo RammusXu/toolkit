@@ -125,6 +125,7 @@ kubectl get nodes
 kubectl cluster-info
 kubectl config get-contexts
 kubectl config set-context $(kubectl config current-context) --namespace=kube-system
+kubectl config use-context CONTEXT_NAME
 kubectl run -it busybox --image=busybox -- sh
 
 kubectl get all
