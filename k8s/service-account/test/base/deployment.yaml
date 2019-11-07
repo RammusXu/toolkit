@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: echoserver
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: echoserver
+  template:
+    metadata:
+      labels:
+        app: echoserver
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-config
+
+      containers:
+      - name: echoserver
+        image: gcr.io/google_containers/echoserver:1.10
+        ports:
+        - containerPort: 8080
+
+        # nginx.conf override
+        volumeMounts:
+        - name: config
+          subPath: nginx.conf
+          mountPath: /etc/nginx/nginx.conf
+          # mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          readOnly: true

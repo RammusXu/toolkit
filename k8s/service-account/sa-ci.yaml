@@ -1,0 +1,93 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: sa-ci
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: ci
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ci
+subjects:
+  - kind: ServiceAccount
+    name: sa-ci
+    namespace: default
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ci
+  namespace: default
+rules:
+- apiGroups: ["extensions", "apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: [""]
+  resources: ["pods","configmaps","services", "secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+
+# namespace: ci
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ci
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: RoleBinding
+metadata:
+  name: ci
+  namespace: ci
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ci
+subjects:
+  - kind: ServiceAccount
+    name: sa-ci
+    namespace: default
+
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: ci
+  namespace: ci
+rules:
+- apiGroups: ["extensions", "apps"]
+  resources: ["deployments"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+- apiGroups: [""]
+  resources: ["pods","configmaps","services", "secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+
+# Cluster Role
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  # "namespace" omitted since ClusterRoles are not namespaced
+  name: cr-ci
+rules:
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list", "watch", "create", "update", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: crb-ci
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cr-ci
+subjects:
+  - kind: ServiceAccount
+    name: sa-ci
+    namespace: default
