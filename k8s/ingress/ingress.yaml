@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: demo-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+  - secretName: rammus-tls
+  rules:
+  - http:
+      paths:
+      - path: /
+        backend:
+          serviceName: helloweb-service
+          servicePort: 8080
+    host: rammus.tw
