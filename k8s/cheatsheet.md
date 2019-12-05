@@ -1,11 +1,6 @@
-# Setup
-
-```
-kubectl apply -f setup
-```
-
 ## Helm
 ```
+kubectl apply -f helm
 brew install kubernetes-helm
 helm init --service-account tiller
 ```
@@ -132,7 +127,7 @@ kubectl get all
 kubectl get pod,deploy
 kubectl logs -f -l app=kibana
 
-kubectl run -i --tty python3 --image=python:3.7 -- bash
+kubectl run --rm -it python3 --image=python:3.7 -- bash
 kubectl run -i --tty --image python dns-test --restart=Never --rm /bin/bash
 
 kubectl apply -R -f .
