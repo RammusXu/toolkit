@@ -2,7 +2,8 @@
 ```
 kubectl apply -f helm
 brew install kubernetes-helm
-helm init --service-account tiller
+helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+
 ```
 
 ## Dashboard

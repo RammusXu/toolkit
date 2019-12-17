@@ -133,3 +133,8 @@ xargs -P 10 -I username curl -sI https://xxxxxxxxxxx/username | grep 'Location: 
 # -F: multi delimiter
 awk -F' |\r' '{print $2 "/cover.jpg"}'
 ```
+
+# Make cpu high loading
+```
+while true; do echo; done
+```
