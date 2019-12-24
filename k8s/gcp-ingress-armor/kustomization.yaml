@@ -1,0 +1,8 @@
+namespace: gcp-armor
+
+resources:
+- echoserver.yaml
+- gcp-ingress.yaml
+- gcp-ingress-cdn.yaml
+- backend-config.yaml
+- proxy-service.yaml
