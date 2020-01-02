@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name:  stress-alpine
+spec:
+  backoffLimit: 5
+  template:
+    metadata:
+      name:  stress-alpine
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: stress-alpine
+        image: alpine:3.11
+        args:
+        - /bin/sh
+        - -c
+        - | 
+          apk add --no-cache stress-ng
+          stress-ng --cpu 1 --vm 2 --vm-bytes 1G --timeout 20s
+        resources:
+          limits:
+            cpu: 2
+            memory: 2G
+          requests:
+            cpu: 1
+            memory: 2G
