@@ -1,0 +1,33 @@
+version: '3'
+services:
+  busydocker:
+    image: docker:19.03
+    entrypoint: /bin/sh -c "tail -f /dev/null"
+    # command: version
+    # entrypoint: docker run -p 80:80 httpd:latest
+    depends_on:
+      - dind
+    environment:
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_HOST=tcp://docker:2376
+      # - DOCKER_TLS_VERIFY=1
+    volumes:
+      - "cert-client:/certs/client"    
+    networks:
+      - dind
+
+  dind:
+    image: docker:19.03-dind
+    privileged: true
+    volumes:
+      # - "cert-ca:/certs/ca"    
+      - "cert-client:/certs/client"    
+    networks:
+      dind:
+        aliases:
+          - docker
+volumes:
+  cert-client:
+
+networks:
+  dind:
