@@ -138,3 +138,8 @@ awk -F' |\r' '{print $2 "/cover.jpg"}'
 ```
 while true; do echo; done
 ```
+
+# jq
+```
+$(msg=$(cat $(grep -E "(mirror to|replace by)" *.txt -l)) jq -nc '{"body":env.msg}')
+```
