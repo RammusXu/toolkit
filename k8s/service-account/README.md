@@ -1,12 +1,14 @@
-## Validate Kubernetes Config
+
+## Create service account and namespace
 ```
-docker run -it -v $PWD/kubernetes:/kubernetes garethr/kubeval -d kubernetes --strict
+kubectl apply -f sa-ci.yaml
+kubectl apply -f sa-cluster-admin.yaml
 ```
 
 ## Genereate Kubeconfig from Service Account
 ```
 # Genereate kube config
-./export-service-account.sh https://your_cluster_ip
+./export-service-account.sh
 ```
 
 ## Debug
@@ -14,8 +16,9 @@ Use service account config
 ```
 ./debug-container.sh KUBE_CONFIG_FROM_SCRIPT_ABOVE
 
-kubectl apply -k test/base
-kubectl apply -k test/ns-ci
+root@94d47211817d:/# kubectl get po
+root@94d47211817d:/# kubectl apply -k test/base
+root@94d47211817d:/# kubectl apply -k test/ns-ci
 ```
 
 Update service account permissions

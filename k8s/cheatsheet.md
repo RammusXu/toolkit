@@ -39,6 +39,12 @@ https://medium.com/containerum/how-to-launch-nginx-ingress-and-cert-manager-in-k
 
 ## Commands
 
+Validate Kubernetes Config
+```
+docker run -it -v $PWD/kubernetes:/kubernetes garethr/kubeval -d kubernetes --strict
+```
+
+
 ### kops
 
 Install
