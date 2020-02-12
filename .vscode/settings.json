@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": ".env/bin/python",
+    "python.pythonPath": ".venv/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }

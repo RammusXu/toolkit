@@ -3,6 +3,11 @@ My toolkit
 
 [Dockerhub](https://hub.docker.com/r/rammusxu/docker-box)
 
+## Setup
+In `Visual Studio Code`:
+Command + Shift + P -> Python: Select Interpreter
+
+
 ## Image Tags
 - rammusxu/docker-box:node [docker/dind-18-node.Dockerfile](https://github.com/RammusXu/toolkit/blob/master/docker/dind-18-node.Dockerfile)
 
