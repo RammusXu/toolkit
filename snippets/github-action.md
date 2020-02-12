@@ -9,8 +9,28 @@ on:
       - "**"
     tags:
       - "**"
+  pull_request:
+    branches:
+      - master
   repository_dispatch:
     types: [rammus_post]
+```
+
+### Important
+- pull_request.branches is base on *ref*, not *head_ref*
+
+## Starter
+```
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo hi
 ```
 
 ## Pass variables
@@ -32,6 +52,8 @@ if: contains(github.ref, 'tags')
 if: steps.git-diff.outputs.is-diff
 if: steps.set-env.outputs.message == 'hello'
 if: github.event.action == 'rammus_post'
+if: github.event_name == 'pull_request' && github.event.action == 'unassigned'
+if: github.event_name == 'pull_request' && contains(github.head_ref, 'update-swag-bot')
 ```
 
 ## Setting
@@ -48,6 +70,13 @@ Docker login
         password: ${{ secrets.GHR_PASSWORD }}
         username: ${{ secrets.GHR_USERNAME }}
         url: docker.pkg.github.com
+
+    - name: Docker Login - docker.pkg.github.com
+      if: contains(github.ref, 'tags')
+      env: 
+        DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
+      run: echo $DOCKER_PASSWORD | docker login -u $GITHUB_ACTOR --password-stdin docker.pkg.github.com
+    
 ```
 
 Cache node_modules
@@ -61,7 +90,16 @@ Cache node_modules
 ```
 
 Fetch private submodule
+PAT = private access token
 ```
+    - name: Fix submodules
+      run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
+    - name: Checkout
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 0
+        submodules: true
+        token: ${{ secrets.PAT }}
 ```
 
 Create pull request
@@ -79,7 +117,46 @@ Create pull request
             head: '${{ steps.create-branch.outputs.branch_name }}',
             base: 'master'
           })
+    - name: Create Pull Request
+      if: steps.create-branch.outputs.branch_name
+      uses: actions/github-script@0.3.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.pulls.create({
+            ...context.repo,
+            title: '[Action] ${{ steps.create-branch.outputs.branch_name }}',
+            body: 'Create by `${{ github.event.client_payload.actor }}`',
+            head: '${{ steps.create-branch.outputs.branch_name }}',
+            base: 'master'
+          })
 ```
+
+Create a comment in pull request
+```
+    - name: Notify Results in Pull Request
+      if: steps.generate-mirror-list.outputs.images
+      uses: actions/github-script@0.3.0
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        images: ${{ steps.generate-mirror-list.outputs.images }}
+        script: |
+          var body = "## I mirrored something for you"
+          process.env.INPUT_IMAGES.split(' ').forEach(function(image){
+            let [source, target] = image.split('@')
+            body = `${body}\r\n- \`${source}\` -> \`${target}\``
+          })
+
+          github.issues.createComment({
+            ...context.repo,
+            issue_number: context.payload.number,
+            body: body,
+          })
+```
+
+## iOS App Build
+bitrise: 2 vCPU + 4 GB RAM
+Github Action: 2 vCPU + 7 GB RAM
 
 
 ## Test workflows
@@ -109,3 +186,14 @@ curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
     -XPOST $INPUT_COMMENT_URL
 
 ```
+
+## Build status
+```
+[![](https://github.com/swaglive/swag-bot/workflows/release/badge.svg)](https://github.com/swaglive/swag-bot/tree/master)
+```
+
+
+## Reference
+- https://github.com/actions/toolkit/tree/master/packages/github
+- https://github.com/actions/github-script
+- https://octokit.github.io/rest.js/#usage
