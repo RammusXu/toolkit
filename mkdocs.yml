@@ -1,0 +1,21 @@
+site_name: Rammus Toolkit
+theme: 
+  name: material
+  # highlightjs: true
+  # hljs_languages:
+  #   - yaml
+  #   - rust
+  #   - python
+  #   - bash
+  #   - js
+
+markdown_extensions:
+  - codehilite
+  - pymdownx.superfences
+
+repo_url: https://github.com/RammusXu/toolkit
+site_author: Rammus Xu
+site_description: It's Rammus Toolkit. A collection of snippets, examples and solutions.
+copyright: |
+  © 2015- Rammus Xu
+  All website licensed under CC BY-SA 4.0

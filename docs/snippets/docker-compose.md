@@ -1,4 +1,6 @@
-```
+# Docker Compose
+
+```yaml
 version: '3'
 services:
   web:
@@ -9,8 +11,7 @@ services:
     image: "redis:alpine"
 ```
 
-```
-
+```yaml
     networks:
       - frontend
  
