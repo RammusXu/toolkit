@@ -3,7 +3,7 @@
 - [mkdocs.org](https://www.mkdocs.org/)
 - [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
     - [codehilite](https://squidfunk.github.io/mkdocs-material/extensions/codehilite/#usage)
-
+    - [admonition - note block](https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types)
 
 ## Tabs
 
@@ -24,5 +24,5 @@ echo hi
 ```
 
 ``` py tab=
-print('hhelo')
+print('hi')
 ```

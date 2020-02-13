@@ -22,6 +22,7 @@ theme:
 markdown_extensions:
   - codehilite
   - pymdownx.superfences
+  - pymdownx.magiclink
   - admonition # https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types
   - toc:
       permalink: true
