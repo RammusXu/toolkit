@@ -1,6 +1,6 @@
 
 ## Cluster setup
-```
+```js
 rs.initiate(
   {
     _id: "<replSetName>",
@@ -42,7 +42,7 @@ sh.addShard( "rs0/mongo-sh0-0.mongo-sh0:27017")
 
 ```
 
-```
+``` js
 rs.initiate()
 
 rs.status()
@@ -56,27 +56,27 @@ mongo --port 27019 --eval "rs.reconfig(rs.config(),{force:true})"
 ```
 
 ## Config
-```
+```js
 db.getMongo().setReadPref('secondaryPreferred')
 ```
 
 
 ## Usage
-```
+```js
 use myNewDatabase
 db.myCollection.insertOne( { x: 1 } )
 db.myCollection.find()
 ```
 
 Connection pools
-```
+```js
 db.serverStatus().connections
 db.currentOp(true)
 db.runCommand( { "connPoolStats" : 1 } )
 ```
 
 Index
-```
+```js
 db.demo.createIndex({name:1})
 db.demo.createIndex({name:1},{background:true})
 
@@ -87,7 +87,7 @@ db.demo.getIndexes()
 ```
 
 Array
-```
+```js
 db.getCollection('feat.rammus').insertOne(
     {name:"rammus"}
 )
@@ -106,7 +106,7 @@ db.getCollection('feat.rammus').update(
 ```
 
 Find
-```
+```js
 db.getCollection('feat.rammus').find(
     { tags: /cover/i }
 )
@@ -114,12 +114,12 @@ db.getCollection('feat.rammus').find(
 ```
 
 Log
-```
+```js
 db.getCollection('oplog.rs').find({}).sort({$natural: -1})
 ```
 
 Test
-```
+```js
 while true; do kubectl exec -it mongo-mongos-0 -- mongo mongo-mongos:27017/rammus --eval "db.serverStatus().connections;" ; done;
 
 
