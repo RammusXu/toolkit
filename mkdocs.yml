@@ -17,6 +17,8 @@ markdown_extensions:
   - codehilite
   - pymdownx.superfences
   - admonition # https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types
+  - toc:
+      permalink: true
 
 repo_url: https://github.com/RammusXu/toolkit
 site_author: Rammus Xu
