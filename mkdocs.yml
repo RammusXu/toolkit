@@ -9,7 +9,7 @@ theme:
   name: material
   logo:
     icon: 'build'
-  language: 'zh-TW'
+  language: 'en'
 
   # highlightjs: true
   # hljs_languages:
@@ -23,6 +23,8 @@ markdown_extensions:
   - codehilite
   - pymdownx.superfences
   - pymdownx.magiclink
+  - pymdownx.caret
+  - pymdownx.mark
   - admonition # https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types
   - toc:
       permalink: true
@@ -37,6 +39,7 @@ extra:
       link: 'https://github.com/rammusxu'
     - type: 'linkedin'
       link: 'https://www.linkedin.com/in/rammusxu'
+  disqus: 'rammusxu'
 
 google_analytics:
   - 'UA-67048750-3'
@@ -44,5 +47,6 @@ google_analytics:
 
 plugins:
   - search
-  # - minify:
-  #     minify_html: true
+  - git-revision-date-localized
+  - minify:
+      minify_html: true

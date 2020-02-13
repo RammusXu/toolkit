@@ -1,3 +1,7 @@
+---
+description: Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
+---
+
 ## Volumes
 ```yaml
 spec:

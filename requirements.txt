@@ -1,5 +1,6 @@
 mkdocs
 mkdocs-material
-mkdocs-minify-plugin
+mkdocs-minify-plugin>=0.2.3
+mkdocs-git-revision-date-localized-plugin
 pygments
 pymdown-extensions
