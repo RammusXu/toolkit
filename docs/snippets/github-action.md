@@ -1,6 +1,6 @@
-
+# Github Action
 ## On Trigger Event
-```
+```yaml
 
 on:
   push:
@@ -16,11 +16,11 @@ on:
     types: [rammus_post]
 ```
 
-### Important
-- pull_request.branches is base on *ref*, not *head_ref*
+!!! important
+    `pull_request.branches` is base on **ref**, not **head_ref**
 
 ## Starter
-```
+```yaml
 on:
   push:
 jobs:
@@ -34,20 +34,20 @@ jobs:
 ```
 
 ## Pass variables
-```
+```bash
 echo ::set-output name=message::$output_message
 echo ::set-env name=action_state::yellow
 ```
 
 ## Use variables
-```
+```yaml
 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 PR_COMMENT_URL: ${{ github.event.pull_request.comments_url }}
 PR_COMMENT: ${{ steps.message.outputs.message }}
 ```
 
 ## if condition
-```
+```yaml
 if: contains(github.ref, 'tags')
 if: steps.git-diff.outputs.is-diff
 if: steps.set-env.outputs.message == 'hello'
@@ -57,13 +57,13 @@ if: github.event_name == 'pull_request' && contains(github.head_ref, 'update-swa
 ```
 
 ## Setting
-```
+```yaml
 ACTIONS_RUNNER_DEBUG: true
 ```
 
 ## Awesome Actions
 Docker login 
-```
+```yaml
     - name: Docker Login - docker.pkg.github.com
       uses: swaglive/actions/docker/login@944b742
       with:
@@ -80,7 +80,7 @@ Docker login
 ```
 
 Cache node_modules
-```
+```yaml
       - uses: actions/cache@v1
         with:
           path: ./node_modules
@@ -91,7 +91,7 @@ Cache node_modules
 
 Fetch private submodule
 PAT = private access token
-```
+```yaml
     - name: Fix submodules
       run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
     - name: Checkout
@@ -103,7 +103,7 @@ PAT = private access token
 ```
 
 Create pull request
-```
+```yaml
     - name: Create Pull Request
       if: steps.create-branch.outputs.branch_name
       uses: actions/github-script@0.3.0
@@ -133,7 +133,7 @@ Create pull request
 ```
 
 Create a comment in pull request
-```
+```yaml
     - name: Notify Results in Pull Request
       if: steps.generate-mirror-list.outputs.images
       uses: actions/github-script@0.3.0
@@ -155,13 +155,13 @@ Create a comment in pull request
 ```
 
 ## iOS App Build
-bitrise: 2 vCPU + 4 GB RAM
-Github Action: 2 vCPU + 7 GB RAM
+- bitrise: 2 vCPU + 4 GB RAM
+- Github Action: 2 vCPU + 7 GB RAM
 
 
 ## Test workflows
 https://github.com/swaglive/action-demo/commit/4b0528f1fbfb125e98850f7ea9fb1d6ec32b46ac/checks?check_suite_id=382701123
-```
+```yaml
 on: 
   repository_dispatch:
 
@@ -175,7 +175,7 @@ jobs:
     - run: env
 ```
 
-```
+```bash
 ## Ramms
 INPUT_GITHUB_TOKEN=
 INPUT_COMMENT_URL="https://api.github.com/repos/swaglive/action-demo/dispatches"

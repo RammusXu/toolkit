@@ -9,6 +9,16 @@
 
 This need [pymdownx.superfences](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#installation)
 
+```
+    ``` bash tab=
+    echo hi
+    ```
+
+    ``` py tab=
+    print('hhelo')
+    ```
+```
+
 ``` bash tab=
 echo hi
 ```

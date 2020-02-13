@@ -1,5 +1,5 @@
 mkdocs
-mkdocs-ivory
 mkdocs-material
+mkdocs-minify-plugin
 pygments
 pymdown-extensions

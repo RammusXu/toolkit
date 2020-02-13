@@ -1,8 +1,8 @@
+# Mac Setup
 ## Tool
-
-- brew
-
-```
+### brew
+Install:
+```bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 brew install bash-completion
@@ -10,8 +10,8 @@ brew install bash-completion
 # Then add the following line to your ~/.bash_profile:
 [ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 ```
-
-```
+Must have:
+```bash
 brew install python3
 brew install pyenv
 
@@ -20,23 +20,26 @@ brew upgrade
 pyenv install 3.6.8
 ```
 
-Terminal
+### Terminal
 ```
 brew cask install iterm2
 brew install zsh zsh-completions
 ```
+
 `iTerm2 > Preferences > Profiles > Keys`
+
 https://medium.com/@jonnyhaynes/jump-forwards-backwards-and-delete-a-word-in-iterm2-on-mac-os-43821511f0a
-⌥+←
-⌥+→
-escape
+
+- ⌥+←
+- ⌥+→
+- escape
 
 ## Software
 - source tree
 - vs code
 - docker for desktop
 
-## setting
+## Setting
   - Touchpad
     - 點一下來選按
   - Sharing
