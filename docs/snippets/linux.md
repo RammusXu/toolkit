@@ -90,20 +90,18 @@ apt-get install procps
 apt-get install mysql-client
 ```
 
-## wget/ curl
+## wget, curl
 ```bash
+# wget -qO- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -
 wget -qO- your_link_here | tar xvz -
-wget -qO- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -
-
 
 wget -O- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -C .
 
-wget -O- https://github.com/sing1ee/elasticsearch-jieba-plugin/archive/v7.0.0.tar.gz| tar -xzv -C . --strip 1
+# wget -O- https://github.com/sing1ee/elasticsearch-jieba-plugin/archive/v7.0.0.tar.gz | tar -xzv -C . --strip 1
+wget -O- your_link_here | tar -xzv -C . --strip 1
 
 wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && unzip tmp.zip && rm tmp.zip
 
-
-https://httpbin.org/
 curl -X GET "https://httpbin.org/ip" -H "accept: application/json"
 curl https://httpbin.org/ip
 
