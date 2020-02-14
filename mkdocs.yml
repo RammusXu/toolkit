@@ -48,5 +48,5 @@ google_analytics:
 plugins:
   - search
   - git-revision-date-localized
-  - minify:
-      minify_html: true
+  # - minify:
+  #     minify_html: true
