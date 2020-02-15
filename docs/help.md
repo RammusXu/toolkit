@@ -5,6 +5,8 @@
     - [codehilite](https://squidfunk.github.io/mkdocs-material/extensions/codehilite/#usage)
     - [admonition - note block](https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types)
     - [Pymdown](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#usage)
+- [Writing in Visual Studio Code](snippets/visual-studio.md)
+
 
 ## Tabs
 
@@ -34,3 +36,10 @@ This need [pymdownx.mark](https://squidfunk.github.io/mkdocs-material/extensions
 This is a ==highlight==.
 ```
 This is a ==highlight==.
+
+## Link(referenc) to internal documents
+```
+[Writing in Visual Studio Code](snippets/visual-studio.md)
+[Mac Setup](mac-setup.md)
+[Help](../help.md)
+```
