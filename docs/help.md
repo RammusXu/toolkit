@@ -4,6 +4,7 @@
 - [mkdocs-material](https://squidfunk.github.io/mkdocs-material/)
     - [codehilite](https://squidfunk.github.io/mkdocs-material/extensions/codehilite/#usage)
     - [admonition - note block](https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types)
+    - [Pymdown](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#usage)
 
 ## Tabs
 
@@ -26,3 +27,10 @@ echo hi
 ``` py tab=
 print('hi')
 ```
+
+## Hightlight
+This need [pymdownx.mark](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#mark)
+```
+This is a ==highlight==.
+```
+This is a ==highlight==.
