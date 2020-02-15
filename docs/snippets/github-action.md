@@ -1,10 +1,24 @@
 ---
-description: Github Actions(CI/CD) tricks that official documents didn't mention. Including hints, tips, snippet, cheatsheet, troubleshooting, notes.
+description: Github Actions(CI/CD) tricks that official documents didn't mention. This post including hints, tips, snippet, cheatsheet, troubleshooting, notes, how-to.
 ---
 
 # Github Action
 
-Github Actions(CI/CD) tricks that official documents didn't mention. Including hints, tips, snippet, cheatsheet, troubleshooting, notes.
+Github Actions(CI/CD) tricks that official documents didn't mention. This post including hints, tips, snippet, cheatsheet, troubleshooting, notes, how-to.
+
+## Starter
+```yaml
+on:
+  push:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          echo hi
+```
 
 ## On Trigger Event
 ```yaml
@@ -26,19 +40,6 @@ on:
 !!! important
     `pull_request.branches` is base on **ref**, not **head_ref**
 
-## Starter
-```yaml
-on:
-  push:
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Run tests
-        run: |
-          echo hi
-```
 ## Environments and variables
 ### Pass variables
 ```bash
@@ -251,10 +252,16 @@ Compare:
 - Github Action: 2 vCPU + 7 GB RAM
 
 ### Build status
-```
-[![](https://github.com/swaglive/swag-bot/workflows/release/badge.svg)](https://github.com/swaglive/swag-bot/tree/master)
+```yaml tab="Clickable"
+[![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
 ```
 
+```yaml tab="Unclickable"
+![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)
+```
+
+- Clickable: [![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
+- Unclickable: ![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)
 
 ## Reference
 - https://github.com/actions/toolkit/tree/master/packages/github
