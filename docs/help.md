@@ -37,7 +37,7 @@ This is a ==highlight==.
 ```
 This is a ==highlight==.
 
-## Link(referenc) to internal documents
+## Link(reference) to internal documents
 ```
 [Writing in Visual Studio Code](snippets/visual-studio.md)
 [Mac Setup](mac-setup.md)

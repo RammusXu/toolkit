@@ -11,27 +11,20 @@ theme:
     icon: 'build'
   language: 'en'
 
-  # highlightjs: true
-  # hljs_languages:
-  #   - yaml
-  #   - rust
-  #   - python
-  #   - bash
-  #   - js
-
 markdown_extensions:
   - codehilite
   - pymdownx.superfences
   - pymdownx.magiclink
   - pymdownx.caret
   - pymdownx.mark
-  - admonition # https://squidfunk.github.io/mkdocs-material/extensions/admonition/#types
+  - admonition
   - toc:
       permalink: true
 
 copyright: |
   Copyright © 2015- Rammus Xu <br>
   All website licensed under <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed">CC BY-SA 4.0</a>
+
 extra:
   social:
     - type: 'github'
