@@ -1,3 +1,7 @@
+---
+description: Github Actions(CI/CD) tricks that official documents didn't mention. Including hints, tips, snippet, cheatsheet, troubleshooting.
+---
+
 # Github Action
 ## On Trigger Event
 ```yaml
@@ -32,18 +36,25 @@ jobs:
         run: |
           echo hi
 ```
-
-## Pass variables
+## Environments and variables
+### Pass variables
 ```bash
 echo ::set-output name=message::$output_message
 echo ::set-env name=action_state::yellow
 ```
-
-## Use variables
+### Use variables
 ```yaml
 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 PR_COMMENT_URL: ${{ github.event.pull_request.comments_url }}
 PR_COMMENT: ${{ steps.message.outputs.message }}
+PAYLOAD_ACTOR: ${{ github.event.client_payload.actor }}
+```
+
+#### Get commit author information
+This is only for ==push== event
+```yaml
+AUTHOR_NAME: ${{ github.event.head_commit.author.name }}
+AUTHOR_EMAIL: ${{ github.event.head_commit.author.email }}
 ```
 
 ## if condition
@@ -51,9 +62,25 @@ PR_COMMENT: ${{ steps.message.outputs.message }}
 if: contains(github.ref, 'tags')
 if: steps.git-diff.outputs.is-diff
 if: steps.set-env.outputs.message == 'hello'
-if: github.event.action == 'rammus_post'
+```
+
+### pull_request
+#### when specific event type
+```yaml
 if: github.event_name == 'pull_request' && github.event.action == 'unassigned'
-if: github.event_name == 'pull_request' && contains(github.head_ref, 'update-swag-bot')
+```
+#### when branch name is
+```yaml
+if: github.event_name == 'pull_request' && contains(github.head_ref, 'my-feature-branch')
+```
+#### when merged
+```yaml
+on: 
+  pull_request:
+    types: [closed]
+jobs:
+  merged:    
+    if: github.event.pull_request.merged == true
 ```
 
 ## Setting
@@ -62,7 +89,32 @@ ACTIONS_RUNNER_DEBUG: true
 ```
 
 ## Awesome Actions
-Docker login 
+
+### Customize action type with http post method
+```yaml
+on: 
+  repository_dispatch:
+    types: [rammus_post]
+jobs:
+  rammus_job:
+    env:
+      ACTOR: ${{ github.event.client_payload.actor }}
+    if: github.event.action == 'rammus_post'
+```
+
+And you can send a post request like:
+
+```bash
+INPUT_GITHUB_TOKEN=
+INPUT_COMMENT_URL="https://api.github.com/repos/<owner>/<repo>/dispatches"
+
+curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
+    -H "Accept: application/vnd.github.everest-preview+json" \
+    -d '{"event_type":"rammus_post","client_payload":{"new_version_image":"echo-server:96b2166", "new_version_sha":"96b2166","actor":"Rammus Xu"}}' \
+    -XPOST $INPUT_COMMENT_URL
+```
+
+### Docker login 
 ```yaml
     - name: Docker Login - docker.pkg.github.com
       uses: swaglive/actions/docker/login@944b742
@@ -79,7 +131,30 @@ Docker login
     
 ```
 
-Cache node_modules
+### Docker login and copy config to default container's workspace
+
+!!! note
+    github runner will mount `/home/runner/work/_temp/_github_home":"/github/home` when we use a docker action.
+    That means we can't use the credential directly in next steps. Only if you use a docker contain step. Since `id: generate-mirror-list` need docker credentials and run on default container, credentials should be copied to default container's home.
+
+    And a docker action must run as root. Therefore, it needs to be `sudo` in a default container.
+
+```yaml
+    - name: Docker Login - docker.pkg.github.com
+      uses: swaglive/actions/docker/login@944b742
+      with:
+        password: ${{ secrets.GHR_PASSWORD }}
+        username: ${{ secrets.GHR_USERNAME }}
+        url: docker.pkg.github.com
+
+    - name: Do something in default container's workspace
+      run: |
+        sudo cp -R /home/runner/work/_temp/_github_home/.docker ~
+        sudo chown -R $(whoami) ~/.docker
+        docker pull docker.pkg.github.com/swaglive/dockerfiles/kubectl:1.17
+```
+
+### Cache node_modules
 ```yaml
       - uses: actions/cache@v1
         with:
@@ -89,8 +164,8 @@ Cache node_modules
             ${{ runner.os }}-yarn-
 ```
 
-Fetch private submodule
-PAT = private access token
+### Fetch private submodule
+PAT = [private access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
 ```yaml
     - name: Fix submodules
       run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
@@ -102,7 +177,7 @@ PAT = private access token
         token: ${{ secrets.PAT }}
 ```
 
-Create pull request
+### Create pull request
 ```yaml
     - name: Create Pull Request
       if: steps.create-branch.outputs.branch_name
@@ -132,7 +207,7 @@ Create pull request
           })
 ```
 
-Create a comment in pull request
+### Create a comment in pull request
 ```yaml
     - name: Notify Results in Pull Request
       if: steps.generate-mirror-list.outputs.images
@@ -154,17 +229,8 @@ Create a comment in pull request
           })
 ```
 
-## iOS App Build
-- bitrise: 2 vCPU + 4 GB RAM
-- Github Action: 2 vCPU + 7 GB RAM
-
-
-## Test workflows
-https://github.com/swaglive/action-demo/commit/4b0528f1fbfb125e98850f7ea9fb1d6ec32b46ac/checks?check_suite_id=382701123
+### Get environments in action
 ```yaml
-on: 
-  repository_dispatch:
-
 jobs:
   show-env:
     runs-on: ubuntu-latest
@@ -175,19 +241,13 @@ jobs:
     - run: env
 ```
 
-```bash
-## Ramms
-INPUT_GITHUB_TOKEN=
-INPUT_COMMENT_URL="https://api.github.com/repos/swaglive/action-demo/dispatches"
+## Othes
+### iOS App Build
+Compare:
+- bitrise: 2 vCPU + 4 GB RAM
+- Github Action: 2 vCPU + 7 GB RAM
 
-curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
-    -H "Accept: application/vnd.github.everest-preview+json" \
-    -d '{"event_type":"deploy_swag_bot","client_payload":{"new_version_image":"echo-server:96b2166", "new_version_sha":"96b2166","actor":"Rammus Xu"}}' \
-    -XPOST $INPUT_COMMENT_URL
-
-```
-
-## Build status
+### Build status
 ```
 [![](https://github.com/swaglive/swag-bot/workflows/release/badge.svg)](https://github.com/swaglive/swag-bot/tree/master)
 ```
