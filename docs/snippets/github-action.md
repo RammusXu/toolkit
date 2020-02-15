@@ -1,8 +1,11 @@
 ---
-description: Github Actions(CI/CD) tricks that official documents didn't mention. Including hints, tips, snippet, cheatsheet, troubleshooting.
+description: Github Actions(CI/CD) tricks that official documents didn't mention. Including hints, tips, snippet, cheatsheet, troubleshooting, notes.
 ---
 
 # Github Action
+
+Github Actions(CI/CD) tricks that official documents didn't mention. Including hints, tips, snippet, cheatsheet, troubleshooting, notes.
+
 ## On Trigger Event
 ```yaml
 
