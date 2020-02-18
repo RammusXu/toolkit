@@ -22,9 +22,8 @@ markdown_extensions:
       permalink: true
 
 copyright: |
-  Copyright © 2015- Rammus Xu <br>
-  All website licensed under <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed">CC BY-SA 4.0</a>
-
+  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
+  <br> Copyright © 2015- Rammus Xu
 extra:
   social:
     - type: 'github'
