@@ -42,3 +42,6 @@ services:
 docker exec -it celery_celery_1 ping redis
 docker exec -it celery_celery_1 ping redis-not-found
 ```
+
+## Reference
+- https://docs.docker.com/compose/compose-file/

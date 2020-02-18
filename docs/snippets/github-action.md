@@ -53,6 +53,14 @@ PR_COMMENT_URL: ${{ github.event.pull_request.comments_url }}
 PR_COMMENT: ${{ steps.message.outputs.message }}
 PAYLOAD_ACTOR: ${{ github.event.client_payload.actor }}
 ```
+### Use GITHUB_ACTOR as git commit author and using github avator
+https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address
+```yaml
+git config --global user.name "${GITHUB_ACTOR}"
+git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+git remote add origin "${remote_repo}"
+```
 
 #### Get commit author information
 This is only for ==push== event
@@ -231,6 +239,28 @@ PAT = [private access token](https://help.github.com/en/github/authenticating-to
             issue_number: context.payload.number,
             body: body,
           })
+```
+
+### Deploy mkdocs to gh-pages
+```yaml
+name: Publish
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    name: Deploy docs
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+
+      - name: Deploy docs
+        uses: mhausenblas/mkdocs-deploy-gh-pages@1.11
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ### Get environments in action

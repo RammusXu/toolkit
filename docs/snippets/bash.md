@@ -37,5 +37,15 @@ watch -n 1 -d http http://localhost/
 (cd src/ && git checkout $NEW_VERSION_SHA) 
 ```
 
+### ANSI - 輸出文字變色
+
+https://misc.flogisoft.com/bash/tip_colors_and_formatting
+```bash
+echo -e "Default \e[31mRed"
+echo -e "\e[31mHello\e[0m World"
+echo -e "\e[1;31mHello\e[0m World"
+```
+`-e`: to use `\e[31m`
+
 ## Reference
 - https://devhints.io/bash

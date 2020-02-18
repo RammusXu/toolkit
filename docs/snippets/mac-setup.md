@@ -34,6 +34,14 @@ https://medium.com/@jonnyhaynes/jump-forwards-backwards-and-delete-a-word-in-ite
 - ⌥+→
 - escape
 
+### zsh
+https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins
+plugins=(git z httpie zsh-autosuggestions)
+
+What I use:
+- https://github.com/zsh-users/zsh-autosuggestions
+- git z httpie
+
 ## Software
 - source tree
 - vs code
