@@ -152,7 +152,61 @@ spec:
       name: mysecret
 ```
 
-## Container with commands
+## Container Injection
+
+### /etc/hosts and /etc/resolv.conf
+
+ref:
+
+- https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/#adding-additional-entries-with-hostaliases
+- https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/#pod-s-dns-config
+
+This will append hostname and overwrite /etc/resolv.conf
+
+```yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dnsmasq
+  labels:
+    name: dnsmasq
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: dnsmasq
+    spec:
+      hostAliases:
+      - ip: "35.227.233.133"
+        hostnames:
+        - "swag.live"
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+          - 1.1.1.1
+          - 8.8.8.8
+      containers:
+      - image: rammusxu/dnsmasq
+        name: dnsmasq
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100M"   
+        ports:
+        - containerPort:  53
+          name: dnsmasq
+        - containerPort:  53
+          protocol: UDP
+          name: dnsmasq-udp
+        imagePullPolicy: Always
+```
+
+### Container with commands
 ```yaml
       - name: imagemagick
         image: swaglive/imagemagick:lastest
