@@ -1,0 +1,17 @@
+version: '3'
+services:
+  dnsmasq:
+    build: .
+    image: rammusxu/dnsmasq
+    # environment:
+    #   - DOCKER_CERT_PATH=/certs/client
+    volumes:
+      - "./conf/resolv.conf:/etc/resolv.conf"
+      - "./conf/dnsmasq.conf:/etc/dnsmasq.conf"
+    ports: 
+    - "53:53"
+    - "53:53/udp"
+  runner:
+    build: .
+    entrypoint: |
+      tail -f /dev/null
