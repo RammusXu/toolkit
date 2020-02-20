@@ -10,3 +10,10 @@ kubectl config get-contexts
 kubectl config use-context production
 kubectl config set-context --current --namespace=dev
 ```
+
+### Create static ip address
+ref: https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domain-name-static-ip
+```bash
+gcloud compute addresses create dnsmasq-ip --region asia-east1
+gcloud compute addresses describe dnsmasq-ip --region asia-east1
+```
