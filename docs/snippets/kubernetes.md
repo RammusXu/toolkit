@@ -218,3 +218,7 @@ spec:
         - name: tmp
           mountPath: /tmp
 ```
+
+## Reference:
+- [feiskyer Handbook](https://kubernetes.feisky.xyz/)
+- [feiskyer Examples](https://github.com/feiskyer/kubernetes-handbook/tree/master/examples)

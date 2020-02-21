@@ -26,12 +26,6 @@ echo ${qq%:*}
 # ops
 ```
 
-### Generate High CPU Usage
-```bash
-while true; do echo "hi" ; done;
-watch -n 1 -d http http://localhost/
-```
-
 ### 暫時進到某個 folder 執行指令，不改變目前 path
 ```bash
 (cd src/ && git checkout $NEW_VERSION_SHA) 

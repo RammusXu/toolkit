@@ -32,6 +32,16 @@ kill -9 PID
 killall node
 ```
 
+### Do something parallel
+
+開多個 thread 同時執行多個指令
+```bash
+parallel docker push ::: \
+    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG-builder \
+    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG \
+    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_TAG 
+```
+
 ## System config
 ```
 screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
@@ -124,9 +134,20 @@ xargs -P 10 -I username curl -sI https://xxxxxxxxxxx/username | grep 'Location: 
 awk -F' |\r' '{print $2 "/cover.jpg"}'
 ```
 
-## Make cpu high loading
+## Load Testing
+### Generate High CPU Usage
+```bash
+while true; do echo "hi" ; done;
+while true; do curl localhost ; done;
+watch -n 1 -d http http://localhost/
 ```
-while true; do echo; done
+
+### Generate High memory usage
+ref: https://stackoverflow.com/questions/20200982/how-to-generate-a-memory-shortage-using-bash-script
+
+```bash
+yes | tr \\n x | head -c $BYTES | grep n
+yes | tr \\n x | head -c 100m | grep n
 ```
 
 ## jq
