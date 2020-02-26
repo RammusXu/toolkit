@@ -108,6 +108,20 @@ spec:
                   fieldPath: metadata.annotations['version']
 ```
 
+### metadata.name metadata.namespace
+ref: https://kubernetes.io/docs/tasks/inject-data-application/downward-api-volume-expose-pod-information/#capabilities-of-the-downward-api
+```yaml
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: POD_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+```
+
 ### Secret
 
 Encode/Decode
