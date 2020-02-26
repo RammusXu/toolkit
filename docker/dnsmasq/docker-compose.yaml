@@ -3,8 +3,6 @@ services:
   dnsmasq:
     build: .
     image: rammusxu/dnsmasq
-    # environment:
-    #   - DOCKER_CERT_PATH=/certs/client
     volumes:
       - "./conf/resolv.conf:/etc/resolv.conf"
       - "./conf/dnsmasq.conf:/etc/dnsmasq.conf"
