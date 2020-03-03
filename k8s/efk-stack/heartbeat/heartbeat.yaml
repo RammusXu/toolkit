@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heartbeat
+  labels:
+    app: heartbeat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: heartbeat
+  template:
+    metadata:
+      labels:
+        app: heartbeat
+    spec:
+      containers:
+      - name: heartbeat
+        image: docker.elastic.co/beats/heartbeat:7.6.0
+        resources:
+          limits:
+            cpu: 500m
+          requests:
+            cpu: 100m
+        volumeMounts:
+        - name: config
+          subPath: heartbeat.yml
+          mountPath: /usr/share/heartbeat/heartbeat.yml
+          readOnly: true
+      volumes:
+      - name: config
+        configMap:
+          name: heartbeat
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: heartbeat
+data:
+  heartbeat.yml: |-
+    output.elasticsearch:
+      hosts: ["http://elasticsearch:9200"]
+    setup.kibana:
+      host: "http://kibana:5601"
+
+    heartbeat.monitors:
+    - name: elasticsearch
+      type: http
+      urls: ["http://elasticsearch:9200"]
+      schedule: "@every 10s"

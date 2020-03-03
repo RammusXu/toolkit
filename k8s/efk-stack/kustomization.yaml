@@ -1,0 +1,7 @@
+namespace: elastic
+bases:
+  - elasticsearch
+  - kibana
+  - heartbeat
+resources:
+  - namespace.yaml
