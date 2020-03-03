@@ -166,6 +166,42 @@ spec:
       name: mysecret
 ```
 
+### volumeMounts from configmap
+```yaml tab="Pod"
+    spec:
+      volumes:
+      - name: config
+        configMap:
+          name: nginx-config
+
+      containers:
+      - name: echoserver
+        image: gcr.io/google_containers/echoserver:1.10
+        ports:
+        - containerPort: 8080
+
+        # nginx.conf override
+        volumeMounts:
+        - name: config
+          subPath: nginx.conf
+          mountPath: /etc/nginx/nginx.conf
+          # mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          readOnly: true
+```
+
+```yaml tab="ConfigMap"
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nginx-config
+  namespace: ingress-nginx
+data:
+  nginx.conf: |-
+    events {
+      worker_connections 1024;
+    }
+```
+
 ## Container Injection
 
 ### /etc/hosts and /etc/resolv.conf

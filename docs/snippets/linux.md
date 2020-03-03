@@ -58,11 +58,16 @@ ls -lh file
 du -sh folder
 ```
 
-## Monitor
+## Monitoring
 ```bsah
 # Login log
 last
 lastlog
+```
+
+### Keep tracking a command
+```
+watch -n 1 -d http http://localhost/
 ```
 
 ## Speed Test
@@ -139,7 +144,6 @@ awk -F' |\r' '{print $2 "/cover.jpg"}'
 ```bash
 while true; do echo "hi" ; done;
 while true; do curl localhost ; done;
-watch -n 1 -d http http://localhost/
 ```
 
 ### Generate High memory usage
