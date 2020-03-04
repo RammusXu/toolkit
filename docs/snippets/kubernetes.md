@@ -269,6 +269,12 @@ spec:
           mountPath: /tmp
 ```
 
+## Frequent Commands
+### Gracefully rolling restart deployment.
+```bash
+kubectl rollout restart deployment/my-sites --namespace=default
+```
+
 ## Reference:
 - [feiskyer Handbook](https://kubernetes.feisky.xyz/)
 - [feiskyer Examples](https://github.com/feiskyer/kubernetes-handbook/tree/master/examples)
