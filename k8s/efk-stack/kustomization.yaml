@@ -2,6 +2,6 @@ namespace: elastic
 bases:
   - elasticsearch
   - kibana
-  - heartbeat
+  - beats
 resources:
   - namespace.yaml

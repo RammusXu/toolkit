@@ -1,6 +1,6 @@
 ## Elasticsearch
 - headless service
-- 3 pods: 
+- 3 pods: Avoiding split-brain 
 
 Test it locally:
 ```

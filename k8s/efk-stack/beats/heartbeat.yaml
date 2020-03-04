@@ -50,3 +50,8 @@ data:
       type: http
       urls: ["http://elasticsearch:9200"]
       schedule: "@every 10s"
+
+    - type: http
+      name: echoserver.ops
+      schedule: "@every 1s"
+      urls: ["http://echoserver.ops"]
