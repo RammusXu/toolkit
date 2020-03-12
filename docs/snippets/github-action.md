@@ -20,7 +20,7 @@ jobs:
           echo hi
 ```
 
-## On Trigger Event
+## On trigger event
 ```yaml
 
 on:
@@ -100,6 +100,56 @@ jobs:
 ## Setting
 ```yaml
 ACTIONS_RUNNER_DEBUG: true
+```
+
+## Build an action
+
+```yaml
+# action.yml
+name: 'Hello World'
+description: 'Greet someone and record the time'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who-to-greet }}
+```
+
+### Get input as environemnt in Docker
+```yaml
+# action.yaml
+inputs:
+  who-to-greet:
+```
+```yaml
+# workflow.yaml
+      - uses: ./actions/my-action
+        with:
+          who-to-greet: rammus
+```
+
+```bash
+# entrypoint.sh
+echo INPUTS_WHO_TO_GREET
+```
+
+### ENTRYPOINT need to be abolute path
+
+!!! warning
+    When `uses: ./actions/my-action`
+    Workflow will mount workspace `--workdir /github/workspace`
+
+```bash
+COPY ./app.py /
+ENTRYPOINT python /app.py
 ```
 
 ## Awesome Actions
@@ -221,6 +271,37 @@ PAT = [private access token](https://help.github.com/en/github/authenticating-to
           })
 ```
 
+### Close issue when title contains specific string
+```yaml
+name: issue-opened
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.title, 'Update APK')
+    steps:
+      - name: Close issue
+        uses: actions/github-script@0.8.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.issues.update({
+              ...context.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            })
+
+            github.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: 'Close this!'
+            });
+```
+
 ### Create a comment in pull request
 ```yaml
     - name: Notify Results in Pull Request
@@ -277,6 +358,30 @@ jobs:
     - run: env
 ```
 
+### Get other step output as enviroment in github-script
+```yaml
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - id: update
+        run: echo ::set-output name=message::okok
+      - name: js
+        uses: actions/github-script@0.8.0
+        env:
+          MESSAGE: ${{ steps.update.outputs.message }}
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            var message = process.env.MESSAGE
+            if (message !== undefined){
+              message == 'in'
+            } else {
+              message == 'else'
+            }
+            console.log(message)
+```
+
 ## Othes
 ### iOS App Build
 Compare:
@@ -297,7 +402,11 @@ Compare:
 - Unclickable: ![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)
 
 ## Env Sample
-2020-02-25 on a push branch
+### 2020-03-11 Use a self build action
+```bash
+/usr/bin/docker run --name e87b528978e939d04c5cabae17f516da08bb2a_79b912 --label e87b52 --workdir /github/workspace --rm -e INPUT_ARGS -e INPUT_MY_VAR -e INPUT_LOWER_VAR -e INPUT_WHO-TO-GREET -e INPUT_NAME -e HOME -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/action-demo/action-demo":"/github/workspace" e87b52:8978e939d04c5cabae17f516da08bb2a env
+```
+### 2020-02-25 on a push branch
 ```bash
 PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 HOSTNAME=7e68d28ee47e

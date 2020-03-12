@@ -73,7 +73,9 @@ spec:
 ```
 
 ## Affinity
+### Pod 只能放在符合以下條件的 Node
 ```yaml
+    spec:
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -88,6 +90,22 @@ spec:
                 values:
                 - "262144"
 ```
+
+### 同一個 Node 不放一樣的 Pod
+```yaml
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - mongo-sh0
+```
+
 
 ## env
 
@@ -275,6 +293,6 @@ spec:
 kubectl rollout restart deployment/my-sites --namespace=default
 ```
 
-## Reference:
+## Reference
 - [feiskyer Handbook](https://kubernetes.feisky.xyz/)
 - [feiskyer Examples](https://github.com/feiskyer/kubernetes-handbook/tree/master/examples)

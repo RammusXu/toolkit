@@ -1,16 +1,20 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: busybox1
+  name: busybox2
   labels:
-    app: busybox1
+    app: busybox2
 spec:
+  dnsConfig:
+    options:
+      - name: single-request-reopen
   containers:
   # - image: busybox
   - image: alpine:3.11
     command:
-      - sleep
-      - "3600"
+      - tail
+      - -f
+      - /dev/null
     imagePullPolicy: IfNotPresent
     name: busybox
   restartPolicy: Never

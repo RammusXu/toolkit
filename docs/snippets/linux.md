@@ -129,14 +129,23 @@ curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 # -o: Only match
 # \K: Only match Perl regex will show
 grep -oP 'foobar \K\w+' test.txt
+# -F: multi delimiter
+awk -F' |\r' '{print $2 "/cover.jpg"}'
+```
 
+### Using variable in xargs
+```bash
 # curl is wired. https://stackoverflow.com/questions/37014430/awk-how-to-concat-number-with-strings
 # -P: multi process
 # -I: input stream as a variable
 xargs -P 10 -I username curl -sI https://xxxxxxxxxxx/username | grep 'Location: ' | awk '{print $2 "/a_string"}'
+```
 
-# -F: multi delimiter
-awk -F' |\r' '{print $2 "/cover.jpg"}'
+### Get nth line of stdout on linux
+ref: https://stackoverflow.com/questions/1429556/command-to-get-nth-line-of-stdout
+```bash
+ls -l | sed -n 2p
+ls -l | head -2 | tail -1
 ```
 
 ## Load Testing
