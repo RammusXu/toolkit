@@ -17,3 +17,21 @@ ref: https://cloud.google.com/kubernetes-engine/docs/tutorials/configuring-domai
 gcloud compute addresses create dnsmasq-ip-2 --region asia-east1
 gcloud compute addresses describe dnsmasq-ip-2 --region asia-east1
 ```
+
+## GCS(Google Cloud Stroge)
+### Public to internet
+Edit bucket permissions -> Add member -> allUsers: Storage Object Viewer
+
+### Test service accout permission
+```bash
+SA=$(cat service-account.json | base64)
+docker run -it --rm --entrypoint bash gcr.io/cloud-builders/gsutil -c "
+        echo $SA | base64 -d > sa.json
+        gcloud auth activate-service-account --key-file=sa.json
+        bash
+    "
+```
+
+```bash
+gsutil ls gs://<replace_this_with_your_bucket>
+```
