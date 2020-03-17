@@ -11,5 +11,4 @@ services:
     - "53:53/udp"
   runner:
     build: .
-    entrypoint: |
-      tail -f /dev/null
+    entrypoint: tail -f /dev/null

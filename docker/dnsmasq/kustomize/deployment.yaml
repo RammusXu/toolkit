@@ -1,0 +1,74 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: dnsmasq
+  labels:
+    name: dnsmasq
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        name: dnsmasq
+    spec:
+      # Override /etc/resovle.conf
+      # Avoid search internal DNS
+      dnsPolicy: "None"
+      dnsConfig:
+        nameservers:
+          - 8.8.8.8
+      containers:
+      - image: rammusxu/dnsmasq
+        name: dnsmasq
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100M"   
+        ports:
+        - containerPort:  53
+          name: dnsmasq
+        - containerPort:  53
+          protocol: UDP
+          name: dnsmasq-udp
+        imagePullPolicy: Always
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: dnsmasq
+spec:
+  selector:
+    name: dnsmasq
+  type: LoadBalancer
+  externalIPs:
+  - 11.11.11.11
+  - 11.11.11.12
+
+  ports:
+  - name: dnsmasq-udp
+    port: 53
+    protocol: UDP
+    targetPort: dnsmasq-udp
+
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: dnsmasq-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    name: dnsmasq
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: 60

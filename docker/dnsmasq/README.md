@@ -1,6 +1,4 @@
-
-## Reference 
-- https://www.linux.com/tutorials/advanced-dnsmasq-tips-and-tricks/
+Blog: https://rammusxu.github.io/2020/03/16/Test-and-validate-dnssec-in-dnsmasq-by-docker-compose/
 
 
 Config:
@@ -29,4 +27,9 @@ dig @8.8.8.8 swag.live
 ```
 dig +trace swag.live
 dig +short swag.live ns
+```
+
+```
+dig @dnsmasq +dnssec swag.live
+dig @dnsmasq +dnssec google.com
 ```
