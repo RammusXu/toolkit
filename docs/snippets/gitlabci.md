@@ -3,16 +3,16 @@
 ## Debugging Containers
 
 For Gitlab CI
-```
+```bash
 docker run -it --rm -v $PWD:/app docker:18.09-git sh
 ```
 
-```
+```yaml
 rammusxu/docker-box:python
 rammusxu/docker-box:node
 ```
 
-```
+```yaml
 image: docker:stable
 
 services:
@@ -34,7 +34,7 @@ build:
 
 
 ## Quick build
-```
+```yaml
 image: docker:18.09-git
 
 services:

@@ -21,7 +21,6 @@ ps aux | grep "java -jar build/libs/Hello-1.0.jar"
 pgrep -f "java -jar build/libs/Hello-1.0.jar"
 pkill -f "java -jar build/libs/Hello-1.0.jar"
 
-echo $?
 pgrep -f "java -jar build/libs/Hello-1.0.jar" | xargs kill
 pkill -f "java -jar build/libs/Hello-1.0.jar" || true
 
@@ -34,7 +33,7 @@ killall node
 
 ### Do something parallel
 
-開多個 thread 同時執行多個指令
+### 開多個 thread 同時執行多個指令
 ```bash
 parallel docker push ::: \
     $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG-builder \
@@ -59,8 +58,8 @@ du -sh folder
 ```
 
 ## Monitoring
-```bsah
-# Login log
+### Login log
+```bash
 last
 lastlog
 ```
@@ -68,11 +67,6 @@ lastlog
 ### Keep tracking a command
 ```
 watch -n 1 -d http http://localhost/
-```
-
-## Speed Test
-```
-curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} Size: %{size_download} \n" https://google.com
 ```
 
 ## Linux User
@@ -85,8 +79,8 @@ userdel -r ashish # and Home Directory
 ```
 
 ## cp
-```
-# Copy folder content to another folder
+### Copy folder content to another folder
+```bash
 cp -ar plugins/. share-plugins
 ```
 
@@ -123,6 +117,12 @@ curl https://httpbin.org/ip
 curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 ```
 
+### Get response time
+```bash
+curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} Size: %{size_download} \n" https://google.com
+curl -o /dev/null -s -w 'Total: %{time_total}s\n'  https://www.google.com
+```
+
 ## String(Text) Processing
 ```bash
 # -P: Perl regex
@@ -146,6 +146,12 @@ ref: https://stackoverflow.com/questions/1429556/command-to-get-nth-line-of-stdo
 ```bash
 ls -l | sed -n 2p
 ls -l | head -2 | tail -1
+```
+
+### Parsing xml in bash
+```
+apk add libxml2-utils curl
+curl -s https://data.iana.org/root-anchors/root-anchors.xml | xmllint --format --xpath 'TrustAnchor/KeyDigest/KeyTag' -
 ```
 
 ## Load Testing
