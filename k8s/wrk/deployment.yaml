@@ -5,7 +5,7 @@ metadata:
   labels:
     app: wrk-busybox
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: wrk-busybox
@@ -19,9 +19,10 @@ spec:
         image: williamyeh/wrk:4.0.2
         args: 
         - -t10
-        - -c100
-        - -d180
-        - http://rammus.cf
+        - -c500
+        - -d30
+        - --latency
+        - http://10.4.1.6:3000
       containers:
       - name: busybox
         image: busybox
