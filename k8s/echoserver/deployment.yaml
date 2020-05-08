@@ -1,26 +1,45 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echoserver
-  namespace: ingress-nginx
+  name: echoserver-v13
+  namespace: default
 spec:
-  replicas: 10
+  replicas: 3
   selector:
     matchLabels:
-      app: echoserver
+      app: echoserver-v13
   template:
     metadata:
       labels:
-        app: echoserver
+        app: echoserver-v13
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: cloud.google.com/gke-nodepool
+                operator: In
+                values:
+                - "pool-2-v13"
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchExpressions:
+                  - key: "app"
+                    operator: In
+                    values:
+                    - echoserver-v13
       volumes:
       - name: config
         configMap:
           name: nginx-config
 
       containers:
-      - name: echoserver
+      - name: echoserver-v13
         image: gcr.io/google_containers/echoserver:1.10
+        # image: openresty/openresty:1.15.8.2-1-alpine
         ports:
         - containerPort: 8080
 
@@ -35,8 +54,8 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: echoserver
-  namespace: ingress-nginx
+  name: echoserver-v13
+  namespace: default
 spec:
   type: NodePort
   ports:
@@ -45,13 +64,13 @@ spec:
     protocol: TCP
     name: http
   selector:
-    app: echoserver
+    app: echoserver-v13
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: nginx-config
-  namespace: ingress-nginx
+  namespace: default
 data:
   nginx.conf: |-
     events {

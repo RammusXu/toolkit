@@ -23,3 +23,30 @@ spec:
         tail -f /dev/null
     name: busybox
   restartPolicy: Never
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: busybox-pool2
+  labels:
+    app: busybox-pool2
+spec:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: cloud.google.com/gke-nodepool
+            operator: In
+            values:
+            - "pool-2"
+  containers:
+  # - image: busybox
+  - image: alpine:3.11
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        tail -f /dev/null
+    name: busybox
+  restartPolicy: Never
