@@ -49,9 +49,18 @@ data:
     - name: elasticsearch
       type: http
       urls: ["http://elasticsearch:9200"]
-      schedule: "@every 10s"
+      schedule: "@every 1s"
 
     - type: http
-      name: echoserver.ops
-      schedule: "@every 1s"
-      urls: ["http://echoserver.ops"]
+      name: echoserver-v13.default
+      schedule: "@every 0.1s"
+      urls: ["http://echoserver-v13.default"]
+      timeout: 3s
+      check.response.status: 200
+
+    - type: http
+      name: echoserver-v15.default
+      schedule: "@every 0.1s"
+      urls: ["http://echoserver-v15.default"]
+      timeout: 3s
+      check.response.status: 200

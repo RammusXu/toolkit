@@ -5,3 +5,5 @@ bases:
   - beats
 resources:
   - namespace.yaml
+patches:
+  - overlays/node-affinity.yaml
