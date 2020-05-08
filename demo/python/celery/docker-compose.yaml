@@ -9,13 +9,13 @@ services:
     ports:
       - "6379:6379"
 
-  celery:
-    image: "celery:4.0.2"
-    environment:
-      - CELERY_BROKER_URL=redis://redis
+  # celery:
+  #   image: "celery:4.0.2"
+  #   environment:
+  #     - CELERY_BROKER_URL=redis://redis
 
-  celery-2:
-    image: "celery:4.0.2"
-    environment:
-      - CELERY_BROKER_URL=redis://redis
+  # celery-2:
+  #   image: "celery:4.0.2"
+  #   environment:
+  #     - CELERY_BROKER_URL=redis://redis
       
