@@ -9,6 +9,10 @@ gcloud container clusters get-credentials staging --region=asia-east1
 kubectl config get-contexts
 kubectl config use-context production
 kubectl config set-context --current --namespace=dev
+
+kubectl create clusterrolebinding cluster-admin-binding \
+  --clusterrole cluster-admin \
+  --user user-account
 ```
 
 ### Create static ip address
@@ -34,4 +38,16 @@ docker run -it --rm --entrypoint bash gcr.io/cloud-builders/gsutil -c "
 
 ```bash
 gsutil ls gs://<replace_this_with_your_bucket>
+```
+
+## Projects
+### Switch projects
+```bash
+gcloud projects list
+gcloud config set project my-project
+```
+
+### Use GCP service account
+```bash
+gcloud auth activate-service-account sa-devops@rammus-xu.iam.gserviceaccount.com --key-file=$GOOGLE_APPLICATION_CREDENTIALS
 ```

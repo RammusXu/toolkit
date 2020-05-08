@@ -2,6 +2,8 @@
 description: Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 ---
 
+Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
+
 ## Volumes
 ```yaml
 spec:
@@ -73,6 +75,17 @@ spec:
 ```
 
 ## Affinity
+### Keywords
+operators:
+```yaml
+In, NotIn, Exists, DoesNotExist, Gt, Lt
+```
+
+Scheduling:
+
+- preferredDuringSchedulingIgnoredDuringExecution
+- requiredDuringSchedulingIgnoredDuringExecution
+
 ### Pod 只能放在符合以下條件的 Node
 ```yaml
     spec:

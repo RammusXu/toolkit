@@ -58,7 +58,7 @@ https://help.github.com/en/github/setting-up-and-managing-your-github-user-accou
 ```yaml
 git config --global user.name "${GITHUB_ACTOR}"
 git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
-remote_repo="https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+remote_repo="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git"
 git remote add origin "${remote_repo}"
 ```
 
@@ -75,7 +75,7 @@ if: contains(github.ref, 'tags')
 if: steps.git-diff.outputs.is-diff
 if: steps.set-env.outputs.message == 'hello'
 if: github.ref != 'refs/heads/master'
-
+if: github.event.action == 'dispatch_rammus_customize_action_type'
 ```
 
 ### pull_request
@@ -380,6 +380,21 @@ jobs:
               message == 'else'
             }
             console.log(message)
+```
+
+## FAQ
+### What's logic used in `push.branches` and `push.paths`
+It's **AND** logic. It needs meet both conditions.
+
+- Push to branch: `dev**`
+- Something under `echo-box` folder changed
+```
+on:
+  push:
+    branches:
+    - "dev**"
+    paths:
+    - 'echo-box/**'
 ```
 
 ## Othes

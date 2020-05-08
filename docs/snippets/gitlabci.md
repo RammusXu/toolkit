@@ -9,44 +9,37 @@ docker run -it --rm -v $PWD:/app docker:18.09-git sh
 
 ```yaml
 rammusxu/docker-box:python
-rammusxu/docker-box:node
+rammusxu/docker-box:
 ```
 
+## Build docker image and push to gitlab registry
+ref: https://gitlab.com/gableroux/gitlab-ci-example-docker
+
 ```yaml
-image: docker:stable
+image: docker:latest
 
 services:
   - docker:dind
-
-variables:
-  DOCKER_DRIVER: overlay2
-  IMAGE_LATEST: $CI_REGISTRY_IMAGE:latest
 
 before_script:
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+build-master:
+  stage: build
+  script:
+    - docker build --pull -t "$CI_REGISTRY_IMAGE" .
+    - docker push "$CI_REGISTRY_IMAGE"
+  only:
+    - master
 
 build:
   stage: build
   script:
-    - docker build -t $CI_REGISTRY_IMAGE:master .
-    - docker push $CI_REGISTRY_IMAGE:master
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  except:
+    - master
 ```
 
-
-## Quick build
-```yaml
-image: docker:18.09-git
-
-services:
-  - docker:dind
-
-variables:
-  DOCKER_DRIVER: overlay2
-
-build:
-  stage: build
-  script:
-    - docker images
-    - docker build .
-    - docker images
-```
+## References
+- CI 環境變數 https://docs.gitlab.com/ee/ci/variables/predefined_variables.html
