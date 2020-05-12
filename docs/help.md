@@ -32,13 +32,13 @@ This need [pymdownx.tabbed](https://facelessuser.github.io/pymdown-extensions/ex
 ```
 
 === "bash"
-    ```
+    ```bash
     echo hi
     ```
 
 
 === "python"
-    ```
+    ```py
     print('hi')
     ```
 
@@ -49,7 +49,18 @@ This is a ==highlight==.
 ```
 This is a ==highlight==.
 
+## Hightlight code changes
+
+This need [pymdownx.critic](https://facelessuser.github.io/pymdown-extensions/extensions/critic/)
+
+```conf
+{--location = @gcsfiles {--}
+{++location @gcsfiles {++}
+```
+
 ## Highlight Code
+
+This need [pymdownx.superfences](https://facelessuser.github.io/pymdown-extensions/extensions/superfences/#highlighting-lines)
 
 ````md
 ```yaml hl_lines="9 10 11 17"

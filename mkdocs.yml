@@ -16,6 +16,8 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.magiclink
   - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.highlight
   - pymdownx.mark
   - pymdownx.tabbed
   - admonition
