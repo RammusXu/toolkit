@@ -7,8 +7,8 @@ repo_url: https://github.com/RammusXu/toolkit
 
 theme: 
   name: material
-  logo:
-    icon: 'build'
+  icon:
+    logo: fontawesome/solid/toolbox
   language: 'en'
 
 markdown_extensions:
@@ -17,20 +17,24 @@ markdown_extensions:
   - pymdownx.magiclink
   - pymdownx.caret
   - pymdownx.mark
+  - pymdownx.tabbed
   - admonition
   - toc:
       permalink: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 copyright: |
   <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a>
   <br> Copyright © 2015- Rammus Xu
 extra:
   social:
-    - type: 'github'
-      link: 'https://github.com/rammusxu'
-    - type: 'linkedin'
-      link: 'https://www.linkedin.com/in/rammusxu'
-  disqus: 'rammusxu'
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/rammusxu
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/in/rammusxu
+  disqus: rammusxu
 
 google_analytics:
   - 'UA-67048750-3'
@@ -39,5 +43,5 @@ google_analytics:
 plugins:
   - search
   - git-revision-date-localized
-  # - minify:
-  #     minify_html: true
+  - minify:
+      minify_html: true

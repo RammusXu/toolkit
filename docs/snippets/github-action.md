@@ -405,13 +405,16 @@ Compare:
 - Github Action: 2 vCPU + 7 GB RAM
 
 ### Build status
-```yaml tab="Clickable"
-[![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
-```
+=== "Clickable"
+    ```yaml
+    [![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
+    ```
 
-```yaml tab="Unclickable"
-![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)
-```
+=== "Unclickable"
+    ```yaml
+    ![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)
+    ```
+
 
 - Clickable: [![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
 - Unclickable: ![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)

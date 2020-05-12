@@ -15,26 +15,32 @@ Tips about writing in mkdocs.
 
 ## Tabs
 
-This need [pymdownx.superfences](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#installation)
+This need [pymdownx.tabbed](https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/)
 
-```
-    ``` bash tab=
+```mk
+
+=== "bash"
+    ```
     echo hi
     ```
 
-    ``` py tab=
+
+=== "python"
+    ```
     print('hi')
     ```
 ```
 
+=== "bash"
+    ```
+    echo hi
+    ```
 
-``` bash tab=
-echo hi
-```
 
-``` py tab=
-print('hi')
-```
+=== "python"
+    ```
+    print('hi')
+    ```
 
 ## Hightlight
 This need [pymdownx.mark](https://squidfunk.github.io/mkdocs-material/extensions/pymdown/#mark)
