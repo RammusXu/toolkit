@@ -117,6 +117,14 @@ curl https://httpbin.org/ip
 curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 ```
 
+## httpie
+```bash
+## Print request infomations: header, payload
+http localhost:3000 'Accept-Encoding: br, gzip, deflate' -v
+## Print response header only
+http localhost:3000 'Accept-Encoding: br, gzip, deflate' -h
+```
+
 ### Get response time
 ```bash
 curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} Size: %{size_download} \n" https://google.com
