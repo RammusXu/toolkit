@@ -69,6 +69,37 @@ AUTHOR_NAME: ${{ github.event.head_commit.author.name }}
 AUTHOR_EMAIL: ${{ github.event.head_commit.author.email }}
 ```
 
+### Customize docker action
+```yaml
+name: 'Update Status'
+description: 'Update status'
+inputs:
+  state:
+    description: 'Option: success, failure'
+    required: false
+    default: 'success'
+  auth_token: 
+    description: 'Auth token used to API'
+    required: true
+    default: "${{ github.token }}"
+  pull_sha: 
+    description: 'Commit SHA'
+    default: "${{ github.event.pull_request.head.sha}}"
+    required: false
+  push_sha: 
+    description: 'Commit SHA'
+    required: false
+    default: "${{ github.sha }}"
+```
+
+```bash
+if [[ $GITHUB_EVENT_NAME == 'pull_request' ]]; then
+    COMMIT_SHA=$INPUT_PULL_SHA
+else
+    COMMIT_SHA=$INPUT_PUSH_SHA
+```
+
+
 ## if condition
 ```yaml
 if: contains(github.ref, 'tags')
@@ -95,6 +126,17 @@ on:
 jobs:
   merged:    
     if: github.event.pull_request.merged == true
+```
+
+## Job syntax
+### Wait other jobs finish
+```
+jobs:
+  job1:
+  job2:
+    needs: job1
+  job3:
+    needs: [job1, job2]
 ```
 
 ## Setting
@@ -346,18 +388,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
-### Get environments in action
-```yaml
-jobs:
-  show-env:
-    runs-on: ubuntu-latest
-    steps:
-    - run: cat $GITHUB_EVENT_PATH
-    - run: echo ${{ github.event_name }}
-    - run: echo ${{ github.event.action }}
-    - run: env
-```
-
 ### Get other step output as enviroment in github-script
 ```yaml
 jobs:
@@ -420,6 +450,97 @@ Compare:
 - Unclickable: ![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)
 
 ## Env Sample
+### Get environments in action
+```yaml
+jobs:
+  show-env:
+    runs-on: ubuntu-latest
+    steps:
+    - run: cat $GITHUB_EVENT_PATH
+    - run: echo ${{ github.event_name }}
+    - run: echo ${{ github.event.action }}
+    - run: env
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: echo "$GITHUB_CONTEXT"
+```
+
+### 2020-05-18 Github workflow env on pull request
+```bash
+LEIN_HOME=/usr/local/lib/lein
+M2_HOME=/usr/share/apache-maven-3.6.3
+GOROOT_1_11_X64=/usr/local/go1.11
+ANDROID_HOME=/usr/local/lib/android/sdk
+JAVA_HOME_11_X64=/usr/lib/jvm/zulu-11-azure-amd64
+ImageVersion=20200430.1
+AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+LANG=C.UTF-8
+AZURE_EXTENSION_DIR=/opt/az/azcliextensions
+POWERSHELL_DISTRIBUTION_CHANNEL=GitHub-Actions-ubuntu18
+INVOCATION_ID=68f93b53277249cc8519235cea6396c9
+BOOST_ROOT_1_72_0=/usr/local/share/boost/1.72.0
+JAVA_HOME_12_X64=/usr/lib/jvm/zulu-12-azure-amd64
+ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
+RUNNER_TOOL_CACHE=/opt/hostedtoolcache
+SWIFT_PATH=/usr/share/swift/usr/bin
+JAVA_HOME=/usr/lib/jvm/zulu-8-azure-amd64
+RUNNER_TRACKING_ID=github_884bb8e2-7879-4810-9c99-0192e58487e7
+GITHUB_REPOSITORY_OWNER=rammusxu
+GITHUB_ACTIONS=true
+DOTNET_SKIP_FIRST_TIME_EXPERIENCE="1"
+CI=true
+USER=runner
+GITHUB_HEAD_REF=try-deploy
+GITHUB_ACTOR=RammusXu
+GITHUB_ACTION=run
+GRADLE_HOME=/usr/share/gradle
+PWD=/home/runner/work/action-demo/action-demo
+ImageOS=ubuntu18
+HOME=/home/runner
+GOROOT=/usr/local/go1.14
+JOURNAL_STREAM=9:31391
+GOROOT_1_14_X64=/usr/local/go1.14
+JAVA_HOME_8_X64=/usr/lib/jvm/zulu-8-azure-amd64
+RUNNER_TEMP=/home/runner/work/_temp
+CONDA=/usr/share/miniconda
+GOROOT_1_13_X64=/usr/local/go1.13
+BOOST_ROOT_1_69_0=/usr/local/share/boost/1.69.0
+DEBIAN_FRONTEND=noninteractive
+RUNNER_WORKSPACE=/home/runner/work/action-demo
+GITHUB_REF=refs/pull/37/merge
+GITHUB_SHA=aadf39660fb8c0f87565bc08db9403f5197a8de6
+GITHUB_RUN_ID=107752396
+GOROOT_1_12_X64=/usr/local/go1.12
+GECKOWEBDRIVER=/usr/local/share/gecko_driver
+DEPLOYMENT_BASEPATH=/opt/runner
+GITHUB_EVENT_PATH=/home/runner/work/_temp/_github_workflow/event.json
+CHROMEWEBDRIVER=/usr/local/share/chrome_driver
+HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+RUNNER_OS=Linux
+GITHUB_BASE_REF=master
+VCPKG_INSTALLATION_ROOT=/usr/local/share/vcpkg
+GITHUB_JOB=test
+PERFLOG_LOCATION_SETTING=RUNNER_PERFLOG
+JAVA_HOME_7_X64=/usr/lib/jvm/zulu-7-azure-amd64
+RUNNER_USER=runner
+SHLVL=1
+HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+GITHUB_REPOSITORY=rammusxu/action-demo
+GITHUB_EVENT_NAME=pull_request
+LEIN_JAR=/usr/local/lib/lein/self-installs/leiningen-2.9.3-standalone.jar
+GITHUB_RUN_NUMBER=5
+RUNNER_PERFLOG=/home/runner/perflog
+GITHUB_WORKFLOW=.github/workflows/update-status.yaml
+ANT_HOME=/usr/share/ant
+PATH=/usr/share/rust/.cargo/bin:/home/runner/.config/composer/vendor/bin:/home/runner/.dotnet/tools:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin
+SELENIUM_JAR_PATH=/usr/share/java/selenium-server-standalone.jar
+GITHUB_WORKSPACE=/home/runner/work/action-demo/action-demo
+CHROME_BIN=/usr/bin/google-chrome
+HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+2Z _=/usr/bin/env
+```
+
 ### 2020-03-11 Use a self build action
 ```bash
 /usr/bin/docker run --name e87b528978e939d04c5cabae17f516da08bb2a_79b912 --label e87b52 --workdir /github/workspace --rm -e INPUT_ARGS -e INPUT_MY_VAR -e INPUT_LOWER_VAR -e INPUT_WHO-TO-GREET -e INPUT_NAME -e HOME -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/action-demo/action-demo":"/github/workspace" e87b52:8978e939d04c5cabae17f516da08bb2a env
