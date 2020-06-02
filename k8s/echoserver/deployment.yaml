@@ -1,70 +1,53 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: echoserver-v13
+  name: echoserver
   namespace: default
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: echoserver-v13
+      app: echoserver
   template:
     metadata:
       labels:
-        app: echoserver-v13
+        app: echoserver
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: cloud.google.com/gke-nodepool
-                operator: In
-                values:
-                - "pool-2-v13"
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            - topologyKey: "kubernetes.io/hostname"
-              labelSelector:
-                matchExpressions:
-                  - key: "app"
-                    operator: In
-                    values:
-                    - echoserver-v13
       volumes:
       - name: config
         configMap:
           name: nginx-config
 
       containers:
-      - name: echoserver-v13
-        image: gcr.io/google_containers/echoserver:1.10
-        # image: openresty/openresty:1.15.8.2-1-alpine
+      - name: echoserver
+        # image: gcr.io/google_containers/echoserver:1.10
+        image: openresty/openresty:1.15.8.2-1-alpine
         ports:
         - containerPort: 8080
+          name: http
 
         # nginx.conf override
         volumeMounts:
         - name: config
           subPath: nginx.conf
-          mountPath: /etc/nginx/nginx.conf
-          # mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          # mountPath: /etc/nginx/nginx.conf
+          mountPath: /usr/local/openresty/nginx/conf/nginx.conf
           readOnly: true
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: echoserver-v13
+  name: echoserver
   namespace: default
 spec:
   type: NodePort
   ports:
   - port: 80
-    targetPort: 8080
+    targetPort: http
     protocol: TCP
     name: http
   selector:
-    app: echoserver-v13
+    app: echoserver
 ---
 apiVersion: v1
 kind: ConfigMap

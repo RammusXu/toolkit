@@ -13,6 +13,9 @@ git remote prune origin --dry-run
 git remote prune origin
 
 git submodule update --init
+
+# Get current commit sha
+git rev-parse --short=7 HEAD 
 ```
 
 ## Process
