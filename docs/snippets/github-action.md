@@ -271,7 +271,22 @@ curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
 ```
 
 ### Fetch private submodule
-PAT = [private access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+PAT = [personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+
+`actions/checkout@v2` fixed `git@github.com` problem
+```yaml
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+        submodules: true
+        token: ${{ secrets.PAT }}
+```
+
 ```yaml
     - name: Fix submodules
       run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
@@ -410,6 +425,41 @@ jobs:
               message == 'else'
             }
             console.log(message)
+```
+
+### Docker build and push action
+```yaml
+name: docker-publish
+
+on:
+  push:
+
+jobs:
+  docker-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Build base image
+      - uses: docker/build-push-action@v1
+        with:
+          username: _json_key
+          password: ${{ secrets.GOOGLE_SA_GCR_JSON }}
+          registry: asia.gcr.io
+          repository: rammusxu/${{ github.event.repository.name }}
+          tags: base
+          target: base
+          cache_froms: rammusxu/${{ github.event.repository.name }}:base
+
+      # Build app image
+      - uses: docker/build-push-action@v1
+        with:
+          username: _json_key
+          password: ${{ secrets.GOOGLE_SA_GCR_JSON }}
+          registry: asia.gcr.io
+          repository: rammusxu/${{ github.event.repository.name }}
+          tags: ${{ github.sha }}
+          cache_froms: rammusxu/${{ github.event.repository.name }}:${{ github.sha }}
+          tag_with_ref: true
 ```
 
 ## FAQ
