@@ -102,11 +102,14 @@ else
 
 ## if condition
 ```yaml
-if: contains(github.ref, 'tags')
+if: contains(github.ref, 'refs/tags')
+if: contains(github.event.issue.title, 'Update APK')
 if: steps.git-diff.outputs.is-diff
 if: steps.set-env.outputs.message == 'hello'
 if: github.ref != 'refs/heads/master'
 if: github.event.action == 'dispatch_rammus_customize_action_type'
+if: github.event.issue.pull_request
+if: github.event_name == 'pull_request' && contains(github.head_ref, 'update-app')
 ```
 
 ### pull_request
@@ -475,6 +478,30 @@ on:
     - "dev**"
     paths:
     - 'echo-box/**'
+```
+
+### How to activate google service account in action
+
+Should be `echo '${{ secrets.GOOGLE_SA_JSON }}'`
+
+✅
+```yaml
+  debug2:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo '${{ secrets.GOOGLE_SA_JSON }}' > sa.json
+    - run: gcloud auth activate-service-account --key-file=sa.json
+    - run: gsutil ls gs://rammus.dev
+```
+
+❌
+```yaml
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+    - run: echo "${{ secrets.GOOGLE_SA_JSON }}" > sa.json
+    - run: gcloud auth activate-service-account --key-file=sa.json
+    - run: gsutil ls gs://rammus.dev
 ```
 
 ## Othes
