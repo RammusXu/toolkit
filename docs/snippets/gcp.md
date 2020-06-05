@@ -40,6 +40,14 @@ docker run -it --rm --entrypoint bash gcr.io/cloud-builders/gsutil -c "
 gsutil ls gs://<replace_this_with_your_bucket>
 ```
 
+### gsutil - Verify a google service account with docker and a environment variable
+```bash
+docker run -it --rm --entrypoint bash gcr.io/cloud-builders/gsutil
+sa='{key.json,....}'
+gcloud auth activate-service-account --key-file=<(echo $sa)
+gsutil ls gs://rammus.dev
+```
+
 ## Projects
 ### Switch projects
 ```bash
