@@ -15,7 +15,7 @@ curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list &&\
     apt-get update && apt-get install -y yarn
 
-# https://github.com/imagemin/imagemin-gifsicle/issues/37
+# https://github.com/imagemin/imagemin-gifsicle/issues/37#issuecomment-577889854
 apt-get install -y --no-install-recommends autoconf automake libtool dh-autoreconf
 
 curl -fsSL https://get.docker.com -o get-docker.sh
