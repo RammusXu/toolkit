@@ -20,7 +20,7 @@ sh get-docker.sh
 usermod -aG docker runner
 
 ## Install action-runner
-su runner
+su - runner
 curl -O -L https://github.com/actions/runner/releases/download/v2.263.0/actions-runner-linux-x64-2.263.0.tar.gz
 tar xzf ./actions-runner-linux-x64-2.263.0.tar.gz
 sudo ./bin/installdependencies.sh
