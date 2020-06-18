@@ -1,0 +1,5 @@
+namespace: ingress-nginx
+resources:
+  - custom-config.yaml
+  - hpa.yaml
+  - nginx-template.yaml
