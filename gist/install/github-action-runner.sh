@@ -6,6 +6,8 @@ echo "runner ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers &&\
 usermod -aG sudo runner
 
 ## Pre-installed softwares
+apt-get install -y --no-install-recommends iputils-ping git 
+
 curl -sL https://deb.nodesource.com/setup_12.x | bash - &&\
     apt-get install -y nodejs
 
@@ -13,7 +15,8 @@ curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list &&\
     apt-get update && apt-get install -y yarn
 
-apt-get install -y --no-install-recommends iputils-ping git
+# https://github.com/imagemin/imagemin-gifsicle/issues/37
+apt-get install -y --no-install-recommends autoconf automake libtool dh-autoreconf
 
 curl -fsSL https://get.docker.com -o get-docker.sh
 sh get-docker.sh
