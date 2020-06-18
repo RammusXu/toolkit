@@ -1,5 +1,7 @@
-# toolkit [![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
-My toolkit
+# My Toolkit [![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
+Feel free to open a issue to let me know if something wrong or outdated.
+
+And sure, you can copy&paste to anywhere. But please add the reference just like I did.
 
 ## Links
 - [Dockerhub](https://hub.docker.com/r/rammusxu/docker-box)
