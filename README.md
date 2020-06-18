@@ -19,7 +19,7 @@ curl -sL $gist | bash -
 ```
 
 ### Kubernetes resource
-See what will generete
+See what will generate
 ```bash
 kustomize build github.com/RammusXu/toolkit/k8s/echoserver 
 ```
