@@ -81,6 +81,17 @@ userdel ashish
 userdel -r ashish # and Home Directory
 ```
 
+### Linux - adduser without prompts
+```bash
+adduser runner --disabled-password  --gecos ""
+```
+
+### Linux - Add sudoer group to user
+```bash
+echo "runner ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers &&\
+usermod -aG sudo runner
+```
+
 ## cp
 ### Copy folder content to another folder
 ```bash
