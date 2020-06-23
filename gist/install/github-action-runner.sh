@@ -6,7 +6,7 @@ echo "runner ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers &&\
 usermod -aG sudo runner
 
 ## Pre-installed softwares
-apt-get install -y --no-install-recommends iputils-ping git 
+apt-get install -y --no-install-recommends iputils-ping git jq
 
 curl -sL https://deb.nodesource.com/setup_12.x | bash - &&\
     apt-get install -y nodejs
