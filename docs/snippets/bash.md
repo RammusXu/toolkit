@@ -26,6 +26,20 @@ echo ${qq%:*}
 # ops
 ```
 
+#### Return error code when a variable is not found
+ref: https://stackoverflow.com/a/307735/3854890
+```bash
+sh-3.2$ STATE=abc
+sh-3.2$ : ${STATE:?"Need to set STATE"}
+sh-3.2$ echo $?
+0
+sh-3.2$ unset STATE
+sh-3.2$ : ${STATE:?"Need to set STATE"}
+sh: STATE: Need to set STATE
+sh-3.2$ echo $?
+1
+```
+
 ### 暫時進到某個 folder 執行指令，不改變目前 path
 ```bash
 (cd src/ && git checkout $NEW_VERSION_SHA) 
@@ -43,3 +57,4 @@ echo -e "\e[1;31mHello\e[0m World"
 
 ## Reference
 - https://devhints.io/bash
+- Bash FAQ: http://mywiki.wooledge.org/BashFAQ/031
