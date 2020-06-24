@@ -78,15 +78,15 @@ inputs:
     description: 'Option: success, failure'
     required: false
     default: 'success'
-  auth_token: 
+  auth_token:
     description: 'Auth token used to API'
     required: true
     default: "${{ github.token }}"
-  pull_sha: 
+  pull_sha:
     description: 'Commit SHA'
     default: "${{ github.event.pull_request.head.sha}}"
     required: false
-  push_sha: 
+  push_sha:
     description: 'Commit SHA'
     required: false
     default: "${{ github.sha }}"
@@ -123,11 +123,11 @@ if: github.event_name == 'pull_request' && contains(github.head_ref, 'my-feature
 ```
 #### when merged
 ```yaml
-on: 
+on:
   pull_request:
     types: [closed]
 jobs:
-  merged:    
+  merged:
     if: github.event.pull_request.merged == true
 ```
 
@@ -201,7 +201,7 @@ ENTRYPOINT python /app.py
 
 ### Customize action type with http post method
 ```yaml
-on: 
+on:
   repository_dispatch:
     types: [rammus_post]
 jobs:
@@ -223,7 +223,7 @@ curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
     -XPOST $INPUT_COMMENT_URL
 ```
 
-### Docker login 
+### Docker login
 ```yaml
     - name: Docker Login - docker.pkg.github.com
       uses: swaglive/actions/docker/login@944b742
@@ -234,10 +234,10 @@ curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
 
     - name: Docker Login - docker.pkg.github.com
       if: contains(github.ref, 'tags')
-      env: 
+      env:
         DOCKER_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
       run: echo $DOCKER_PASSWORD | docker login -u $GITHUB_ACTOR --password-stdin docker.pkg.github.com
-    
+
 ```
 
 ### Docker login and copy config to default container's workspace
@@ -505,6 +505,28 @@ Should be `echo '${{ secrets.GOOGLE_SA_JSON }}'`
     - run: echo "${{ secrets.GOOGLE_SA_JSON }}" > sa.json
     - run: gcloud auth activate-service-account --key-file=sa.json
     - run: gsutil ls gs://rammus.dev
+```
+
+### Can't load secrets in action.yaml
+❌
+```yaml
+# action.yaml
+inputs:
+  kube_config:
+    description: 'kubernetes config file'
+    default: ${{ secrets.KUBE_CONFIG }}
+    description: 'kubernetes config file. ex. ${{ secrets.KUBE_CONFIG }}'
+```
+
+### But ${{ github.token }} can be get in action.yaml
+✅
+```yaml
+# action.yaml
+inputs:
+  auth_token:
+    description: 'Auth token used to API'
+    required: true
+    default: "${{ github.token }}"
 ```
 
 ## Othes
@@ -847,3 +869,4 @@ GITHUB_WORKSPACE=/github/workspace
 - https://github.com/actions/toolkit/tree/master/packages/github
 - https://github.com/actions/github-script
 - https://octokit.github.io/rest.js/#usage
+- bin in Ubuntu 18.04 https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md

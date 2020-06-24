@@ -4,6 +4,23 @@ description: Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 
 Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 
+## Installation
+### kubectl
+ref: https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-with-curl-on-linux
+
+Get stable version
+```bash
+curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt
+```
+
+Install kubectl
+```bash
+VERSION=1.18.0
+wget -q https://storage.googleapis.com/kubernetes-release/release/v$VERSION/bin/linux/amd64/kubectl -O /usr/local/bin/kubectl
+chmod +x /usr/local/bin/kubectl
+```
+
+
 ## Volumes
 ```yaml
 spec:
@@ -12,7 +29,7 @@ spec:
       volumes:
       - name: plugindir
         emptyDir: {}
-        
+
       containers:
       - name: mongos
         image: mongo:4.0.2
@@ -141,7 +158,7 @@ spec:
         metadata:
           annotations:
             version: abc4444
-            
+
         spec:
           containers:
           - name: cronjob
@@ -296,7 +313,7 @@ spec:
         resources:
           requests:
             cpu: "100m"
-            memory: "100M"   
+            memory: "100M"
         ports:
         - containerPort:  53
           name: dnsmasq
@@ -311,7 +328,7 @@ spec:
       - name: imagemagick
         image: swaglive/imagemagick:lastest
         command: ["/bin/sh","-c"]
-        args: 
+        args:
         - |
           magick montage -quality 90 -resize 211x292^ -gravity center -crop 211x292+0+0 -geometry +4+4 -tile 7x4 -background none +repage $(cat /tmp/covers.txt) /tmp/montage.jpg
         volumeMounts:
