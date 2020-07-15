@@ -18,19 +18,18 @@ spec:
       initContainers:
       - name: wrk
         image: williamyeh/wrk:4.0.2
-        args: 
+        args:
         - -t10
         - -c500
         - -d30
         - --latency
-        - http://10.4.1.6:3000
+        - "-H 'Host: landing.china.svc.cluster.local'"
+        - http://10.140.0.31:80
       containers:
       - name: busybox
         image: busybox
-        args: 
+        args:
         - sh
         - -c
         - |
           tail -f /dev/null
-        
-        

@@ -374,6 +374,11 @@ Waiting for deployment "sites" rollout to finish: 1 old replicas are pending ter
 deployment "sites" successfully rolled out
 ```
 
+### Create new job from cronjob
+```bash
+kubectl create job --from=cronjob/my-daily-task manual-20200101
+```
+
 ## Reference
 - [feiskyer Handbook](https://kubernetes.feisky.xyz/)
 - [feiskyer Examples](https://github.com/feiskyer/kubernetes-handbook/tree/master/examples)
