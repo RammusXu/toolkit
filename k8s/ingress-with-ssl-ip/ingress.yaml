@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "my-ip1"
+spec:
+  tls:
+  - secretName: my-ip1
+  rules:
+  - http:
+      paths:
+      - backend:
+          serviceName: httpbin
+          servicePort: http
