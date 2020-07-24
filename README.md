@@ -15,13 +15,13 @@ And sure, you can copy&paste to anywhere. But please add the reference just like
 ### Gists
 ```bash
 gist=https://raw.githubusercontent.com/RammusXu/toolkit/master/gist/install/github-action-runner.sh
-curl -sL $gist | bash - 
+curl -sL $gist | bash -
 ```
 
 ### Kubernetes resource
 See what will generate
 ```bash
-kustomize build github.com/RammusXu/toolkit/k8s/echoserver 
+kustomize build github.com/RammusXu/toolkit/k8s/echoserver
 ```
 
 Apply
@@ -32,4 +32,10 @@ kustomize build github.com/RammusXu/toolkit/k8s/echoserver | kubectl apply -f -
 Clean
 ```bash
 kustomize build github.com/RammusXu/toolkit/k8s/echoserver | kubectl delete -f -
+```
+
+## Start server
+```
+docker run -d --name toolkit -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 ```

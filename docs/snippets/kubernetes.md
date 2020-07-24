@@ -336,6 +336,39 @@ spec:
           mountPath: /tmp
 ```
 
+## GKE
+### Enable CDN in Service
+```yaml
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  namespace: default
+  name: gclb-cdn-hpq
+spec:
+  cdn:
+    enabled: true
+    cachePolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: default
+  name: webapp
+  annotations:
+    beta.cloud.google.com/backend-config: '{"ports": {"http":"gclb-cdn-hpq"}}'
+spec:
+  type: NodePort
+  selector:
+    app: webapp
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+```
+
 ## Frequent Commands
 ### Gracefully rolling restart deployment.
 ```bash
