@@ -157,6 +157,11 @@ kubectl --context=control -n test port-forward svc/frontend 8080
 watch -n0.1 curl localhost:8080
 ```
 
+Try traffic split
+```
+kubectl --context=control apply -f test/traffic-split.yaml
+linkerd --context=west -n test stat trafficsplit
+```
 
 ## Reference
 - https://linkerd.io/2/tasks/multicluster/
