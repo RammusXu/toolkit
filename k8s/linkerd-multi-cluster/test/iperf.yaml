@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: iperf3
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: iperf3
+  template:
+    metadata:
+      annotations:
+        config.linkerd.io/skip-inbound-ports: "5201"
+        linkerd.io/inject: enabled
+      labels:
+        app: iperf3
+    spec:
+      containers:
+      - name: iperf3
+        image: networkstatic/iperf3
+        ports:
+        - containerPort: 5201
+          name: iperf3
+        args:
+        - -s
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: iperf3
+  namespace: test
+  annotations:
+    mirror.linkerd.io/gateway-name: linkerd-gateway
+    mirror.linkerd.io/gateway-ns: linkerd-multicluster
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 5201
+    targetPort: iperf3
+    protocol: TCP
+    name: iperf3
+  selector:
+    app: iperf3

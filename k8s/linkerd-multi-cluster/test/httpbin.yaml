@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpbin
+  namespace: test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: httpbin
+  template:
+    metadata:
+      annotations:
+        linkerd.io/inject: enabled
+      labels:
+        app: httpbin
+    spec:
+      containers:
+      - name: httpbin
+        # image: nginx
+        image: kennethreitz/httpbin
+        ports:
+        - containerPort: 80
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: httpbin
+  namespace: test
+  annotations:
+    mirror.linkerd.io/gateway-name: linkerd-gateway
+    mirror.linkerd.io/gateway-ns: linkerd-multicluster
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: httpbin

@@ -1,0 +1,3 @@
+.kubecfg
+*.crt
+*.key

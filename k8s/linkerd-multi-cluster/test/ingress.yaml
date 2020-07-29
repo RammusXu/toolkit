@@ -1,0 +1,23 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-ingress
+  namespace: test
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+    # ingress.kubernetes.io/custom-request-headers: "l5d-dst-override: frontend.test.svc.cluster.local:8080"
+spec:
+  rules:
+  - host: link.rammus2020.cf
+    http:
+      paths:
+      - backend:
+          serviceName: frontend
+          servicePort: service
+
+  - host: bin.rammus2020.cf
+    http:
+      paths:
+      - backend:
+          serviceName: bin
+          servicePort: http
