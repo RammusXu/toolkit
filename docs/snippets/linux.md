@@ -38,6 +38,7 @@ sysctl vm.max_map_count
 ```bash
 ls -lh file
 du -sh folder
+lsblk
 ```
 
 ## Monitoring
