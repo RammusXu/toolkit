@@ -568,6 +568,493 @@ jobs:
       run: echo "$GITHUB_CONTEXT"
 ```
 
+### 2020-09-01 github context on push branch event
+
+`${{ toJson(github) }}`
+
+```json
+{
+  "token": "***",
+  "job": "show-env",
+  "ref": "refs/heads/github-pkg",
+  "sha": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+  "repository": "rammusxu/action-demo",
+  "repository_owner": "rammusxu",
+  "repositoryUrl": "git://github.com/rammusxu/action-demo.git",
+  "run_id": "221813086",
+  "run_number": "166",
+  "actor": "RammusXu",
+  "workflow": "show-env",
+  "head_ref": "",
+  "base_ref": "",
+  "event_name": "push",
+  "event": {
+    "after": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+    "base_ref": null,
+    "before": "1c8b86a50a7bfb2d04984d5a67b414836aa04f22",
+    "commits": [
+      {
+        "author": {
+          "email": "comte_ken@hotmail.com",
+          "name": "Rammus Xu",
+          "username": "RammusXu"
+        },
+        "committer": {
+          "email": "comte_ken@hotmail.com",
+          "name": "Rammus Xu",
+          "username": "RammusXu"
+        },
+        "distinct": true,
+        "id": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+        "message": "Update docker login",
+        "timestamp": "2020-08-24T17:56:16+08:00",
+        "tree_id": "bf214120ff82ade624e0c2584c6e945c55ade8e3",
+        "url": "https://github.com/rammusxu/action-demo/commit/044271eda133bb9944f4aa7119bc661a8c1e9900"
+      }
+    ],
+    "compare": "https://github.com/rammusxu/action-demo/compare/1c8b86a50a7b...044271eda133",
+    "created": false,
+    "deleted": false,
+    "forced": false,
+    "head_commit": {
+      "author": {
+        "email": "comte_ken@hotmail.com",
+        "name": "Rammus Xu",
+        "username": "RammusXu"
+      },
+      "committer": {
+        "email": "comte_ken@hotmail.com",
+        "name": "Rammus Xu",
+        "username": "RammusXu"
+      },
+      "distinct": true,
+      "id": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+      "message": "Update docker login",
+      "timestamp": "2020-08-24T17:56:16+08:00",
+      "tree_id": "bf214120ff82ade624e0c2584c6e945c55ade8e3",
+      "url": "https://github.com/rammusxu/action-demo/commit/044271eda133bb9944f4aa7119bc661a8c1e9900"
+    },
+    "organization": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/36289044?v=4",
+      "description": "The SWAG Life",
+      "events_url": "https://api.github.com/orgs/rammusxu/events",
+      "hooks_url": "https://api.github.com/orgs/rammusxu/hooks",
+      "id": 36289044,
+      "issues_url": "https://api.github.com/orgs/rammusxu/issues",
+      "login": "rammusxu",
+      "members_url": "https://api.github.com/orgs/rammusxu/members{/member}",
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjM2Mjg5MDQ0",
+      "public_members_url": "https://api.github.com/orgs/rammusxu/public_members{/member}",
+      "repos_url": "https://api.github.com/orgs/rammusxu/repos",
+      "url": "https://api.github.com/orgs/rammusxu"
+    },
+    "pusher": {
+      "email": "comte_ken@hotmail.com",
+      "name": "RammusXu"
+    },
+    "ref": "refs/heads/github-pkg",
+    "repository": {
+      "archive_url": "https://api.github.com/repos/rammusxu/action-demo/{archive_format}{/ref}",
+      "archived": false,
+      "assignees_url": "https://api.github.com/repos/rammusxu/action-demo/assignees{/user}",
+      "blobs_url": "https://api.github.com/repos/rammusxu/action-demo/git/blobs{/sha}",
+      "branches_url": "https://api.github.com/repos/rammusxu/action-demo/branches{/branch}",
+      "clone_url": "https://github.com/rammusxu/action-demo.git",
+      "collaborators_url": "https://api.github.com/repos/rammusxu/action-demo/collaborators{/collaborator}",
+      "comments_url": "https://api.github.com/repos/rammusxu/action-demo/comments{/number}",
+      "commits_url": "https://api.github.com/repos/rammusxu/action-demo/commits{/sha}",
+      "compare_url": "https://api.github.com/repos/rammusxu/action-demo/compare/{base}...{head}",
+      "contents_url": "https://api.github.com/repos/rammusxu/action-demo/contents/{+path}",
+      "contributors_url": "https://api.github.com/repos/rammusxu/action-demo/contributors",
+      "created_at": 1564547431,
+      "default_branch": "master",
+      "deployments_url": "https://api.github.com/repos/rammusxu/action-demo/deployments",
+      "description": null,
+      "disabled": false,
+      "downloads_url": "https://api.github.com/repos/rammusxu/action-demo/downloads",
+      "events_url": "https://api.github.com/repos/rammusxu/action-demo/events",
+      "fork": false,
+      "forks": 0,
+      "forks_count": 0,
+      "forks_url": "https://api.github.com/repos/rammusxu/action-demo/forks",
+      "full_name": "rammusxu/action-demo",
+      "git_commits_url": "https://api.github.com/repos/rammusxu/action-demo/git/commits{/sha}",
+      "git_refs_url": "https://api.github.com/repos/rammusxu/action-demo/git/refs{/sha}",
+      "git_tags_url": "https://api.github.com/repos/rammusxu/action-demo/git/tags{/sha}",
+      "git_url": "git://github.com/rammusxu/action-demo.git",
+      "has_downloads": true,
+      "has_issues": true,
+      "has_pages": true,
+      "has_projects": true,
+      "has_wiki": true,
+      "homepage": null,
+      "hooks_url": "https://api.github.com/repos/rammusxu/action-demo/hooks",
+      "html_url": "https://github.com/rammusxu/action-demo",
+      "id": 199778774,
+      "issue_comment_url": "https://api.github.com/repos/rammusxu/action-demo/issues/comments{/number}",
+      "issue_events_url": "https://api.github.com/repos/rammusxu/action-demo/issues/events{/number}",
+      "issues_url": "https://api.github.com/repos/rammusxu/action-demo/issues{/number}",
+      "keys_url": "https://api.github.com/repos/rammusxu/action-demo/keys{/key_id}",
+      "labels_url": "https://api.github.com/repos/rammusxu/action-demo/labels{/name}",
+      "language": "Dockerfile",
+      "languages_url": "https://api.github.com/repos/rammusxu/action-demo/languages",
+      "license": null,
+      "master_branch": "master",
+      "merges_url": "https://api.github.com/repos/rammusxu/action-demo/merges",
+      "milestones_url": "https://api.github.com/repos/rammusxu/action-demo/milestones{/number}",
+      "mirror_url": null,
+      "name": "action-demo",
+      "node_id": "MDEwOlJlcG9zaXRvcnkxOTk3Nzg3NzQ=",
+      "notifications_url": "https://api.github.com/repos/rammusxu/action-demo/notifications{?since,all,participating}",
+      "open_issues": 1,
+      "open_issues_count": 1,
+      "organization": "rammusxu",
+      "owner": {
+        "avatar_url": "https://avatars3.githubusercontent.com/u/36289044?v=4",
+        "email": "engineering@swag.live",
+        "events_url": "https://api.github.com/users/rammusxu/events{/privacy}",
+        "followers_url": "https://api.github.com/users/rammusxu/followers",
+        "following_url": "https://api.github.com/users/rammusxu/following{/other_user}",
+        "gists_url": "https://api.github.com/users/rammusxu/gists{/gist_id}",
+        "gravatar_id": "",
+        "html_url": "https://github.com/rammusxu",
+        "id": 36289044,
+        "login": "rammusxu",
+        "name": "rammusxu",
+        "node_id": "MDEyOk9yZ2FuaXphdGlvbjM2Mjg5MDQ0",
+        "organizations_url": "https://api.github.com/users/rammusxu/orgs",
+        "received_events_url": "https://api.github.com/users/rammusxu/received_events",
+        "repos_url": "https://api.github.com/users/rammusxu/repos",
+        "site_admin": false,
+        "starred_url": "https://api.github.com/users/rammusxu/starred{/owner}{/repo}",
+        "subscriptions_url": "https://api.github.com/users/rammusxu/subscriptions",
+        "type": "Organization",
+        "url": "https://api.github.com/users/rammusxu"
+      },
+      "private": true,
+      "pulls_url": "https://api.github.com/repos/rammusxu/action-demo/pulls{/number}",
+      "pushed_at": 1598262984,
+      "releases_url": "https://api.github.com/repos/rammusxu/action-demo/releases{/id}",
+      "size": 245,
+      "ssh_url": "git@github.com:rammusxu/action-demo.git",
+      "stargazers": 0,
+      "stargazers_count": 0,
+      "stargazers_url": "https://api.github.com/repos/rammusxu/action-demo/stargazers",
+      "statuses_url": "https://api.github.com/repos/rammusxu/action-demo/statuses/{sha}",
+      "subscribers_url": "https://api.github.com/repos/rammusxu/action-demo/subscribers",
+      "subscription_url": "https://api.github.com/repos/rammusxu/action-demo/subscription",
+      "svn_url": "https://github.com/rammusxu/action-demo",
+      "tags_url": "https://api.github.com/repos/rammusxu/action-demo/tags",
+      "teams_url": "https://api.github.com/repos/rammusxu/action-demo/teams",
+      "trees_url": "https://api.github.com/repos/rammusxu/action-demo/git/trees{/sha}",
+      "updated_at": "2020-08-24T06:36:17Z",
+      "url": "https://github.com/rammusxu/action-demo",
+      "watchers": 0,
+      "watchers_count": 0
+    },
+    "sender": {
+      "avatar_url": "https://avatars1.githubusercontent.com/u/4367069?v=4",
+      "events_url": "https://api.github.com/users/RammusXu/events{/privacy}",
+      "followers_url": "https://api.github.com/users/RammusXu/followers",
+      "following_url": "https://api.github.com/users/RammusXu/following{/other_user}",
+      "gists_url": "https://api.github.com/users/RammusXu/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/RammusXu",
+      "id": 4367069,
+      "login": "RammusXu",
+      "node_id": "MDQ6VXNlcjQzNjcwNjk=",
+      "organizations_url": "https://api.github.com/users/RammusXu/orgs",
+      "received_events_url": "https://api.github.com/users/RammusXu/received_events",
+      "repos_url": "https://api.github.com/users/RammusXu/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/RammusXu/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/RammusXu/subscriptions",
+      "type": "User",
+      "url": "https://api.github.com/users/RammusXu"
+    }
+  },
+  "server_url": "https://github.com",
+  "api_url": "https://api.github.com",
+  "graphql_url": "https://api.github.com/graphql",
+  "workspace": "/home/runner/work/action-demo/action-demo",
+  "action": "run3",
+  "event_path": "/home/runner/work/_temp/_github_workflow/event.json"
+}
+```
+
+`cat $GITHUB_EVENT_PATH`
+
+```json
+{
+  "after": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+  "base_ref": null,
+  "before": "1c8b86a50a7bfb2d04984d5a67b414836aa04f22",
+  "commits": [
+    {
+      "author": {
+        "email": "comte_ken@hotmail.com",
+        "name": "Rammus Xu",
+        "username": "RammusXu"
+      },
+      "committer": {
+        "email": "comte_ken@hotmail.com",
+        "name": "Rammus Xu",
+        "username": "RammusXu"
+      },
+      "distinct": true,
+      "id": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+      "message": "Update docker login",
+      "timestamp": "2020-08-24T17:56:16+08:00",
+      "tree_id": "bf214120ff82ade624e0c2584c6e945c55ade8e3",
+      "url": "https://github.com/rammusxu/action-demo/commit/044271eda133bb9944f4aa7119bc661a8c1e9900"
+    }
+  ],
+  "compare": "https://github.com/rammusxu/action-demo/compare/1c8b86a50a7b...044271eda133",
+  "created": false,
+  "deleted": false,
+  "forced": false,
+  "head_commit": {
+    "author": {
+      "email": "comte_ken@hotmail.com",
+      "name": "Rammus Xu",
+      "username": "RammusXu"
+    },
+    "committer": {
+      "email": "comte_ken@hotmail.com",
+      "name": "Rammus Xu",
+      "username": "RammusXu"
+    },
+    "distinct": true,
+    "id": "044271eda133bb9944f4aa7119bc661a8c1e9900",
+    "message": "Update docker login",
+    "timestamp": "2020-08-24T17:56:16+08:00",
+    "tree_id": "bf214120ff82ade624e0c2584c6e945c55ade8e3",
+    "url": "https://github.com/rammusxu/action-demo/commit/044271eda133bb9944f4aa7119bc661a8c1e9900"
+  },
+  "organization": {
+    "avatar_url": "https://avatars3.githubusercontent.com/u/36289044?v=4",
+    "description": "The SWAG Life",
+    "events_url": "https://api.github.com/orgs/rammusxu/events",
+    "hooks_url": "https://api.github.com/orgs/rammusxu/hooks",
+    "id": 36289044,
+    "issues_url": "https://api.github.com/orgs/rammusxu/issues",
+    "login": "rammusxu",
+    "members_url": "https://api.github.com/orgs/rammusxu/members{/member}",
+    "node_id": "MDEyOk9yZ2FuaXphdGlvbjM2Mjg5MDQ0",
+    "public_members_url": "https://api.github.com/orgs/rammusxu/public_members{/member}",
+    "repos_url": "https://api.github.com/orgs/rammusxu/repos",
+    "url": "https://api.github.com/orgs/rammusxu"
+  },
+  "pusher": {
+    "email": "comte_ken@hotmail.com",
+    "name": "RammusXu"
+  },
+  "ref": "refs/heads/github-pkg",
+  "repository": {
+    "archive_url": "https://api.github.com/repos/rammusxu/action-demo/{archive_format}{/ref}",
+    "archived": false,
+    "assignees_url": "https://api.github.com/repos/rammusxu/action-demo/assignees{/user}",
+    "blobs_url": "https://api.github.com/repos/rammusxu/action-demo/git/blobs{/sha}",
+    "branches_url": "https://api.github.com/repos/rammusxu/action-demo/branches{/branch}",
+    "clone_url": "https://github.com/rammusxu/action-demo.git",
+    "collaborators_url": "https://api.github.com/repos/rammusxu/action-demo/collaborators{/collaborator}",
+    "comments_url": "https://api.github.com/repos/rammusxu/action-demo/comments{/number}",
+    "commits_url": "https://api.github.com/repos/rammusxu/action-demo/commits{/sha}",
+    "compare_url": "https://api.github.com/repos/rammusxu/action-demo/compare/{base}...{head}",
+    "contents_url": "https://api.github.com/repos/rammusxu/action-demo/contents/{+path}",
+    "contributors_url": "https://api.github.com/repos/rammusxu/action-demo/contributors",
+    "created_at": 1564547431,
+    "default_branch": "master",
+    "deployments_url": "https://api.github.com/repos/rammusxu/action-demo/deployments",
+    "description": null,
+    "disabled": false,
+    "downloads_url": "https://api.github.com/repos/rammusxu/action-demo/downloads",
+    "events_url": "https://api.github.com/repos/rammusxu/action-demo/events",
+    "fork": false,
+    "forks": 0,
+    "forks_count": 0,
+    "forks_url": "https://api.github.com/repos/rammusxu/action-demo/forks",
+    "full_name": "rammusxu/action-demo",
+    "git_commits_url": "https://api.github.com/repos/rammusxu/action-demo/git/commits{/sha}",
+    "git_refs_url": "https://api.github.com/repos/rammusxu/action-demo/git/refs{/sha}",
+    "git_tags_url": "https://api.github.com/repos/rammusxu/action-demo/git/tags{/sha}",
+    "git_url": "git://github.com/rammusxu/action-demo.git",
+    "has_downloads": true,
+    "has_issues": true,
+    "has_pages": true,
+    "has_projects": true,
+    "has_wiki": true,
+    "homepage": null,
+    "hooks_url": "https://api.github.com/repos/rammusxu/action-demo/hooks",
+    "html_url": "https://github.com/rammusxu/action-demo",
+    "id": 199778774,
+    "issue_comment_url": "https://api.github.com/repos/rammusxu/action-demo/issues/comments{/number}",
+    "issue_events_url": "https://api.github.com/repos/rammusxu/action-demo/issues/events{/number}",
+    "issues_url": "https://api.github.com/repos/rammusxu/action-demo/issues{/number}",
+    "keys_url": "https://api.github.com/repos/rammusxu/action-demo/keys{/key_id}",
+    "labels_url": "https://api.github.com/repos/rammusxu/action-demo/labels{/name}",
+    "language": "Dockerfile",
+    "languages_url": "https://api.github.com/repos/rammusxu/action-demo/languages",
+    "license": null,
+    "master_branch": "master",
+    "merges_url": "https://api.github.com/repos/rammusxu/action-demo/merges",
+    "milestones_url": "https://api.github.com/repos/rammusxu/action-demo/milestones{/number}",
+    "mirror_url": null,
+    "name": "action-demo",
+    "node_id": "MDEwOlJlcG9zaXRvcnkxOTk3Nzg3NzQ=",
+    "notifications_url": "https://api.github.com/repos/rammusxu/action-demo/notifications{?since,all,participating}",
+    "open_issues": 1,
+    "open_issues_count": 1,
+    "organization": "rammusxu",
+    "owner": {
+      "avatar_url": "https://avatars3.githubusercontent.com/u/36289044?v=4",
+      "email": "engineering@swag.live",
+      "events_url": "https://api.github.com/users/rammusxu/events{/privacy}",
+      "followers_url": "https://api.github.com/users/rammusxu/followers",
+      "following_url": "https://api.github.com/users/rammusxu/following{/other_user}",
+      "gists_url": "https://api.github.com/users/rammusxu/gists{/gist_id}",
+      "gravatar_id": "",
+      "html_url": "https://github.com/rammusxu",
+      "id": 36289044,
+      "login": "rammusxu",
+      "name": "rammusxu",
+      "node_id": "MDEyOk9yZ2FuaXphdGlvbjM2Mjg5MDQ0",
+      "organizations_url": "https://api.github.com/users/rammusxu/orgs",
+      "received_events_url": "https://api.github.com/users/rammusxu/received_events",
+      "repos_url": "https://api.github.com/users/rammusxu/repos",
+      "site_admin": false,
+      "starred_url": "https://api.github.com/users/rammusxu/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/rammusxu/subscriptions",
+      "type": "Organization",
+      "url": "https://api.github.com/users/rammusxu"
+    },
+    "private": true,
+    "pulls_url": "https://api.github.com/repos/rammusxu/action-demo/pulls{/number}",
+    "pushed_at": 1598262984,
+    "releases_url": "https://api.github.com/repos/rammusxu/action-demo/releases{/id}",
+    "size": 245,
+    "ssh_url": "git@github.com:rammusxu/action-demo.git",
+    "stargazers": 0,
+    "stargazers_count": 0,
+    "stargazers_url": "https://api.github.com/repos/rammusxu/action-demo/stargazers",
+    "statuses_url": "https://api.github.com/repos/rammusxu/action-demo/statuses/{sha}",
+    "subscribers_url": "https://api.github.com/repos/rammusxu/action-demo/subscribers",
+    "subscription_url": "https://api.github.com/repos/rammusxu/action-demo/subscription",
+    "svn_url": "https://github.com/rammusxu/action-demo",
+    "tags_url": "https://api.github.com/repos/rammusxu/action-demo/tags",
+    "teams_url": "https://api.github.com/repos/rammusxu/action-demo/teams",
+    "trees_url": "https://api.github.com/repos/rammusxu/action-demo/git/trees{/sha}",
+    "updated_at": "2020-08-24T06:36:17Z",
+    "url": "https://github.com/rammusxu/action-demo",
+    "watchers": 0,
+    "watchers_count": 0
+  },
+  "sender": {
+    "avatar_url": "https://avatars1.githubusercontent.com/u/4367069?v=4",
+    "events_url": "https://api.github.com/users/RammusXu/events{/privacy}",
+    "followers_url": "https://api.github.com/users/RammusXu/followers",
+    "following_url": "https://api.github.com/users/RammusXu/following{/other_user}",
+    "gists_url": "https://api.github.com/users/RammusXu/gists{/gist_id}",
+    "gravatar_id": "",
+    "html_url": "https://github.com/RammusXu",
+    "id": 4367069,
+    "login": "RammusXu",
+    "node_id": "MDQ6VXNlcjQzNjcwNjk=",
+    "organizations_url": "https://api.github.com/users/RammusXu/orgs",
+    "received_events_url": "https://api.github.com/users/RammusXu/received_events",
+    "repos_url": "https://api.github.com/users/RammusXu/repos",
+    "site_admin": false,
+    "starred_url": "https://api.github.com/users/RammusXu/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/RammusXu/subscriptions",
+    "type": "User",
+    "url": "https://api.github.com/users/RammusXu"
+  }
+}
+```
+
+`env`
+
+```bash
+LEIN_HOME=/usr/local/lib/lein
+M2_HOME=/usr/share/apache-maven-3.6.3
+GOROOT_1_11_X64=/opt/hostedtoolcache/go/1.11.13/x64
+ANDROID_HOME=/usr/local/lib/android/sdk
+JAVA_HOME_11_X64=/usr/lib/jvm/adoptopenjdk-11-hotspot-amd64
+ImageVersion=20200817.1
+AGENT_TOOLSDIRECTORY=/opt/hostedtoolcache
+LANG=C.UTF-8
+AZURE_EXTENSION_DIR=/opt/az/azcliextensions
+POWERSHELL_DISTRIBUTION_CHANNEL=GitHub-Actions-ubuntu18
+GITHUB_API_URL=https://api.github.com
+INVOCATION_ID=dcb35bf82e314cdb9caa479c88a6c37e
+BOOST_ROOT_1_72_0=/opt/hostedtoolcache/boost/1.72.0/x64
+JAVA_HOME_12_X64=/usr/lib/jvm/adoptopenjdk-12-hotspot-amd64
+ANDROID_SDK_ROOT=/usr/local/lib/android/sdk
+RUNNER_TOOL_CACHE=/opt/hostedtoolcache
+SWIFT_PATH=/usr/share/swift/usr/bin
+JAVA_HOME=/usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
+JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+RUNNER_TRACKING_ID=github_0e3e53f2-73ff-4e23-8e4f-52cb37f62b82
+DOTNET_MULTILEVEL_LOOKUP="0"
+GITHUB_REPOSITORY_OWNER=rammusxu
+GITHUB_ACTIONS=true
+DOTNET_SKIP_FIRST_TIME_EXPERIENCE="1"
+CI=true
+DOTNET_NOLOGO="1"
+USER=runner
+GITHUB_HEAD_REF=
+GITHUB_ACTOR=RammusXu
+GITHUB_ACTION=run2
+GRADLE_HOME=/usr/share/gradle
+PWD=/home/runner/work/action-demo/action-demo
+ImageOS=ubuntu18
+HOME=/home/runner
+GOROOT=/opt/hostedtoolcache/go/1.14.7/x64
+JOURNAL_STREAM=9:31545
+GOROOT_1_14_X64=/opt/hostedtoolcache/go/1.14.7/x64
+JAVA_HOME_8_X64=/usr/lib/jvm/adoptopenjdk-8-hotspot-amd64
+RUNNER_TEMP=/home/runner/work/_temp
+GOROOT_1_15_X64=/opt/hostedtoolcache/go/1.15.0/x64
+CONDA=/usr/share/miniconda
+GOROOT_1_13_X64=/opt/hostedtoolcache/go/1.13.15/x64
+BOOST_ROOT_1_69_0=/opt/hostedtoolcache/boost/1.69.0/x64
+DEBIAN_FRONTEND=noninteractive
+RUNNER_WORKSPACE=/home/runner/work/action-demo
+GITHUB_REF=refs/heads/github-pkg
+GITHUB_SHA=044271eda133bb9944f4aa7119bc661a8c1e9900
+GITHUB_RUN_ID=221813086
+GITHUB_SERVER_URL=https://github.com
+GOROOT_1_12_X64=/opt/hostedtoolcache/go/1.12.17/x64
+GECKOWEBDRIVER=/usr/local/share/gecko_driver
+DEPLOYMENT_BASEPATH=/opt/runner
+GITHUB_EVENT_PATH=/home/runner/work/_temp/_github_workflow/event.json
+CHROMEWEBDRIVER=/usr/local/share/chrome_driver
+HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+GITHUB_GRAPHQL_URL=https://api.github.com/graphql
+RUNNER_OS=Linux
+GITHUB_BASE_REF=
+VCPKG_INSTALLATION_ROOT=/usr/local/share/vcpkg
+GITHUB_JOB=show-env
+PERFLOG_LOCATION_SETTING=RUNNER_PERFLOG
+JAVA_HOME_7_X64=/usr/lib/jvm/zulu-7-azure-amd64
+RUNNER_USER=runner
+SHLVL=1
+HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+GITHUB_REPOSITORY=rammusxu/action-demo
+GITHUB_EVENT_NAME=push
+LEIN_JAR=/usr/local/lib/lein/self-installs/leiningen-2.9.4-standalone.jar
+GITHUB_RUN_NUMBER=166
+RUNNER_PERFLOG=/home/runner/perflog
+GITHUB_WORKFLOW=show-env
+ANT_HOME=/usr/share/ant
+PATH=/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:/usr/share/rust/.cargo/bin:/home/runner/.config/composer/vendor/bin:/home/runner/.dotnet/tools:/snap/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+SELENIUM_JAR_PATH=/usr/share/java/selenium-server-standalone.jar
+GITHUB_WORKSPACE=/home/runner/work/action-demo/action-demo
+CHROME_BIN=/usr/bin/google-chrome
+HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+_=/usr/bin/env
+```
+
 ### 2020-05-18 Github workflow env on pull request
 ```bash
 LEIN_HOME=/usr/local/lib/lein
@@ -647,222 +1134,6 @@ HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
 ```bash
 /usr/bin/docker run --name e87b528978e939d04c5cabae17f516da08bb2a_79b912 --label e87b52 --workdir /github/workspace --rm -e INPUT_ARGS -e INPUT_MY_VAR -e INPUT_LOWER_VAR -e INPUT_WHO-TO-GREET -e INPUT_NAME -e HOME -e GITHUB_REF -e GITHUB_SHA -e GITHUB_REPOSITORY -e GITHUB_RUN_ID -e GITHUB_RUN_NUMBER -e GITHUB_ACTOR -e GITHUB_WORKFLOW -e GITHUB_HEAD_REF -e GITHUB_BASE_REF -e GITHUB_EVENT_NAME -e GITHUB_WORKSPACE -e GITHUB_ACTION -e GITHUB_EVENT_PATH -e RUNNER_OS -e RUNNER_TOOL_CACHE -e RUNNER_TEMP -e RUNNER_WORKSPACE -e ACTIONS_RUNTIME_URL -e ACTIONS_RUNTIME_TOKEN -e ACTIONS_CACHE_URL -e GITHUB_ACTIONS=true -v "/var/run/docker.sock":"/var/run/docker.sock" -v "/home/runner/work/_temp/_github_home":"/github/home" -v "/home/runner/work/_temp/_github_workflow":"/github/workflow" -v "/home/runner/work/action-demo/action-demo":"/github/workspace" e87b52:8978e939d04c5cabae17f516da08bb2a env
 ```
-### 2020-02-25 on a push branch
-```bash
-PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-HOSTNAME=7e68d28ee47e
-HOME=/github/home
-GITHUB_REF=refs/heads/show-env
-GITHUB_REPOSITORY=rammusxu/action-demo
-GITHUB_RUN_ID=42801200
-GITHUB_RUN_NUMBER=153
-GITHUB_ACTOR=RammusXu
-RUNNER_TEMP=/home/runner/work/_temp
-INPUT_ARGS=env
-ACTIONS_RUNTIME_URL=https://pipelines.actions.githubusercontent.com/PMQIhg54lq7cRaMuQESXLNDyCqKLwtTaQOTGOPlUgbwmwZae5C/
-RUNNER_WORKSPACE=/home/runner/work/action-demo
-GITHUB_ACTIONS=true
-GITHUB_EVENT_NAME=push
-GITHUB_WORKFLOW=RammusPush
-GITHUB_HEAD_REF=
-GITHUB_BASE_REF=
-GITHUB_ACTION=alpine
-GITHUB_EVENT_PATH=/github/workflow/event.json
-RUNNER_OS=Linux
-RUNNER_TOOL_CACHE=/opt/hostedtoolcache
-GITHUB_SHA=7f4bedfc1262dbb55052aa18ecf9d21388c50526
-ACTIONS_RUNTIME_TOKEN=***
-GITHUB_WORKSPACE=/github/workspace
-```
-
-```json
-{
-  "after": "7f4bedfc1262dbb55052aa18ecf9d21388c50526",
-  "base_ref": null,
-  "before": "0000000000000000000000000000000000000000",
-  "commits": [
-    {
-      "author": {
-        "email": "comte_ken@hotmail.com",
-        "name": "Rammus Xu",
-        "username": "RammusXu"
-      },
-      "committer": {
-        "email": "comte_ken@hotmail.com",
-        "name": "Rammus Xu",
-        "username": "RammusXu"
-      },
-      "distinct": true,
-      "id": "7f4bedfc1262dbb55052aa18ecf9d21388c50526",
-      "message": "parallel --help",
-      "timestamp": "2020-02-21T13:36:19+08:00",
-      "tree_id": "f4f9fd21306ee5fb29fab80d373ef55b1852c082",
-      "url": "https://github.com/swaglive/action-demo/commit/7f4bedfc1262dbb55052aa18ecf9d21388c50526"
-    }
-  ],
-  "compare": "https://github.com/swaglive/action-demo/commit/7f4bedfc1262",
-  "created": true,
-  "deleted": false,
-  "forced": false,
-  "head_commit": {
-    "author": {
-      "email": "comte_ken@hotmail.com",
-      "name": "Rammus Xu",
-      "username": "RammusXu"
-    },
-    "committer": {
-      "email": "comte_ken@hotmail.com",
-      "name": "Rammus Xu",
-      "username": "RammusXu"
-    },
-    "distinct": true,
-    "id": "7f4bedfc1262dbb55052aa18ecf9d21388c50526",
-    "message": "parallel --help",
-    "timestamp": "2020-02-21T13:36:19+08:00",
-    "tree_id": "f4f9fd21306ee5fb29fab80d373ef55b1852c082",
-    "url": "https://github.com/swaglive/action-demo/commit/7f4bedfc1262dbb55052aa18ecf9d21388c50526"
-  },
-  "organization": {
-    "avatar_url": "https://avatars3.githubusercontent.com/u/36289044?v=4",
-    "description": "The SWAG Life",
-    "events_url": "https://api.github.com/orgs/swaglive/events",
-    "hooks_url": "https://api.github.com/orgs/swaglive/hooks",
-    "id": 36289044,
-    "issues_url": "https://api.github.com/orgs/swaglive/issues",
-    "login": "swaglive",
-    "members_url": "https://api.github.com/orgs/swaglive/members{/member}",
-    "node_id": "MDEyOk9yZ2FuaXphdGlvbjM2Mjg5MDQ0",
-    "public_members_url": "https://api.github.com/orgs/swaglive/public_members{/member}",
-    "repos_url": "https://api.github.com/orgs/swaglive/repos",
-    "url": "https://api.github.com/orgs/swaglive"
-  },
-  "pusher": {
-    "email": "comte_ken@hotmail.com",
-    "name": "RammusXu"
-  },
-  "ref": "refs/heads/show-parallel",
-  "repository": {
-    "archive_url": "https://api.github.com/repos/swaglive/action-demo/{archive_format}{/ref}",
-    "archived": false,
-    "assignees_url": "https://api.github.com/repos/swaglive/action-demo/assignees{/user}",
-    "blobs_url": "https://api.github.com/repos/swaglive/action-demo/git/blobs{/sha}",
-    "branches_url": "https://api.github.com/repos/swaglive/action-demo/branches{/branch}",
-    "clone_url": "https://github.com/swaglive/action-demo.git",
-    "collaborators_url": "https://api.github.com/repos/swaglive/action-demo/collaborators{/collaborator}",
-    "comments_url": "https://api.github.com/repos/swaglive/action-demo/comments{/number}",
-    "commits_url": "https://api.github.com/repos/swaglive/action-demo/commits{/sha}",
-    "compare_url": "https://api.github.com/repos/swaglive/action-demo/compare/{base}...{head}",
-    "contents_url": "https://api.github.com/repos/swaglive/action-demo/contents/{+path}",
-    "contributors_url": "https://api.github.com/repos/swaglive/action-demo/contributors",
-    "created_at": 1564547431,
-    "default_branch": "master",
-    "deployments_url": "https://api.github.com/repos/swaglive/action-demo/deployments",
-    "description": null,
-    "disabled": false,
-    "downloads_url": "https://api.github.com/repos/swaglive/action-demo/downloads",
-    "events_url": "https://api.github.com/repos/swaglive/action-demo/events",
-    "fork": false,
-    "forks": 0,
-    "forks_count": 0,
-    "forks_url": "https://api.github.com/repos/swaglive/action-demo/forks",
-    "full_name": "swaglive/action-demo",
-    "git_commits_url": "https://api.github.com/repos/swaglive/action-demo/git/commits{/sha}",
-    "git_refs_url": "https://api.github.com/repos/swaglive/action-demo/git/refs{/sha}",
-    "git_tags_url": "https://api.github.com/repos/swaglive/action-demo/git/tags{/sha}",
-    "git_url": "git://github.com/swaglive/action-demo.git",
-    "has_downloads": true,
-    "has_issues": true,
-    "has_pages": false,
-    "has_projects": true,
-    "has_wiki": true,
-    "homepage": null,
-    "hooks_url": "https://api.github.com/repos/swaglive/action-demo/hooks",
-    "html_url": "https://github.com/swaglive/action-demo",
-    "id": 199778774,
-    "issue_comment_url": "https://api.github.com/repos/swaglive/action-demo/issues/comments{/number}",
-    "issue_events_url": "https://api.github.com/repos/swaglive/action-demo/issues/events{/number}",
-    "issues_url": "https://api.github.com/repos/swaglive/action-demo/issues{/number}",
-    "keys_url": "https://api.github.com/repos/swaglive/action-demo/keys{/key_id}",
-    "labels_url": "https://api.github.com/repos/swaglive/action-demo/labels{/name}",
-    "language": "Dockerfile",
-    "languages_url": "https://api.github.com/repos/swaglive/action-demo/languages",
-    "license": null,
-    "master_branch": "master",
-    "merges_url": "https://api.github.com/repos/swaglive/action-demo/merges",
-    "milestones_url": "https://api.github.com/repos/swaglive/action-demo/milestones{/number}",
-    "mirror_url": null,
-    "name": "action-demo",
-    "node_id": "MDEwOlJlcG9zaXRvcnkxOTk3Nzg3NzQ=",
-    "notifications_url": "https://api.github.com/repos/swaglive/action-demo/notifications{?since,all,participating}",
-    "open_issues": 4,
-    "open_issues_count": 4,
-    "organization": "swaglive",
-    "owner": {
-      "avatar_url": "https://avatars3.githubusercontent.com/u/36289044?v=4",
-      "email": "engineering@swag.live",
-      "events_url": "https://api.github.com/users/swaglive/events{/privacy}",
-      "followers_url": "https://api.github.com/users/swaglive/followers",
-      "following_url": "https://api.github.com/users/swaglive/following{/other_user}",
-      "gists_url": "https://api.github.com/users/swaglive/gists{/gist_id}",
-      "gravatar_id": "",
-      "html_url": "https://github.com/swaglive",
-      "id": 36289044,
-      "login": "swaglive",
-      "name": "swaglive",
-      "node_id": "MDEyOk9yZ2FuaXphdGlvbjM2Mjg5MDQ0",
-      "organizations_url": "https://api.github.com/users/swaglive/orgs",
-      "received_events_url": "https://api.github.com/users/swaglive/received_events",
-      "repos_url": "https://api.github.com/users/swaglive/repos",
-      "site_admin": false,
-      "starred_url": "https://api.github.com/users/swaglive/starred{/owner}{/repo}",
-      "subscriptions_url": "https://api.github.com/users/swaglive/subscriptions",
-      "type": "Organization",
-      "url": "https://api.github.com/users/swaglive"
-    },
-    "private": false,
-    "pulls_url": "https://api.github.com/repos/swaglive/action-demo/pulls{/number}",
-    "pushed_at": 1582263389,
-    "releases_url": "https://api.github.com/repos/swaglive/action-demo/releases{/id}",
-    "size": 184,
-    "ssh_url": "git@github.com:swaglive/action-demo.git",
-    "stargazers": 0,
-    "stargazers_count": 0,
-    "stargazers_url": "https://api.github.com/repos/swaglive/action-demo/stargazers",
-    "statuses_url": "https://api.github.com/repos/swaglive/action-demo/statuses/{sha}",
-    "subscribers_url": "https://api.github.com/repos/swaglive/action-demo/subscribers",
-    "subscription_url": "https://api.github.com/repos/swaglive/action-demo/subscription",
-    "svn_url": "https://github.com/swaglive/action-demo",
-    "tags_url": "https://api.github.com/repos/swaglive/action-demo/tags",
-    "teams_url": "https://api.github.com/repos/swaglive/action-demo/teams",
-    "trees_url": "https://api.github.com/repos/swaglive/action-demo/git/trees{/sha}",
-    "updated_at": "2020-02-15T04:12:28Z",
-    "url": "https://github.com/swaglive/action-demo",
-    "watchers": 0,
-    "watchers_count": 0
-  },
-  "sender": {
-    "avatar_url": "https://avatars1.githubusercontent.com/u/4367069?v=4",
-    "events_url": "https://api.github.com/users/RammusXu/events{/privacy}",
-    "followers_url": "https://api.github.com/users/RammusXu/followers",
-    "following_url": "https://api.github.com/users/RammusXu/following{/other_user}",
-    "gists_url": "https://api.github.com/users/RammusXu/gists{/gist_id}",
-    "gravatar_id": "",
-    "html_url": "https://github.com/RammusXu",
-    "id": 4367069,
-    "login": "RammusXu",
-    "node_id": "MDQ6VXNlcjQzNjcwNjk=",
-    "organizations_url": "https://api.github.com/users/RammusXu/orgs",
-    "received_events_url": "https://api.github.com/users/RammusXu/received_events",
-    "repos_url": "https://api.github.com/users/RammusXu/repos",
-    "site_admin": false,
-    "starred_url": "https://api.github.com/users/RammusXu/starred{/owner}{/repo}",
-    "subscriptions_url": "https://api.github.com/users/RammusXu/subscriptions",
-    "type": "User",
-    "url": "https://api.github.com/users/RammusXu"
-  }
-}
-```
-
 
 ## Reference
 - https://help.github.com/en/actions/reference
