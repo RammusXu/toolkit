@@ -1,0 +1,239 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name:  armor-testing
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test-site
+  namespace: armor-testing
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+    - http:
+        paths:
+        - backend:
+            serviceName: test-site
+            servicePort: http
+
+---
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  namespace: armor-testing
+  name: cdn
+spec:
+  cdn:
+    enabled: true
+    cachePolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: true
+  securityPolicy:
+    name: ""
+---
+apiVersion: cloud.google.com/v1beta1
+kind: BackendConfig
+metadata:
+  namespace: armor-testing
+  name: cdn-armor
+spec:
+  cdn:
+    enabled: true
+    cachePolicy:
+      includeHost: true
+      includeProtocol: true
+      includeQueryString: true
+  securityPolicy:
+    name: "protecting"
+  logging:
+    enable: true
+    sampleRate: 1.0 # 1.0 = 100%
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: armor-testing
+  name: test-site
+  annotations:
+    beta.cloud.google.com/backend-config: '{"ports": {"http":"cdn-armor"}}'
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    app: test-site
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: test-site
+  namespace: armor-testing
+spec:
+  selector:
+    matchLabels:
+      app: test-site
+  template:
+    metadata:
+      labels:
+        app: test-site
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 1
+              podAffinityTerm:
+                topologyKey: "kubernetes.io/hostname"
+                labelSelector:
+                  matchExpressions:
+                    - key: "app"
+                      operator: In
+                      values:
+                      - test-site
+      volumes:
+      - name: config
+        configMap:
+          name: test-site-config
+      - name: test-sites
+        configMap:
+          name: test-site
+      containers:
+      - name: openresty
+        image: openresty/openresty:1.15.8.2-1-alpine
+        ports:
+        - name: http
+          containerPort: 80
+        volumeMounts:
+        - name: config
+          subPath: nginx.conf
+          mountPath: /usr/local/openresty/nginx/conf/nginx.conf
+          readOnly: true
+        - name: test-sites
+          mountPath: /etc/nginx/conf.d/
+          readOnly: true
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1G
+          requests:
+            cpu: 100m
+            memory: 1G
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: armor-testing
+  name: test-site-config
+data:
+  nginx.conf: |-
+    worker_processes            auto;
+
+    events {
+        worker_connections      65536;
+        multi_accept            on;
+        accept_mutex            off;
+        use                     epoll;
+    }
+
+    http {
+
+      log_format  main  '$remote_addr - $remote_user - $upstream_cache_status [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+      access_log  logs/access.log  main;
+
+      server_names_hash_bucket_size  128;
+
+      # access_log                on;
+      root                        /usr/local/openresty/nginx/html;
+      sendfile                    on;
+      tcp_nopush                  on;
+      tcp_nodelay                 on;
+
+      # client_max_body_size      10M;
+      # https://blog.percy.io/tuning-nginx-behind-google-cloud-platform-http-s-load-balancer-305982ddb340
+      keepalive_timeout         650;
+      # keepalive_requests        10000;
+
+      # GZIP support
+      gzip                      on;
+      gzip_disable              "msie6";
+      gzip_min_length           128;
+      gzip_vary                 off;
+      gzip_proxied              any;
+      gzip_comp_level           6;
+      gzip_buffers              16 8k;
+      gzip_types                text/css
+                                text/plain
+                                text/javascript
+                                application/javascript
+                                application/json
+                                application/x-javascript
+                                application/xml
+                                application/xml+rss
+                                application/xhtml+xml
+                                application/x-font-ttf
+                                application/x-font-opentype
+                                application/vnd.ms-fontobject
+                                image/svg+xml
+                                image/x-icon
+                                image/vnd.microsoft.icon
+                                application/rss+xml
+                                application/atom_xml
+                                application/vnd.apple.mpegURL
+                                application/x-mpegurl
+                                vnd.apple.mpegURL
+                                application/dash+xml;
+
+      # Enable persistent upstream connections
+      proxy_http_version              1.1;
+      proxy_set_header                Connection "";
+
+      # Enable proxy caching
+      proxy_cache_path                /var/cache/nginx levels=1:2 keys_zone=storage:128m inactive=10m max_size=64G;
+      proxy_cache                     storage;
+      proxy_cache_use_stale           updating;
+      proxy_cache_background_update   on;
+      proxy_cache_lock                on;
+      proxy_cache_lock_age            1s;
+      proxy_cache_lock_timeout        1s;
+
+      include /etc/nginx/conf.d/*.conf;
+    }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: armor-testing
+  name: test-site
+data:
+  default.conf: |-
+    server {
+      listen                          80 default_server deferred;
+
+      # Cluster healthchecks
+      if ( $http_user_agent ~* (GoogleHC|Go\-http\-client|kube\-proxy) ) {
+        return 200;
+      }
+
+      location / {
+        add_header                      "Cache-Control" "public, max-age=600000";
+        index index.html;
+      }
+
+      location /hi {
+        echo "hi";
+        add_header                      "Cache-Control" "public, max-age=600000";
+      }
+
+      location /echo {
+        echo "echo $http_rammus";
+      }
+    }
