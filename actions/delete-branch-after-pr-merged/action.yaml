@@ -1,0 +1,10 @@
+name: 'Delete Branch After Pull Request Merged'
+description: 'Delete branch after pull request merged.'
+inputs:
+  auth_token:
+    description: 'Auth token used to API'
+    required: true
+    default: "${{ github.token }}"
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
