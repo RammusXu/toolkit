@@ -42,7 +42,7 @@ sh-3.2$ echo $?
 
 ### 暫時進到某個 folder 執行指令，不改變目前 path
 ```bash
-(cd src/ && git checkout $NEW_VERSION_SHA) 
+(cd src/ && git checkout $NEW_VERSION_SHA)
 ```
 
 ### ANSI - 輸出文字變色
