@@ -1,4 +1,5 @@
 ---
+title: 🌈 Help
 description: Tips about writing in mkdocs.
 ---
 
