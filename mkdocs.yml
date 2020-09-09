@@ -5,7 +5,7 @@ site_name: Rammus Toolkit
 
 repo_url: https://github.com/RammusXu/toolkit
 
-theme: 
+theme:
   name: material
   icon:
     logo: fontawesome/solid/toolbox
@@ -23,9 +23,9 @@ markdown_extensions:
   - admonition
   - toc:
       permalink: true
-  # - pymdownx.emoji:
-  #     emoji_index: !!python/name:materialx.emoji.twemoji
-  #     emoji_generator: !!python/name:materialx.emoji.to_svg
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 copyright: |
   <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
