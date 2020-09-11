@@ -149,6 +149,7 @@ ACTIONS_RUNNER_DEBUG: true
 
 ## Build an action
 
+### Docker Action Example
 ```yaml
 # action.yml
 name: 'Hello World'
@@ -166,6 +167,30 @@ runs:
   image: 'Dockerfile'
   args:
     - ${{ inputs.who-to-greet }}
+```
+### Composite (Multiple steps) Action Example
+```yaml
+name: 'Hello World'
+description: 'Greet someone'
+inputs:
+  who-to-greet:  # id of input
+    description: 'Who to greet'
+    required: true
+    default: 'World'
+outputs:
+  random-number:
+    description: "Random number"
+    value: ${{ steps.random-number-generator.outputs.random-id }}
+runs:
+  using: "composite"
+  steps:
+    - run: echo Hello ${{ inputs.who-to-greet }}.
+      shell: bash
+    - id: random-number-generator
+      run: echo "::set-output name=random-id::$(echo $RANDOM)"
+      shell: bash
+    - run: ${{ github.action_path }}/goodbye.sh
+      shell: bash
 ```
 
 ### Get input as environemnt in Docker
@@ -198,6 +223,29 @@ ENTRYPOINT python /app.py
 ```
 
 ## Awesome Actions
+
+### Manually/Customize trigger a workflow
+
+https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
+```yaml
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+
+jobs:
+  printInputs:
+    runs-on: ubuntu-latest
+    steps:
+    - run: |
+        echo "Log level: ${{ github.event.inputs.logLevel }}"
+        echo "Tags: ${{ github.event.inputs.tags }}"
+```
 
 ### Customize action type with http post method
 ```yaml
