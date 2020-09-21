@@ -103,6 +103,8 @@ wget -O- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud
 
 # wget -O- https://github.com/sing1ee/elasticsearch-jieba-plugin/archive/v7.0.0.tar.gz | tar -xzv -C . --strip 1
 wget -O- your_link_here | tar -xzv -C . --strip 1
+wget -c https://github.com/moby/buildkit/releases/download/v0.7.2/buildkit-v0.7.2.linux-amd64.tar.gz -O - | tar -xz
+
 
 wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && unzip tmp.zip && rm tmp.zip
 
