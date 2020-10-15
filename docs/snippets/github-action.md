@@ -356,7 +356,7 @@ jobs:
 ```yaml
     - name: Create Pull Request
       if: steps.create-branch.outputs.branch_name
-      uses: actions/github-script@0.3.0
+      uses: actions/github-script@v3
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
@@ -369,15 +369,41 @@ jobs:
           })
     - name: Create Pull Request
       if: steps.create-branch.outputs.branch_name
-      uses: actions/github-script@0.3.0
+      uses: actions/github-script@v3
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           github.pulls.create({
             ...context.repo,
             title: '[Action] ${{ steps.create-branch.outputs.branch_name }}',
-            body: 'Create by `${{ github.event.client_payload.actor }}`',
+            body: `Created by \`${ process.env.GITHUB_ACTOR }\``,
             head: '${{ steps.create-branch.outputs.branch_name }}',
+            base: 'master'
+          })
+```
+
+### Commit and push and create pull request
+```yaml
+    - name: Set environments
+      run: echo "NEW_BRANCH=update-config-$(date +%Y-%m-%d_%H%M%S-utc)" >> $GITHUB_ENV
+    - name: Configure git
+      run: |
+        git config --global user.name "${GITHUB_ACTOR}"
+        git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+    - name: Commit
+      run: git commit -a -m "Update config.json by ${GITHUB_ACTOR}"
+    - name: Git push
+      run: git push origin HEAD:${NEW_BRANCH}
+    - name: Create Pull Request
+      uses: actions/github-script@v3
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        script: |
+          github.pulls.create({
+            ...context.repo,
+            title: '${{ env.NEW_BRANCH }}',
+            body: `Created by \`${ process.env.GITHUB_ACTOR }\``,
+            head: '${{ env.NEW_BRANCH }}',
             base: 'master'
           })
 ```
