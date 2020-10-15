@@ -9,13 +9,24 @@ services:
     ports:
       - "6379:6379"
 
-  celery:
-    image: "celery:4.0.2"
-    environment:
-      - CELERY_BROKER_URL=redis://redis
+  # celery:
+  #   image: "celery:4.0.2"
+  #   environment:
+  #     CELERY_BROKER_URL: redis://redis
 
-  celery-2:
-    image: "celery:4.0.2"
+  # celery-2:
+  #   image: "celery:4.0.2"
+  #   environment:
+  #     CELERY_BROKER_URL: redis://redis
+  flower:
+    image: mher/flower:0.9.5
+    # command: python -m flower -A tasks
+    # command: ["--app demo", "--url_prefix=flower", "--broker=redis://redis"]
+    volumes:
+      - ./examples:/data
+    working_dir: /data
+    ports:
+      - 5555:5555
     environment:
-      - CELERY_BROKER_URL=redis://redis
-      
+      CELERY_BROKER_URL: redis://redis
+      CELERY_RESULT_BACKEND: redis://redis
