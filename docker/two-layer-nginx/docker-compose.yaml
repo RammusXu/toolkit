@@ -7,7 +7,7 @@ services:
     volumes:
       # - "./conf.d/default.conf:/etc/nginx/conf.d/default.conf"
       - "./front-conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
-    ports: 
+    ports:
     - "8001:80"
   backend:
     image: openresty/openresty:alpine-fat
@@ -16,5 +16,5 @@ services:
     volumes:
       # - "./conf.d/default.conf:/etc/nginx/conf.d/default.conf"
       - "./back-conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
-    ports: 
+    ports:
     - "8002:80"
