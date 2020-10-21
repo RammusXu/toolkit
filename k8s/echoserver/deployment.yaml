@@ -16,12 +16,12 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: nginx-config
+          name: echoserver-nginx-config
 
       containers:
       - name: echoserver
-        # image: gcr.io/google_containers/echoserver:1.10
-        image: openresty/openresty:1.15.8.2-1-alpine
+        image: gcr.io/google_containers/echoserver:1.10
+        # image: openresty/openresty:1.15.8.2-1-alpine
         ports:
         - containerPort: 8080
           name: http
@@ -40,7 +40,8 @@ metadata:
   name: echoserver
   namespace: default
 spec:
-  type: NodePort
+  # type: NodePort
+  type: LoadBalancer
   ports:
   - port: 80
     targetPort: http
