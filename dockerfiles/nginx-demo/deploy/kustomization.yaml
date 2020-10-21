@@ -1,0 +1,6 @@
+namespace: default
+resources:
+  - deployment.yaml
+
+namePrefix:
+  demo-
