@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  redis-master:
+    image: redis:6.0.9-alpine
+    command: redis-server --port 6379
+    ports:
+      - "6379:6379"
+  redis-slave:
+    image: redis:6.0.9-alpine
+    command: redis-server --slaveof redis-master 6379 --slave-read-only no
