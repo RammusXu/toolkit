@@ -1,4 +1,13 @@
 
+## Install docker
+ref: https://docs.docker.com/engine/install/ubuntu/#install-using-the-convenience-script
+
+```bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker rammus
+```
+
 ## Minimize docker image
 ### Delete libraries only used in build time
 ```bash
