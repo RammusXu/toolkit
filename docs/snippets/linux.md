@@ -41,6 +41,13 @@ du -sh folder
 lsblk
 ```
 
+### Generate random binary file
+```bash
+# 1 count = 512 Bytes
+# of = output file name
+dd if=/dev/urandom of=dd10 count=20
+```
+
 ## Monitoring
 ### Login log
 ```bash
