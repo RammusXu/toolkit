@@ -1,19 +1,31 @@
 # Bash
 
-### Date
+## Date
 ```bash
 DATE=$(date +%Y%m%d_%H%M%S)
 FILE="/backup/backup-$DATE"
 ```
 
-### Varaible
-#### 設定/刪除
+## Loop
+```bash
+for OUTPUT in $(Linux-Or-Unix-Command-Here)
+do
+	command1 on $OUTPUT
+	command2 on $OUTPUT
+	commandN
+done
+```
+
+ref: https://www.cyberciti.biz/faq/bash-for-loop/
+
+## Varaible
+### 設定/刪除
 ```bash
 export A_VARIBALE
 unset A_VARIBALE
 ```
 
-#### 使用預設值
+### 使用預設值
 ```
 ACTOR=${ACTOR:-$GITHUB_ACTOR}
 ```
@@ -26,7 +38,7 @@ echo ${qq%:*}
 # ops
 ```
 
-#### Return error code when a variable is not found
+### Return error code when a variable is not found
 ref: https://stackoverflow.com/a/307735/3854890
 ```bash
 sh-3.2$ STATE=abc
@@ -40,12 +52,28 @@ sh-3.2$ echo $?
 1
 ```
 
-### 暫時進到某個 folder 執行指令，不改變目前 path
+### Echo Bash List with comma(,)
+```bash
+ROLE_PERMISSIONS=(
+    compute.disks.get
+    compute.disks.create
+    compute.disks.createSnapshot
+    compute.snapshots.get
+    compute.snapshots.create
+    compute.snapshots.useReadOnly
+    compute.snapshots.delete
+    compute.zones.get
+)
+
+echo "$(IFS=","; echo "${ROLE_PERMISSIONS[*]}")"
+```
+
+## 暫時進到某個 folder 執行指令，不改變目前 path
 ```bash
 (cd src/ && git checkout $NEW_VERSION_SHA)
 ```
 
-### ANSI - 輸出文字變色
+## ANSI - 輸出文字變色
 
 https://misc.flogisoft.com/bash/tip_colors_and_formatting
 ```bash
