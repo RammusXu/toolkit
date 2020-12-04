@@ -30,11 +30,8 @@ docker volume rm $(docker volume ls -qf dangling=true)
 
 ### Troubleshooting
 
-####
+#### {"registry-mirrors": ["https://mirror.gcr.io"]} cause error
 不能和 registry-mirrors 一起用 (issue: https://github.com/moby/moby/issues/39120)
-
-{"registry-mirrors": ["https://mirror.gcr.io"]} to /etc/docker/daemon.json
-
 
 #### resolve image config for docker.io/docker/dockerfile:experimental:
 ```bash
@@ -74,7 +71,7 @@ failed to solve with frontend dockerfile.v0: failed to create LLB definition: Do
 ```
 
 
-### error: failed to get status: rpc error: code = Unavailable desc = connection error: desc = "transport: error while dialing: dial unix /run/buildkit/buildkitd.sock: connect: no such file or directory"
+#### error: failed to get status: rpc error: code = Unavailable desc = connection error: desc = "transport: error while dialing: dial unix /run/buildkit/buildkitd.sock: connect: no such file or directory"
 
 ```bash
 error: failed to get status: rpc error: code = Unavailable desc = connection error: desc = "transport: error while dialing: dial unix /run/buildkit/buildkitd.sock: connect: no such file or directory"
