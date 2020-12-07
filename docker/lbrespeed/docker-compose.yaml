@@ -1,0 +1,48 @@
+version: "3.3"
+
+services:
+
+  traefik:
+    image: "traefik:v2.0.0-rc3"
+    container_name: "traefik"
+    command:
+      #- "--log.level=DEBUG"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge=true"
+      - "--certificatesresolvers.myhttpchallenge.acme.httpchallenge.entrypoint=web"
+      # Uncomment it to use staging letsencrypt API.
+      #- "--certificatesresolvers.myhttpchallenge.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.myhttpchallenge.acme.email=rammus.xu@swag.live"
+      - "--certificatesresolvers.myhttpchallenge.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      # Uncomment it to enable Traefik dashboard.
+      # - "8080:8080"
+    volumes:
+      - "./letsencrypt:/letsencrypt"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+
+  librespeed:
+    image: "ghcr.io/linuxserver/librespeed"
+    ports:
+      - "8001:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.librespeed.rule=Host(`ccx-speed.swaggg.dev`)"
+      - "traefik.http.routers.librespeed.entrypoints=websecure"
+      - "traefik.http.routers.librespeed.tls.certresolver=myhttpchallenge"
+
+  nginx-demo:
+    image: "rammusxu/nginx-demo"
+    ports:
+      - "8002:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.nginx.rule=Host(`ccx.swaggg.dev`)"
+      - "traefik.http.routers.nginx.entrypoints=websecure"
+      - "traefik.http.routers.nginx.tls.certresolver=myhttpchallenge"

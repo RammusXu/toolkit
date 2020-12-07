@@ -12,9 +12,16 @@ And sure, you can copy&paste to anywhere. But please add the reference just like
 ## Usage
 
 ### Gists
+Execute
 ```bash
 gist=https://raw.githubusercontent.com/RammusXu/toolkit/master/gist/install/github-action-runner.sh
 curl -sL $gist | bash -
+```
+
+Download
+```bash
+gist=https://raw.githubusercontent.com/RammusXu/toolkit/master/gist/install/github-action-runner.sh
+curl -sLO $gist
 ```
 
 ### Kubernetes resource
