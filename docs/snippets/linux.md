@@ -1,4 +1,31 @@
+---
+description: 常用的 linux 指令集與範例
+---
+
+# Linux commands
+
+常用的 linux 指令集與範例
+
+## Indexes
+
+- Process:
+    - [ps](#ps) - 目前的所有 process。
+- Linux Kernel:
+    - [sysctl](#sysctl) - 修改 Linux Kernel 參數
+- Disk, File system:
+    - [ls](#ls) - 列出資料夾內容。
+    - [du](#du) - 計算檔案使用空間。
+    - [lsblk](#lsblk) - 列出 block devices。
+    - [dd](#dd) - 轉換、複製、產生檔案。
+- Network:
+    - [wget](#wget) - 下載網路資源。
+    - [curl](#curl) - 下載網路資源。
+    - [httpie](#httpie) - 下載網路資源。RESTful like CLI。
+- Miscellaneous:
+    - [parallel](#parallel) - 並行執行指令。
+
 ## Process
+### ps
 ```
 ps aux | grep "java -jar build/libs/Hello-1.0.jar"
 pgrep -f "java -jar build/libs/Hello-1.0.jar"
@@ -14,34 +41,32 @@ kill -9 PID
 killall node
 ```
 
-### Do something parallel
-
-### 開多個 thread 同時執行多個指令
-```bash
-parallel docker push ::: \
-    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG-builder \
-    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG \
-    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_TAG
+## Linux Kernel
+### sysctl
+參數會在 `/proc/sys` 資料夾下。
 ```
-
-## System config
-```
-screen ~/Library/Containers/com.docker.docker/Data/vms/0/tty
-sysctl -w vm.max_map_count=262144
-
-sysctl -a|grep vm
-sysctl -a|grep vm.max_map_count
 sysctl vm.max_map_count
+sysctl -w vm.max_map_count=262144
+sysctl -a | grep vm
+sysctl -a | grep vm.max_map_count
 ```
 
 ## Disk, Storage
+### ls
 ```bash
 ls -lh file
-du -sh folder
-lsblk
 ```
-
-### Generate random binary file
+### du
+```bash
+du -sh .
+```
+### lsblk
+```bash
+lsblk
+lsblk -a
+```
+### dd
+Generate random binary file
 ```bash
 # 1 count = 512 Bytes
 # of = output file name
@@ -80,13 +105,13 @@ echo "runner ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers &&\
 usermod -aG sudo runner
 ```
 
-## cp
-### Copy folder content to another folder
+### cp
+Copy folder content to another folder
 ```bash
 cp -ar plugins/. share-plugins
 ```
 
-## apt-get
+### apt-get
 ```bash
 # ping
 apt-get install iputils-ping
@@ -100,8 +125,8 @@ apt-get install procps
 # mysql
 apt-get install mysql-client
 ```
-
-## wget, curl
+## Network
+### wget
 ```bash
 # wget -qO- https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-240.0.0-darwin-x86_64.tar.gz | tar xvz -
 wget -qO- your_link_here | tar xvz -
@@ -114,14 +139,16 @@ wget -c https://github.com/moby/buildkit/releases/download/v0.7.2/buildkit-v0.7.
 
 
 wget -q -O tmp.zip http://downloads.wordpress.org/plugin/akismet.2.5.3.zip && unzip tmp.zip && rm tmp.zip
-
+```
+### curl
+```
 curl -X GET "https://httpbin.org/ip" -H "accept: application/json"
 curl https://httpbin.org/ip
 
 curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 ```
 
-## httpie
+### httpie
 ```bash
 ## Print request infomations: header, payload
 http localhost:3000 'Accept-Encoding: br, gzip, deflate' -v
@@ -184,4 +211,14 @@ yes | tr \\n x | head -c 100m | grep n
 ## jq
 ```
 $(msg=$(cat $(grep -E "(mirror to|replace by)" *.txt -l)) jq -nc '{"body":env.msg}')
+```
+
+## Miscellaneous
+### parallel
+開多個 thread 同時執行多個指令
+```bash
+parallel docker push ::: \
+    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG-builder \
+    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_REF_TAG \
+    $DOCKER_REGISTRY_URL/$DOCKER_REPOSITORY_NAME:$DOCKER_TAG
 ```
