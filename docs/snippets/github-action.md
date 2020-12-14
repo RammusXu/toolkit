@@ -44,15 +44,21 @@ on:
 ### Pass variables
 ```bash
 echo ::set-output name=message::$output_message
+echo "action_state=yellow" >> $GITHUB_ENV
+
+# Deprecated. ref: https://github.blog/changelog/2020-10-01-github-actions-deprecating-set-env-and-add-path-commands/
 echo ::set-env name=action_state::yellow
 ```
+
 ### Use variables
 ```yaml
 GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-PR_COMMENT_URL: ${{ github.event.pull_request.comments_url }}
+GITHUB_TOKEN: ${{ env.ACTION_STATE }}
 PR_COMMENT: ${{ steps.message.outputs.message }}
+PR_COMMENT_URL: ${{ github.event.pull_request.comments_url }}
 PAYLOAD_ACTOR: ${{ github.event.client_payload.actor }}
 ```
+
 ### Use GITHUB_ACTOR as git commit author and using github avator
 https://help.github.com/en/github/setting-up-and-managing-your-github-user-account/setting-your-commit-email-address
 ```yaml
