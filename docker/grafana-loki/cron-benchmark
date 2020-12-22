@@ -1,0 +1,1 @@
+* * * * * curl -s -o /dev/null -w "target=https://www.baidu.com connect=%{time_connect} ttfb=%{time_starttransfer} totalTime=%{time_total} size=%{size_download} speedDownload=%{speed_download} remoteIp=%{remote_ip}\n" "https://www.baidu.com" >> /var/shared_logs/busybox 2>&1

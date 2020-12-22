@@ -1,0 +1,52 @@
+version: "3"
+
+networks:
+  loki:
+
+volumes:
+  logs:
+
+services:
+  loki:
+    image: grafana/loki:2.0.0
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yaml
+    networks:
+      - loki
+
+  grafana:
+    image: grafana/grafana:7.3.5
+    ports:
+      - "3000:3000"
+    networks:
+      - loki
+
+  promtail:
+    image: grafana/promtail:2.0.0
+    ports:
+      - "9080:9080"
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+      # - /var/log:/var/log
+      - logs:/var/shared_logs
+    command: -config.file=/etc/promtail/config.yml
+    networks:
+      - loki
+
+  busybox:
+    image: alpine
+    # tty: true
+    networks:
+      - loki
+    command: sh -c "
+        apk add curl &&
+        test -f /var/shared_logs/busybox ||
+        touch /var/shared_logs/busybox &&
+
+        crond start &&
+        tail -F /var/shared_logs/busybox
+      "
+    volumes:
+      - logs:/var/shared_logs
+      - ./cron-benchmark:/etc/crontabs/root
