@@ -10,6 +10,7 @@ description: 常用的 linux 指令集與範例
 
 - Process:
     - [ps](#ps) - 目前的所有 process。
+    - [lsof](#lsof) - 列出 open files
 - Linux Kernel:
     - [sysctl](#sysctl) - 修改 Linux Kernel 參數
 - Disk, File system:
@@ -17,6 +18,7 @@ description: 常用的 linux 指令集與範例
     - [du](#du) - 計算檔案使用空間。
     - [lsblk](#lsblk) - 列出 block devices。
     - [dd](#dd) - 轉換、複製、產生檔案。
+    - [tail](#tail) - 印出檔案的最後幾行。
 - Network:
     - [wget](#wget) - 下載網路資源。
     - [curl](#curl) - 下載網路資源。
@@ -34,11 +36,24 @@ pkill -f "java -jar build/libs/Hello-1.0.jar"
 pgrep -f "java -jar build/libs/Hello-1.0.jar" | xargs kill
 pkill -f "java -jar build/libs/Hello-1.0.jar" || true
 
-lsof -i :27017
 
 ps aux | grep node
 kill -9 PID
 killall node
+```
+
+### lsof
+列出佔用中的 port
+```bash
+# lsof -i -P -n | grep LISTEN
+systemd-r   645 systemd-resolve   13u  IPv4  16633      0t0  TCP 127.0.0.53:53 (LISTEN)
+sshd        882            root    3u  IPv4  19952      0t0  TCP *:22 (LISTEN)
+sshd        882            root    4u  IPv6  19969      0t0  TCP *:22 (LISTEN)
+```
+
+確定 port 有沒有被佔用
+```
+lsof -i :22
 ```
 
 ## Linux Kernel
@@ -71,6 +86,35 @@ Generate random binary file
 # 1 count = 512 Bytes
 # of = output file name
 dd if=/dev/urandom of=dd10 count=20
+```
+
+### tail
+印出檔案的最後幾行
+
+`tail -f buxybox-1` 會跟隨原始檔案
+```bash
+# tail -f busybox-1
+hi
+hi3
+
+# echo hi >> busybox-1
+# mv busybox-1 busybox-2
+# echo hi2 >> busybox-1
+# echo hi3 >> busybox-2
+```
+
+`tail -F buxybox-1` 會重複嘗試同一個檔案
+
+```bash
+# tail -F busybox-1
+hi
+tail: busybox-1 has become inaccessible: No such file or directory
+tail: busybox-1 has appeared; following end of new file
+hi
+
+# echo hi >> busybox-1
+# mv busybox-1 busybox-3
+# echo hi >> busybox-1
 ```
 
 ## Monitoring
