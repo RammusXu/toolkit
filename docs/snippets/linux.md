@@ -192,6 +192,8 @@ curl https://httpbin.org/ip
 curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 ```
 
+![](https://blog.cloudflare.com/content/images/2018/10/Screen-Shot-2018-10-16-at-14.51.29-1.png)
+
 ### httpie
 ```bash
 ## Print request infomations: header, payload
