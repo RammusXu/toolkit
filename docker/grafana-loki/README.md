@@ -8,6 +8,20 @@ curl -sLO $gist
 wget https://raw.githubusercontent.com/grafana/loki/master/production/docker-compose.yaml
 ```
 
+```bash
+docker-compose up -d
+```
+
+Open localhost:3000
+
+Default Grafana:
+```
+account: admin
+password: admin
+```
+
+Import Dashboard: dashboard.json
+
 ## Test command
 ```bash
 quantile_over_time(

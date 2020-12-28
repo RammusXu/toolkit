@@ -67,6 +67,8 @@
         "min": true,
         "rightSide": true,
         "show": true,
+        "sort": "max",
+        "sortDesc": true,
         "total": false,
         "values": true
       },
@@ -87,7 +89,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap ttfb [1m]\n) by (target)",
+          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap time_starttransfer [1m]\n) by (target)\n-\nquantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap time_appconnect [1m]\n) by (target)",
           "hide": false,
           "legendFormat": "{{target}}",
           "refId": "A"
@@ -204,7 +206,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap speedDownload [1m]\n) by (target) * 8",
+          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap speed_download [1m]\n) by (target) * 8",
           "legendFormat": "{{target}}",
           "refId": "B"
         }
@@ -320,7 +322,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap connect [1m]\n) by (target)",
+          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap time_connect [1m]\n) by (target)",
           "legendFormat": "{{target}}",
           "refId": "B"
         }
@@ -436,7 +438,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap totalTime [1m]\n) by (target)",
+          "expr": "quantile_over_time(\n  0.5,\n  {job=\"benchmark\"} |= \"target\" | logfmt | unwrap time_total [1m]\n) by (target)",
           "legendFormat": "{{target}}",
           "refId": "C"
         }
@@ -492,12 +494,12 @@
     "list": []
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Benchmark",
   "uid": "5RZRZU1Mz",
-  "version": 15
+  "version": 24
 }
