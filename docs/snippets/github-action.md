@@ -609,14 +609,27 @@ inputs:
     default: "${{ github.token }}"
 ```
 
-## Othes
+## Misc
 ### iOS App Build
-Compare:
 
-- bitrise: 2 vCPU + 4 GB RAM
-- Github Action: 2 vCPU + 7 GB RAM
+[Bitrise](https://www.bitrise.io/pricing)
+
+- Standard:
+    - Available in Developer, Org Standard, Velocity plan
+    - 2vCPU @ 2.7 GHz, 4 GB RAM
+    - [pricing](https://www.bitrise.io/pricing) $90 / Month
+- Elite:
+    - Available in Org Elite, Velocity plan
+    - 4vCPU @ 3.5 GHz, 8 GB RAM
+    - [pricing](https://www.bitrise.io/pricing) $270 / Month
+
+[Github Action](https://docs.github.com/en/free-pro-team@latest/actions/reference/specifications-for-github-hosted-runners#supported-runners-and-hardware-resources)
+
+- 2 vCPU @ 2.60GHz, 7 GB RAM
+- [princing](https://docs.github.com/en/free-pro-team@latest/github/setting-up-and-managing-billing-and-payments-on-github/about-billing-for-github-actions) $0.08 / minute
 
 ### Build status
+
 === "Clickable"
     ```yaml
     [![Publish](https://github.com/RammusXu/toolkit/workflows/Publish/badge.svg)](https://github.com/RammusXu/toolkit)
