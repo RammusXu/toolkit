@@ -23,6 +23,7 @@ description: 常用的 linux 指令集與範例
     - [wget](#wget) - 下載網路資源。
     - [curl](#curl) - 下載網路資源。
     - [httpie](#httpie) - 下載網路資源。RESTful like CLI。
+    - [netstat](#netstat)
 - Miscellaneous:
     - [parallel](#parallel) - 並行執行指令。
 
@@ -192,6 +193,14 @@ curl https://httpbin.org/ip
 curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
 ```
 
+### Get response time
+```bash
+TARGET=google.com
+curl -s -o /dev/null -w "target=${TARGET} time_namelookup=%{time_namelookup} time_connect=%{time_connect} time_appconnect=%{time_appconnect} time_starttransfer=%{time_starttransfer} time_total=%{time_total} size_download=%{size_download} speed_download=%{speed_download} remote_ip=%{remote_ip}\n" "${TARGET}"
+
+curl -o /dev/null -s -w 'Total: %{time_total}s\n'  https://www.google.com
+```
+
 ![](https://blog.cloudflare.com/content/images/2018/10/Screen-Shot-2018-10-16-at-14.51.29-1.png)
 
 ### httpie
@@ -202,10 +211,10 @@ http localhost:3000 'Accept-Encoding: br, gzip, deflate' -v
 http localhost:3000 'Accept-Encoding: br, gzip, deflate' -h
 ```
 
-### Get response time
-```bash
-curl -o /dev/null -w "Connect: %{time_connect} TTFB: %{time_starttransfer} Total time: %{time_total} Size: %{size_download} \n" https://google.com
-curl -o /dev/null -s -w 'Total: %{time_total}s\n'  https://www.google.com
+### netstat
+Show ports in use
+```
+netstat -plnt
 ```
 
 ## String(Text) Processing
