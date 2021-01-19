@@ -4,6 +4,14 @@ description: Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 
 Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 
+## Table of Contents
+- [Installation](#installation)
+- [Volumes](#volumes)
+- [Resources](#resources)
+- [PVC](#pvc)
+- [Affinity](#affinity)
+- [Helm](#helm)
+
 ## Installation
 ### kubectl
 ref: https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl-binary-with-curl-on-linux
@@ -36,6 +44,15 @@ spec:
         volumeMounts:
         - name: mongo-socket
           mountPath: /tmp
+```
+
+```yaml
+      - name: myconfigmap
+        configMap:
+          name: myconfigmap
+      - name: mysecret
+        secret:
+          secretName: mysecret
 ```
 
 ## Resources
@@ -367,6 +384,17 @@ spec:
   - name: http
     port: 80
     targetPort: http
+```
+
+## Helm
+### Install a 3rd party chart
+ref: https://artifacthub.io/packages/helm/kvaps/nfs-server-provisioner?modal=install
+
+```
+helm repo add kvaps https://kvaps.github.io/charts
+helm install nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.2.1
+helm show values kvaps/nfs-server-provisioner --version 1.2.1
+helm show values kvaps/nfs-server-provisioner --version 1.2.1 > value.yaml
 ```
 
 ## Frequent Commands
