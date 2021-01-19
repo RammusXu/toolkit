@@ -1,0 +1,20 @@
+version: '3'
+services:
+  client:
+    image: openresty/openresty:alpine-fat
+    volumes:
+      - "./nginx-client-conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+      - "./cert/client.crt:/etc/ssl/certs/client.crt"
+      - "./cert/client.key:/etc/ssl/certs/client.key"
+    ports:
+    - "8001:80"
+  server:
+    image: openresty/openresty:alpine-fat
+    volumes:
+      - "./nginx-server-conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf"
+      - "./cert/server.crt:/etc/ssl/certs/server.crt"
+      - "./cert/server.key:/etc/ssl/certs/server.key"
+      - "./cert/client.crt:/etc/ssl/certs/client.crt"
+    ports:
+    - "8080:80"
+    - "8443:443"
