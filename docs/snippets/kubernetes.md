@@ -397,6 +397,19 @@ helm show values kvaps/nfs-server-provisioner --version 1.2.1
 helm show values kvaps/nfs-server-provisioner --version 1.2.1 > value.yaml
 ```
 
+### Uninstall
+```bash
+helm uninstall nfs-server-provisioner -n nfs-server
+```
+
+### Render a chart to a yaml file
+```
+helm template nfs-server-provisioner kvaps/nfs-server-provisioner \
+  --version 1.2.1 \
+  -f values.yaml \
+  -n nfs-server > nfs-server.yaml
+```
+
 ## Frequent Commands
 ### Gracefully rolling restart deployment.
 ```bash
