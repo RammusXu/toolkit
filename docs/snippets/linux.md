@@ -6,7 +6,7 @@ description: 常用的 linux 指令集與範例
 
 常用的 linux 指令集與範例
 
-## Indexes
+## Table of Contents
 
 - Process:
     - [ps](#ps) - 目前的所有 process。
