@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Users/rammus/workspace/toolkit/.venv/bin/python3.9",
+    "python.pythonPath": ".venv/bin/python",
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true
 }
