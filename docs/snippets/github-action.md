@@ -277,6 +277,47 @@ curl -H "Authorization: token $INPUT_GITHUB_TOKEN" \
     -XPOST $INPUT_COMMENT_URL
 ```
 
+### Docekr build and push to ghcr.io when pushing a git tag
+```yaml
+name: Tag
+
+on:
+  push:
+    tags:
+      - "**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Env
+        run: |
+          echo "BUILD_TAG=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_ENV
+          echo "BUILD_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Docker Login
+        # uses: docker/login-action@f3364599c6aa293cdc2b8391b1b56d0c30e45c8a
+        uses: docker/login-action@v1.8.0
+        with:
+          registry: ghcr.io
+          username: ${{ secrets.GHCR_USERNAME }}
+          password: ${{ secrets.GHCR_PASSWORD }}
+
+      - name: Build and push Docker images
+        # uses: docker/build-push-action@4a531fa5a603bab87dfa56578bd82b28508c9547
+        uses: docker/build-push-action@v2.2.2
+        with:
+          context: "."
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ env.BUILD_TAG }}
+            ghcr.io/${{ github.repository }}:${{ env.BUILD_SHA }}
+          push: true
+```
+
 ### Docker login
 ```yaml
     - name: Docker Login - docker.pkg.github.com
