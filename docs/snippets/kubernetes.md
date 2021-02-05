@@ -7,6 +7,7 @@ Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 ## Table of Contents
 - [Installation](#installation)
 - [Volumes](#volumes)
+- [StatefulSet](#statefulset)
 - [Resources](#resources)
 - [PVC](#pvc)
 - [Affinity](#affinity)
@@ -53,6 +54,54 @@ spec:
       - name: mysecret
         secret:
           secretName: mysecret
+```
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-pod
+spec:
+  containers:
+    - name: test-container
+      image: k8s.gcr.io/busybox
+      command: [ "/bin/sh", "-c", "ls /etc/config/" ]
+      volumeMounts:
+      - name: config-volume
+        mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: test-config
+  restartPolicy: Never
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: test-config
+data:
+  domains.json: |
+    [
+      "google.com",
+      "facebook.com",
+      "amazon.com",
+      "swag.live"
+    ]
+
+```
+
+## StatefulSet
+### volumeClaimTemplates
+```yaml
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: ssd
+      resources:
+        requests:
+          storage: 50Gi
 ```
 
 ## Resources
