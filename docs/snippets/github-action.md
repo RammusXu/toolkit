@@ -30,6 +30,9 @@ on:
       - "**"
     tags:
       - "**"
+    paths:
+      - src/**
+      - Dockerfile
   pull_request:
     branches:
       - master
