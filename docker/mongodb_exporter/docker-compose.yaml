@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:4.4.3
+    ports:
+    - "27017:27017"
+  mongodb_exporter:
+    image: ghcr.io/swaglive/mongodb_exporter:v0.20.1-beta2
+    # entrypoint:
+    # - "tail"
+    # - "-f"
+    # - "/dev/null"
+    environment:
+      MONGODB_URI: "mongodb://mongo:27017"
+    ports:
+    - "9216:9216"

@@ -1,0 +1,402 @@
+# TYPE mongodb_asserts_total counter
+mongodb_asserts_total{type="msg"} 0
+mongodb_asserts_total{type="regular"} 0
+mongodb_asserts_total{type="rollovers"} 0
+mongodb_asserts_total{type="user"} 0
+mongodb_asserts_total{type="warning"} 0
+# HELP mongodb_connections The connections sub document data regarding the current status of incoming connections and availability of the database server. Use these values to assess the current load and capacity requirements of the server
+# TYPE mongodb_connections gauge
+mongodb_connections{state="active"} 1
+mongodb_connections{state="available"} 838858
+mongodb_connections{state="current"} 2
+# HELP mongodb_connections_metrics_created_total totalCreated provides a count of all incoming connections created to the server. This number includes connections that have since closed
+# TYPE mongodb_connections_metrics_created_total counter
+mongodb_connections_metrics_created_total 4
+# HELP mongodb_exporter_build_info A metric with a constant '1' value labeled by version, revision, branch, and goversion from which mongodb_exporter was built.
+# TYPE mongodb_exporter_build_info gauge
+mongodb_exporter_build_info{branch="",goversion="go1.13.15",revision="",version=""} 1
+# HELP mongodb_exporter_last_scrape_duration_seconds Duration of the last scrape of metrics from MongoDB.
+# TYPE mongodb_exporter_last_scrape_duration_seconds gauge
+mongodb_exporter_last_scrape_duration_seconds 0.0040733
+# HELP mongodb_exporter_last_scrape_error Whether the last scrape of metrics from MongoDB resulted in an error (1 for error, 0 for success).
+# TYPE mongodb_exporter_last_scrape_error gauge
+mongodb_exporter_last_scrape_error 0
+# HELP mongodb_exporter_scrape_errors_total Total number of times an error occurred scraping a MongoDB.
+# TYPE mongodb_exporter_scrape_errors_total counter
+mongodb_exporter_scrape_errors_total 0
+# HELP mongodb_exporter_scrapes_total Total number of times MongoDB was scraped for metrics.
+# TYPE mongodb_exporter_scrapes_total counter
+mongodb_exporter_scrapes_total 2
+# HELP mongodb_extra_info_heap_usage_bytes The heap_usage_bytes field is only available on Unix/Linux systems, and reports the total size in bytes of heap space used by the database process
+# TYPE mongodb_extra_info_heap_usage_bytes gauge
+mongodb_extra_info_heap_usage_bytes 0
+# HELP mongodb_extra_info_page_faults_total The page_faults Reports the total number of page faults that require disk operations. Page faults refer to operations that require the database server to access data which isn’t available in active memory. The page_faults counter may increase dramatically during moments of poor performance and may correlate with limited memory environments and larger data sets. Limited and sporadic page faults do not necessarily indicate an issue
+# TYPE mongodb_extra_info_page_faults_total gauge
+mongodb_extra_info_page_faults_total 0
+# HELP mongodb_instance_local_time The localTime value is the current time, according to the server, in UTC specified in an ISODate format.
+# TYPE mongodb_instance_local_time gauge
+mongodb_instance_local_time 1.61157175e+09
+# HELP mongodb_instance_uptime_estimate_seconds uptimeEstimate provides the uptime as calculated from MongoDB's internal course-grained time keeping system.
+# TYPE mongodb_instance_uptime_estimate_seconds counter
+mongodb_instance_uptime_estimate_seconds 254
+# HELP mongodb_instance_uptime_seconds The value of the uptime field corresponds to the number of seconds that the mongos or mongod process has been active.
+# TYPE mongodb_instance_uptime_seconds counter
+mongodb_instance_uptime_seconds 254
+# HELP mongodb_memory The mem data structure holds information regarding the target system architecture of mongod and current memory use
+# TYPE mongodb_memory gauge
+mongodb_memory{type="mapped"} 0
+mongodb_memory{type="mapped_with_journal"} 0
+mongodb_memory{type="resident"} 96
+mongodb_memory{type="virtual"} 1549
+# HELP mongodb_mongod_global_lock_client The activeClients data structure provides more granular information about the number of connected clients and the operation types (e.g. read or write) performed by these clients
+# TYPE mongodb_mongod_global_lock_client gauge
+mongodb_mongod_global_lock_client{type="reader"} 0
+mongodb_mongod_global_lock_client{type="writer"} 0
+# HELP mongodb_mongod_global_lock_current_queue The currentQueue data structure value provides more granular information concerning the number of operations queued because of a lock
+# TYPE mongodb_mongod_global_lock_current_queue gauge
+mongodb_mongod_global_lock_current_queue{type="reader"} 0
+mongodb_mongod_global_lock_current_queue{type="writer"} 0
+# HELP mongodb_mongod_global_lock_ratio The value of ratio displays the relationship between lockTime and totalTime. Low values indicate that operations have held the globalLock frequently for shorter periods of time. High values indicate that operations have held globalLock infrequently for longer periods of time
+# TYPE mongodb_mongod_global_lock_ratio gauge
+mongodb_mongod_global_lock_ratio 0
+# HELP mongodb_mongod_global_lock_total The value of totalTime represents the time, in microseconds, since the database last started and creation of the globalLock. This is roughly equivalent to total server uptime
+# TYPE mongodb_mongod_global_lock_total counter
+mongodb_mongod_global_lock_total 0
+# HELP mongodb_mongod_locks_time_acquiring_global_microseconds_total amount of time in microseconds that any database has spent waiting for the global lock
+# TYPE mongodb_mongod_locks_time_acquiring_global_microseconds_total counter
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Collection",type="read"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Collection",type="write"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Database",type="read"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Database",type="write"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Global",type="read"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Global",type="write"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Mutex",type="read"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="Mutex",type="write"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="ParallelBatchWriterMode",type="read"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="ParallelBatchWriterMode",type="write"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="ReplicationStateTransition",type="read"} 0
+mongodb_mongod_locks_time_acquiring_global_microseconds_total{database="ReplicationStateTransition",type="write"} 0
+# HELP mongodb_mongod_locks_time_locked_global_microseconds_total amount of time in microseconds that any database has held the global lock
+# TYPE mongodb_mongod_locks_time_locked_global_microseconds_total counter
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Collection",type="read"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Collection",type="write"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Database",type="read"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Database",type="write"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Global",type="read"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Global",type="write"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Mutex",type="read"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="Mutex",type="write"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="ParallelBatchWriterMode",type="read"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="ParallelBatchWriterMode",type="write"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="ReplicationStateTransition",type="read"} 0
+mongodb_mongod_locks_time_locked_global_microseconds_total{database="ReplicationStateTransition",type="write"} 0
+# HELP mongodb_mongod_locks_time_locked_local_microseconds_total amount of time in microseconds that any database has held the local lock
+# TYPE mongodb_mongod_locks_time_locked_local_microseconds_total counter
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Collection",type="read"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Collection",type="write"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Database",type="read"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Database",type="write"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Global",type="read"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Global",type="write"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Mutex",type="read"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="Mutex",type="write"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="ParallelBatchWriterMode",type="read"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="ParallelBatchWriterMode",type="write"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="ReplicationStateTransition",type="read"} 0
+mongodb_mongod_locks_time_locked_local_microseconds_total{database="ReplicationStateTransition",type="write"} 0
+# HELP mongodb_mongod_metrics_cursor_open The open is an embedded document that contains data regarding open cursors
+# TYPE mongodb_mongod_metrics_cursor_open gauge
+mongodb_mongod_metrics_cursor_open{state="noTimeout"} 0
+mongodb_mongod_metrics_cursor_open{state="pinned"} 0
+mongodb_mongod_metrics_cursor_open{state="total"} 0
+# HELP mongodb_mongod_metrics_cursor_timed_out_total timedOut provides the total number of cursors that have timed out since the server process started. If this number is large or growing at a regular rate, this may indicate an application error
+# TYPE mongodb_mongod_metrics_cursor_timed_out_total counter
+mongodb_mongod_metrics_cursor_timed_out_total 0
+# HELP mongodb_mongod_metrics_document_total The document holds a document of that reflect document access and modification patterns and data use. Compare these values to the data in the opcounters document, which track total number of operations
+# TYPE mongodb_mongod_metrics_document_total counter
+mongodb_mongod_metrics_document_total{state="deleted"} 0
+mongodb_mongod_metrics_document_total{state="inserted"} 0
+mongodb_mongod_metrics_document_total{state="returned"} 0
+mongodb_mongod_metrics_document_total{state="updated"} 0
+# HELP mongodb_mongod_metrics_get_last_error_wtime_num_total num reports the total number of getLastError operations with a specified write concern (i.e. w) that wait for one or more members of a replica set to acknowledge the write operation (i.e. a w value greater than 1.)
+# TYPE mongodb_mongod_metrics_get_last_error_wtime_num_total gauge
+mongodb_mongod_metrics_get_last_error_wtime_num_total 0
+# HELP mongodb_mongod_metrics_get_last_error_wtime_total_milliseconds total_millis reports the total amount of time in milliseconds that the mongod has spent performing getLastError operations with write concern (i.e. w) that wait for one or more members of a replica set to acknowledge the write operation (i.e. a w value greater than 1.)
+# TYPE mongodb_mongod_metrics_get_last_error_wtime_total_milliseconds counter
+mongodb_mongod_metrics_get_last_error_wtime_total_milliseconds 0
+# HELP mongodb_mongod_metrics_get_last_error_wtimeouts_total wtimeouts reports the number of times that write concern operations have timed out as a result of the wtimeout threshold to getLastError.
+# TYPE mongodb_mongod_metrics_get_last_error_wtimeouts_total counter
+mongodb_mongod_metrics_get_last_error_wtimeouts_total 0
+# HELP mongodb_mongod_metrics_operation_total operation is a sub-document that holds counters for several types of update and query operations that MongoDB handles using special operation types
+# TYPE mongodb_mongod_metrics_operation_total counter
+mongodb_mongod_metrics_operation_total{type="fastmod"} 0
+mongodb_mongod_metrics_operation_total{type="idhack"} 0
+mongodb_mongod_metrics_operation_total{type="scan_and_order"} 0
+# HELP mongodb_mongod_metrics_query_executor_total queryExecutor is a document that reports data from the query execution system
+# TYPE mongodb_mongod_metrics_query_executor_total counter
+mongodb_mongod_metrics_query_executor_total{state="scanned"} 0
+mongodb_mongod_metrics_query_executor_total{state="scanned_objects"} 0
+# HELP mongodb_mongod_metrics_record_moves_total moves reports the total number of times documents move within the on-disk representation of the MongoDB data set. Documents move as a result of operations that increase the size of the document beyond their allocated record size
+# TYPE mongodb_mongod_metrics_record_moves_total counter
+mongodb_mongod_metrics_record_moves_total 0
+# HELP mongodb_mongod_metrics_repl_apply_batches_num_total num reports the total number of batches applied across all databases
+# TYPE mongodb_mongod_metrics_repl_apply_batches_num_total counter
+mongodb_mongod_metrics_repl_apply_batches_num_total 0
+# HELP mongodb_mongod_metrics_repl_apply_batches_total_milliseconds total_millis reports the total amount of time the mongod has spent applying operations from the oplog
+# TYPE mongodb_mongod_metrics_repl_apply_batches_total_milliseconds counter
+mongodb_mongod_metrics_repl_apply_batches_total_milliseconds 0
+# HELP mongodb_mongod_metrics_repl_apply_ops_total ops reports the total number of oplog operations applied
+# TYPE mongodb_mongod_metrics_repl_apply_ops_total counter
+mongodb_mongod_metrics_repl_apply_ops_total 0
+# HELP mongodb_mongod_metrics_repl_buffer_count count reports the current number of operations in the oplog buffer
+# TYPE mongodb_mongod_metrics_repl_buffer_count gauge
+mongodb_mongod_metrics_repl_buffer_count 0
+# HELP mongodb_mongod_metrics_repl_buffer_max_size_bytes maxSizeBytes reports the maximum size of the buffer. This value is a constant setting in the mongod, and is not configurable
+# TYPE mongodb_mongod_metrics_repl_buffer_max_size_bytes counter
+mongodb_mongod_metrics_repl_buffer_max_size_bytes 0
+# HELP mongodb_mongod_metrics_repl_buffer_size_bytes sizeBytes reports the current size of the contents of the oplog buffer
+# TYPE mongodb_mongod_metrics_repl_buffer_size_bytes gauge
+mongodb_mongod_metrics_repl_buffer_size_bytes 0
+# HELP mongodb_mongod_metrics_repl_executor_event_waiters number of event waiters in the replication executor
+# TYPE mongodb_mongod_metrics_repl_executor_event_waiters gauge
+mongodb_mongod_metrics_repl_executor_event_waiters 0
+# HELP mongodb_mongod_metrics_repl_executor_queue number of queued operations in the replication executor
+# TYPE mongodb_mongod_metrics_repl_executor_queue gauge
+mongodb_mongod_metrics_repl_executor_queue{type="networkInProgress"} 0
+mongodb_mongod_metrics_repl_executor_queue{type="sleepers"} 0
+# HELP mongodb_mongod_metrics_repl_executor_unsignaled_events number of unsignaled events in the replication executor
+# TYPE mongodb_mongod_metrics_repl_executor_unsignaled_events gauge
+mongodb_mongod_metrics_repl_executor_unsignaled_events 0
+# HELP mongodb_mongod_metrics_repl_network_bytes_total bytes reports the total amount of data read from the replication sync source
+# TYPE mongodb_mongod_metrics_repl_network_bytes_total counter
+mongodb_mongod_metrics_repl_network_bytes_total 0
+# HELP mongodb_mongod_metrics_repl_network_getmores_num_total num reports the total number of getmore operations, which are operations that request an additional set of operations from the replication sync source.
+# TYPE mongodb_mongod_metrics_repl_network_getmores_num_total counter
+mongodb_mongod_metrics_repl_network_getmores_num_total 0
+# HELP mongodb_mongod_metrics_repl_network_getmores_total_milliseconds total_millis reports the total amount of time required to collect data from getmore operations
+# TYPE mongodb_mongod_metrics_repl_network_getmores_total_milliseconds counter
+mongodb_mongod_metrics_repl_network_getmores_total_milliseconds 0
+# HELP mongodb_mongod_metrics_repl_network_ops_total ops reports the total number of operations read from the replication source.
+# TYPE mongodb_mongod_metrics_repl_network_ops_total counter
+mongodb_mongod_metrics_repl_network_ops_total 0
+# HELP mongodb_mongod_metrics_repl_network_readers_created_total readersCreated reports the total number of oplog query processes created. MongoDB will create a new oplog query any time an error occurs in the connection, including a timeout, or a network operation. Furthermore, readersCreated will increment every time MongoDB selects a new source fore replication.
+# TYPE mongodb_mongod_metrics_repl_network_readers_created_total counter
+mongodb_mongod_metrics_repl_network_readers_created_total 0
+# HELP mongodb_mongod_metrics_repl_oplog_insert_bytes_total insertBytes the total size of documents inserted into the oplog.
+# TYPE mongodb_mongod_metrics_repl_oplog_insert_bytes_total counter
+mongodb_mongod_metrics_repl_oplog_insert_bytes_total 0
+# HELP mongodb_mongod_metrics_repl_oplog_insert_num_total num reports the total number of items inserted into the oplog.
+# TYPE mongodb_mongod_metrics_repl_oplog_insert_num_total counter
+mongodb_mongod_metrics_repl_oplog_insert_num_total 0
+# HELP mongodb_mongod_metrics_repl_oplog_insert_total_milliseconds total_millis reports the total amount of time spent for the mongod to insert data into the oplog.
+# TYPE mongodb_mongod_metrics_repl_oplog_insert_total_milliseconds counter
+mongodb_mongod_metrics_repl_oplog_insert_total_milliseconds 0
+# HELP mongodb_mongod_metrics_ttl_deleted_documents_total deletedDocuments reports the total number of documents deleted from collections with a ttl index.
+# TYPE mongodb_mongod_metrics_ttl_deleted_documents_total counter
+mongodb_mongod_metrics_ttl_deleted_documents_total 0
+# HELP mongodb_mongod_metrics_ttl_passes_total passes reports the number of times the background process removes documents from collections with a ttl index
+# TYPE mongodb_mongod_metrics_ttl_passes_total counter
+mongodb_mongod_metrics_ttl_passes_total 4
+# HELP mongodb_mongod_op_latencies_histogram op latencies histogram statistics of mongod
+# TYPE mongodb_mongod_op_latencies_histogram gauge
+mongodb_mongod_op_latencies_histogram{micros="128",type="command"} 4
+mongodb_mongod_op_latencies_histogram{micros="16",type="command"} 2
+mongodb_mongod_op_latencies_histogram{micros="256",type="command"} 1
+mongodb_mongod_op_latencies_histogram{micros="32",type="command"} 1
+mongodb_mongod_op_latencies_histogram{micros="512",type="command"} 1
+mongodb_mongod_op_latencies_histogram{micros="64",type="command"} 2
+# HELP mongodb_mongod_op_latencies_latency_total op latencies statistics in microseconds of mongod
+# TYPE mongodb_mongod_op_latencies_latency_total gauge
+mongodb_mongod_op_latencies_latency_total{type="command"} 2151
+mongodb_mongod_op_latencies_latency_total{type="read"} 0
+mongodb_mongod_op_latencies_latency_total{type="write"} 0
+# HELP mongodb_mongod_op_latencies_ops_total op latencies ops total statistics of mongod
+# TYPE mongodb_mongod_op_latencies_ops_total gauge
+mongodb_mongod_op_latencies_ops_total{type="command"} 11
+mongodb_mongod_op_latencies_ops_total{type="read"} 0
+mongodb_mongod_op_latencies_ops_total{type="write"} 0
+# HELP mongodb_mongod_storage_engine The storage engine used by the MongoDB instance
+# TYPE mongodb_mongod_storage_engine counter
+mongodb_mongod_storage_engine{engine="wiredTiger"} 1
+# HELP mongodb_mongod_wiredtiger_blockmanager_blocks_total The total number of blocks read by the WiredTiger BlockManager
+# TYPE mongodb_mongod_wiredtiger_blockmanager_blocks_total counter
+mongodb_mongod_wiredtiger_blockmanager_blocks_total{type="pre_loaded"} 7
+mongodb_mongod_wiredtiger_blockmanager_blocks_total{type="read"} 35
+mongodb_mongod_wiredtiger_blockmanager_blocks_total{type="read_mapped"} 0
+mongodb_mongod_wiredtiger_blockmanager_blocks_total{type="written"} 50
+# HELP mongodb_mongod_wiredtiger_blockmanager_bytes_total The total number of bytes read by the WiredTiger BlockManager
+# TYPE mongodb_mongod_wiredtiger_blockmanager_bytes_total counter
+mongodb_mongod_wiredtiger_blockmanager_bytes_total{type="read"} 155648
+mongodb_mongod_wiredtiger_blockmanager_bytes_total{type="read_mapped"} 0
+mongodb_mongod_wiredtiger_blockmanager_bytes_total{type="written"} 266240
+# HELP mongodb_mongod_wiredtiger_cache_bytes The current size of data in the WiredTiger Cache in bytes
+# TYPE mongodb_mongod_wiredtiger_cache_bytes gauge
+mongodb_mongod_wiredtiger_cache_bytes{type="dirty"} 760
+mongodb_mongod_wiredtiger_cache_bytes{type="internal_pages"} 3947
+mongodb_mongod_wiredtiger_cache_bytes{type="leaf_pages"} 41910
+mongodb_mongod_wiredtiger_cache_bytes{type="total"} 45857
+# HELP mongodb_mongod_wiredtiger_cache_bytes_total The total number of bytes read into/from the WiredTiger Cache
+# TYPE mongodb_mongod_wiredtiger_cache_bytes_total counter
+mongodb_mongod_wiredtiger_cache_bytes_total{type="read"} 18365
+mongodb_mongod_wiredtiger_cache_bytes_total{type="written"} 74519
+# HELP mongodb_mongod_wiredtiger_cache_evicted_total The total number of pages evicted from the WiredTiger Cache
+# TYPE mongodb_mongod_wiredtiger_cache_evicted_total counter
+mongodb_mongod_wiredtiger_cache_evicted_total{type="modified"} 0
+mongodb_mongod_wiredtiger_cache_evicted_total{type="unmodified"} 0
+# HELP mongodb_mongod_wiredtiger_cache_max_bytes The maximum size of data in the WiredTiger Cache in bytes
+# TYPE mongodb_mongod_wiredtiger_cache_max_bytes gauge
+mongodb_mongod_wiredtiger_cache_max_bytes 3.637510144e+09
+# HELP mongodb_mongod_wiredtiger_cache_overhead_percent The percentage overhead of the WiredTiger Cache
+# TYPE mongodb_mongod_wiredtiger_cache_overhead_percent gauge
+mongodb_mongod_wiredtiger_cache_overhead_percent 8
+# HELP mongodb_mongod_wiredtiger_cache_pages The current number of pages in the WiredTiger Cache
+# TYPE mongodb_mongod_wiredtiger_cache_pages gauge
+mongodb_mongod_wiredtiger_cache_pages{type="dirty"} 2
+mongodb_mongod_wiredtiger_cache_pages{type="total"} 18
+# HELP mongodb_mongod_wiredtiger_cache_pages_total The total number of pages read into/from the WiredTiger Cache
+# TYPE mongodb_mongod_wiredtiger_cache_pages_total counter
+mongodb_mongod_wiredtiger_cache_pages_total{type="read"} 14
+mongodb_mongod_wiredtiger_cache_pages_total{type="written"} 22
+# HELP mongodb_mongod_wiredtiger_concurrent_transactions_available_tickets The number of tickets that are available in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_concurrent_transactions_available_tickets gauge
+mongodb_mongod_wiredtiger_concurrent_transactions_available_tickets{type="read"} 127
+mongodb_mongod_wiredtiger_concurrent_transactions_available_tickets{type="write"} 128
+# HELP mongodb_mongod_wiredtiger_concurrent_transactions_out_tickets The number of tickets that are currently in use (out) in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_concurrent_transactions_out_tickets gauge
+mongodb_mongod_wiredtiger_concurrent_transactions_out_tickets{type="read"} 1
+mongodb_mongod_wiredtiger_concurrent_transactions_out_tickets{type="write"} 0
+# HELP mongodb_mongod_wiredtiger_concurrent_transactions_total_tickets The total number of tickets that are available in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_concurrent_transactions_total_tickets gauge
+mongodb_mongod_wiredtiger_concurrent_transactions_total_tickets{type="read"} 128
+mongodb_mongod_wiredtiger_concurrent_transactions_total_tickets{type="write"} 128
+# HELP mongodb_mongod_wiredtiger_log_bytes_total The total number of bytes written to the WiredTiger log
+# TYPE mongodb_mongod_wiredtiger_log_bytes_total counter
+mongodb_mongod_wiredtiger_log_bytes_total{type="payload"} 7204
+mongodb_mongod_wiredtiger_log_bytes_total{type="written"} 9600
+# HELP mongodb_mongod_wiredtiger_log_operations_total The total number of WiredTiger log operations
+# TYPE mongodb_mongod_wiredtiger_log_operations_total counter
+mongodb_mongod_wiredtiger_log_operations_total{type="flush"} 2484
+mongodb_mongod_wiredtiger_log_operations_total{type="read"} 0
+mongodb_mongod_wiredtiger_log_operations_total{type="scan"} 6
+mongodb_mongod_wiredtiger_log_operations_total{type="scan_double"} 0
+mongodb_mongod_wiredtiger_log_operations_total{type="sync"} 8
+mongodb_mongod_wiredtiger_log_operations_total{type="sync_dir"} 1
+mongodb_mongod_wiredtiger_log_operations_total{type="write"} 27
+# HELP mongodb_mongod_wiredtiger_log_records_scanned_total The total number of records scanned by log scan in the WiredTiger log
+# TYPE mongodb_mongod_wiredtiger_log_records_scanned_total counter
+mongodb_mongod_wiredtiger_log_records_scanned_total 15
+# HELP mongodb_mongod_wiredtiger_log_records_total The total number of compressed/uncompressed records written to the WiredTiger log
+# TYPE mongodb_mongod_wiredtiger_log_records_total counter
+mongodb_mongod_wiredtiger_log_records_total{type="compressed"} 5
+mongodb_mongod_wiredtiger_log_records_total{type="uncompressed"} 0
+# HELP mongodb_mongod_wiredtiger_session_open_cursors_total The total number of cursors opened in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_session_open_cursors_total gauge
+mongodb_mongod_wiredtiger_session_open_cursors_total 0
+# HELP mongodb_mongod_wiredtiger_session_open_sessions_total The total number of sessions opened in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_session_open_sessions_total gauge
+mongodb_mongod_wiredtiger_session_open_sessions_total 14
+# HELP mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds The time in milliseconds transactions have checkpointed in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds gauge
+mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds{type="max"} 153
+mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds{type="min"} 6
+# HELP mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds_total The total time in milliseconds transactions have checkpointed in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds_total counter
+mongodb_mongod_wiredtiger_transactions_checkpoint_milliseconds_total 183
+# HELP mongodb_mongod_wiredtiger_transactions_running_checkpoints The number of currently running checkpoints in WiredTiger
+# TYPE mongodb_mongod_wiredtiger_transactions_running_checkpoints gauge
+mongodb_mongod_wiredtiger_transactions_running_checkpoints 0
+# HELP mongodb_mongod_wiredtiger_transactions_total The total number of transactions WiredTiger has handled
+# TYPE mongodb_mongod_wiredtiger_transactions_total counter
+mongodb_mongod_wiredtiger_transactions_total{type="begins"} 18
+mongodb_mongod_wiredtiger_transactions_total{type="checkpoints"} 5
+mongodb_mongod_wiredtiger_transactions_total{type="committed"} 2
+mongodb_mongod_wiredtiger_transactions_total{type="rolledback"} 16
+# HELP mongodb_network_bytes_total The network data structure contains data regarding MongoDB’s network use
+# TYPE mongodb_network_bytes_total counter
+mongodb_network_bytes_total{state="in_bytes"} 1779
+mongodb_network_bytes_total{state="out_bytes"} 50027
+# HELP mongodb_network_metrics_num_requests_total The numRequests field is a counter of the total number of distinct requests that the server has received. Use this value to provide context for the bytesIn and bytesOut values to ensure that MongoDB’s network utilization is consistent with expectations and application use
+# TYPE mongodb_network_metrics_num_requests_total counter
+mongodb_network_metrics_num_requests_total 12
+# HELP mongodb_op_counters_repl_total The opcountersRepl data structure, similar to the opcounters data structure, provides an overview of database replication operations by type and makes it possible to analyze the load on the replica in more granular manner. These values only appear when the current host has replication enabled
+# TYPE mongodb_op_counters_repl_total counter
+mongodb_op_counters_repl_total{type="command"} 0
+mongodb_op_counters_repl_total{type="delete"} 0
+mongodb_op_counters_repl_total{type="getmore"} 0
+mongodb_op_counters_repl_total{type="insert"} 0
+mongodb_op_counters_repl_total{type="query"} 0
+mongodb_op_counters_repl_total{type="update"} 0
+# HELP mongodb_op_counters_total The opcounters data structure provides an overview of database operations by type and makes it possible to analyze the load on the database in more granular manner. These numbers will grow over time and in response to database use. Analyze these values over time to track database utilization
+# TYPE mongodb_op_counters_total counter
+mongodb_op_counters_total{type="command"} 14
+mongodb_op_counters_total{type="delete"} 0
+mongodb_op_counters_total{type="getmore"} 0
+mongodb_op_counters_total{type="insert"} 0
+mongodb_op_counters_total{type="query"} 2
+mongodb_op_counters_total{type="update"} 0
+# HELP mongodb_tcmalloc_aggressive_memory_decommit Whether aggressive_memory_decommit is on
+# TYPE mongodb_tcmalloc_aggressive_memory_decommit counter
+mongodb_tcmalloc_aggressive_memory_decommit 0
+# HELP mongodb_tcmalloc_cache_bytes Sizes for tcpmalloc caches in bytes
+# TYPE mongodb_tcmalloc_cache_bytes gauge
+mongodb_tcmalloc_cache_bytes{cache="central_cache",type="free"} 227976
+mongodb_tcmalloc_cache_bytes{cache="thread_cache",type="current_total"} 852752
+mongodb_tcmalloc_cache_bytes{cache="thread_cache",type="free"} 852752
+mongodb_tcmalloc_cache_bytes{cache="thread_cache",type="max_total"} 1.04333312e+09
+mongodb_tcmalloc_cache_bytes{cache="transfer_cache",type="free"} 96768
+# HELP mongodb_tcmalloc_free_bytes Total free bytes of tcmalloc
+# TYPE mongodb_tcmalloc_free_bytes counter
+mongodb_tcmalloc_free_bytes 1.177496e+06
+# HELP mongodb_tcmalloc_generic_heap High-level summary metricsInternal metrics from tcmalloc
+# TYPE mongodb_tcmalloc_generic_heap gauge
+mongodb_tcmalloc_generic_heap{type="allocated"} 8.4265064e+07
+mongodb_tcmalloc_generic_heap{type="total"} 8.9432064e+07
+# HELP mongodb_tcmalloc_pageheap_bytes Sizes for tcpmalloc pageheaps
+# TYPE mongodb_tcmalloc_pageheap_bytes gauge
+mongodb_tcmalloc_pageheap_bytes{type="comitted"} 8.9432064e+07
+mongodb_tcmalloc_pageheap_bytes{type="free"} 3.989504e+06
+mongodb_tcmalloc_pageheap_bytes{type="total_commit"} 8.9432064e+07
+mongodb_tcmalloc_pageheap_bytes{type="total_decommit"} 0
+mongodb_tcmalloc_pageheap_bytes{type="total_reserve"} 8.9432064e+07
+mongodb_tcmalloc_pageheap_bytes{type="unmapped"} 0
+# HELP mongodb_tcmalloc_pageheap_count Sizes for tcpmalloc pageheaps
+# TYPE mongodb_tcmalloc_pageheap_count gauge
+mongodb_tcmalloc_pageheap_count{type="commit"} 47
+mongodb_tcmalloc_pageheap_count{type="decommit"} 0
+mongodb_tcmalloc_pageheap_count{type="reserve"} 47
+mongodb_tcmalloc_pageheap_count{type="scavenge"} 0
+# HELP mongodb_up Whether MongoDB is up.
+# TYPE mongodb_up gauge
+mongodb_up 1
+# HELP mongodb_version_info Software version information for mongodb process.
+# TYPE mongodb_version_info gauge
+mongodb_version_info{mongodb="4.4.3"} 1
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 0.03
+# HELP process_max_fds Maximum number of open file descriptors.
+# TYPE process_max_fds gauge
+process_max_fds 1.048576e+06
+# HELP process_open_fds Number of open file descriptors.
+# TYPE process_open_fds gauge
+process_open_fds 9
+# HELP process_resident_memory_bytes Resident memory size in bytes.
+# TYPE process_resident_memory_bytes gauge
+process_resident_memory_bytes 1.3131776e+07
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1.61157174561e+09
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 1.21335808e+08
+# HELP process_virtual_memory_max_bytes Maximum amount of virtual memory available in bytes.
+# TYPE process_virtual_memory_max_bytes gauge
+process_virtual_memory_max_bytes -1
+# HELP promhttp_metric_handler_requests_in_flight Current number of scrapes being served.
+# TYPE promhttp_metric_handler_requests_in_flight gauge
+promhttp_metric_handler_requests_in_flight 1
+# HELP promhttp_metric_handler_requests_total Total number of scrapes by HTTP status code.
+# TYPE promhttp_metric_handler_requests_total counter
+promhttp_metric_handler_requests_total{code="200"} 0
+promhttp_metric_handler_requests_total{code="500"} 0
+promhttp_metric_handler_requests_total{code="503"} 0
