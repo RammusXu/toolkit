@@ -7,7 +7,7 @@
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm show values bitnami/redis-cluster --version 4.2.8
-helm install redis-cluster bitnami/redis-cluster
+helm install redis-cluster bitnami/redis-cluster -f values.yaml
 ```
 
 

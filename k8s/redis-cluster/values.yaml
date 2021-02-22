@@ -592,7 +592,7 @@ containerSecurityContext:
 
 ## Use password authentication
 ##
-usePassword: true
+usePassword: false
 ## Redis(TM) password
 ## Defaults to a random 10-character alphanumeric string if not set and usePassword is true
 ## ref: https://github.com/bitnami/bitnami-docker-redis#setting-the-server-password-on-first-run
@@ -707,7 +707,7 @@ statefulset:
 ## Prometheus Exporter / Metrics
 ##
 metrics:
-  enabled: false
+  enabled: true
 
   image:
     registry: docker.io
@@ -827,7 +827,7 @@ volumePermissions:
 ## used to perform sysctl operation to modify Kernel settings (needed sometimes to avoid warnings)
 ##
 sysctlImage:
-  enabled: false
+  enabled: true
   command: []
   registry: docker.io
   repository: bitnami/minideb
