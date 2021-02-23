@@ -1,11 +1,11 @@
-
 ## Environment
-- bitnami/redis-cluster: 4.2.8
+- bitnami/redis-cluster: 4.3.3
 - k3s: v4.0.0
-
-## Start
+-
+- ## Start
 ```bash
 helm repo add bitnami https://charts.bitnami.com/bitnami
+helm update
 
 CHART_VERSION=4.3.3
 helm show values bitnami/redis-cluster --version ${CHART_VERSION} > values.yaml
@@ -13,12 +13,15 @@ helm install redis-cluster bitnami/redis-cluster --version ${CHART_VERSION} -f v
 helm upgrade redis-cluster bitnami/redis-cluster -f values.yaml -n default
 ```
 
+## Create template
+```bash
+helm template redis-cluster bitnami/redis-cluster --version ${CHART_VERSION} -f values.yaml -n default > template.yaml
+```
 
 ## Commands
 ```bash
 redis-cli -c -u redis://redis-cluster
 ```
-
 
 ## Configs
 ```yaml
@@ -40,15 +43,33 @@ cluster:
     lazyfree-lazy-server-del yes
     slave-lazy-flush yes
 
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: cloud.google.com/gke-preemptible
+            operator: NotIn
+            values:
+            - "true"
+
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - topologyKey: "kubernetes.io/hostname"
+          labelSelector:
+            matchExpressions:
+              - key: "app.kubernetes.io/name"
+                operator: In
+                values:
+                - redis-cluster
 
 usePassword: false
 
 persistence:
-  storageClass:
+  storageClass: ssd
   accessModes:
     - ReadWriteOnce
-  size: 8Gi
-
+  size: 64Gi
 
 metrics:
   enabled: true
