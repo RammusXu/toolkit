@@ -18,7 +18,7 @@ image:
   ## Bitnami Redis(TM) image tag
   ## ref: https://github.com/bitnami/bitnami-docker-redis#supported-tags-and-respective-dockerfile-links
   ##
-  tag: 6.0.10-debian-10-r5
+  tag: 6.0.10-debian-10-r34
   ## Specify a imagePullPolicy
   ## Defaults to 'Always' if image tag is 'latest', else set to 'IfNotPresent'
   ## ref: http://kubernetes.io/docs/user-guide/images/#pre-pulling-images
@@ -47,7 +47,7 @@ cluster:
   init: true
   ## Number of Redis(TM) nodes to be deployed
   ##
-  nodes: 3
+  nodes: 6
   ## Parameter to be passed as --cluster-replicas to the redis-cli --cluster create
   ## 1 means that we want a replica for every master created
   ##
@@ -93,6 +93,11 @@ redis:
   ## Custom args for the custom command:
   ##
   args: []
+
+  ## Deployment pod host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
 
   # Whether to use AOF Persistence mode or not
   # It is strongly recommended to use this type when dealing with clusters
@@ -216,6 +221,7 @@ redis:
   nodeAffinityPreset:
     ## Node affinity type
     ## Allowed values: soft, hard
+    ##
     type: ""
     ## Node label key to match
     ## E.g.
@@ -268,6 +274,11 @@ initJob:
   ## Container args (using container default if not set)
   ##
   args:
+
+  ## Deployment pod host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
 
   ## Job annotations
   ## IMPORTANT: When using Istio set as the following (https://github.com/istio/istio/issues/11045):
@@ -326,6 +337,7 @@ initJob:
   nodeAffinityPreset:
     ## Node affinity type
     ## Allowed values: soft, hard
+    ##
     type: ""
     ## Node label key to match
     ## E.g.
@@ -397,6 +409,11 @@ updateJob:
   ##
   args:
 
+  ## Deployment pod host aliases
+  ## https://kubernetes.io/docs/concepts/services-networking/add-entries-to-pod-etc-hosts-with-host-aliases/
+  ##
+  hostAliases: []
+
   ## Job annotations
   ##
   annotations: {}
@@ -456,6 +473,7 @@ updateJob:
   nodeAffinityPreset:
     ## Node affinity type
     ## Allowed values: soft, hard
+    ##
     type: ""
     ## Node label key to match
     ## E.g.
@@ -592,7 +610,7 @@ containerSecurityContext:
 
 ## Use password authentication
 ##
-usePassword: false
+usePassword: true
 ## Redis(TM) password
 ## Defaults to a random 10-character alphanumeric string if not set and usePassword is true
 ## ref: https://github.com/bitnami/bitnami-docker-redis#setting-the-server-password-on-first-run
@@ -707,12 +725,12 @@ statefulset:
 ## Prometheus Exporter / Metrics
 ##
 metrics:
-  enabled: true
+  enabled: false
 
   image:
     registry: docker.io
     repository: bitnami/redis-exporter
-    tag: 1.15.1-debian-10-r6
+    tag: 1.17.1-debian-10-r0
     pullPolicy: IfNotPresent
     ## Optionally specify an array of imagePullSecrets.
     ## Secrets must be manually created in the namespace.
@@ -827,7 +845,7 @@ volumePermissions:
 ## used to perform sysctl operation to modify Kernel settings (needed sometimes to avoid warnings)
 ##
 sysctlImage:
-  enabled: true
+  enabled: false
   command: []
   registry: docker.io
   repository: bitnami/minideb
