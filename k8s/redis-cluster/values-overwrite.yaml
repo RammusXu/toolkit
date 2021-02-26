@@ -1,8 +1,47 @@
+cluster:
+  init: false
 
 redis:
   configmap: |-
     maxmemory-policy allkeys-lfu
     maxmemory 4g
+
+    appendonly yes
+
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: cloud.google.com/gke-preemptible
+  #           operator: NotIn
+  #           values:
+  #           - "true"
+
+  #   podAntiAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       - topologyKey: "kubernetes.io/hostname"
+  #         labelSelector:
+  #           matchExpressions:
+  #             - key: "app.kubernetes.io/name"
+  #               operator: In
+  #               values:
+  #               - redis-cluster
+
+  # tolerations:
+  # - key: "swag.live/instance-family"
+  #   operator: "Equal"
+  #   value: "c2"
+  #   effect: "NoSchedule"
+
+  # resources:
+  #   limits:
+  #     cpu: 4000m
+  #     memory: 4.5Gi
+
+  #   requests:
+  #     cpu: 1000m
+  #     memory: 4Gi
 
 usePassword: false
 

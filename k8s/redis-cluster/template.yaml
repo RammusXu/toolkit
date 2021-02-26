@@ -1825,6 +1825,8 @@ data:
     # bgsave_cpulist 1,10-11
     maxmemory-policy allkeys-lfu
     maxmemory 4g
+    
+    appendonly yes
 ---
 # Source: redis-cluster/templates/scripts-configmap.yaml
 apiVersion: v1
@@ -2095,80 +2097,7 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: "64Gi"
+            storage: "32Gi"
         
   updateStrategy:
     type: RollingUpdate
----
-# Source: redis-cluster/templates/init-cluster.yaml
-apiVersion: batch/v1
-kind: Job
-metadata:
-  name: redis-cluster-cluster-create
-  labels:
-    app.kubernetes.io/name: redis-cluster
-    helm.sh/chart: redis-cluster-4.3.3
-    app.kubernetes.io/instance: redis-cluster
-    app.kubernetes.io/managed-by: Helm
-  annotations:
-    "helm.sh/hook": post-install,post-upgrade
-spec:
-  activeDeadlineSeconds: 600
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: redis-cluster
-        helm.sh/chart: redis-cluster-4.3.3
-        app.kubernetes.io/instance: redis-cluster
-        app.kubernetes.io/managed-by: Helm
-      annotations:
-    spec:
-      
-      affinity:
-        podAffinity:
-          
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchLabels:
-                    app.kubernetes.io/name: redis-cluster
-                    app.kubernetes.io/instance: redis-cluster
-                namespaces:
-                  - "default"
-                topologyKey: kubernetes.io/hostname
-              weight: 1
-        nodeAffinity:
-          
-      securityContext:
-        fsGroup: 1001
-      serviceAccountName: default
-      containers:
-        - name: trigger
-          image: docker.io/bitnami/redis-cluster:6.0.10-debian-10-r34
-          imagePullPolicy: "IfNotPresent"
-          securityContext:
-            runAsUser: 1001
-          command: ['/bin/bash', '-c']
-          args:
-            - |
-              # Backwards compatibility change
-              if ! [[ -f /opt/bitnami/redis/etc/redis.conf ]]; then
-                  cp /opt/bitnami/redis/etc/redis-default.conf /opt/bitnami/redis/etc/redis.conf
-              fi
-              /opt/bitnami/scripts/redis-cluster/entrypoint.sh /opt/bitnami/scripts/redis-cluster/run.sh
-          env:
-            - name: REDIS_TLS_ENABLED
-              value: "no"
-            - name: REDIS_PORT
-              value: "6379"
-            - name: REDIS_NODES
-              value: "redis-cluster-0.redis-cluster-headless redis-cluster-1.redis-cluster-headless redis-cluster-2.redis-cluster-headless redis-cluster-3.redis-cluster-headless redis-cluster-4.redis-cluster-headless redis-cluster-5.redis-cluster-headless "
-            - name: REDIS_CLUSTER_CREATOR
-              value: "yes"
-            - name: REDIS_CLUSTER_REPLICAS
-              value: "1"
-          resources:
-            limits: {}
-            requests: {}
-      restartPolicy: OnFailure
