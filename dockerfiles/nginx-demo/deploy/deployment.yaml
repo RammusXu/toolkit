@@ -25,6 +25,8 @@ kind: Service
 metadata:
   name: nginx-demo
   namespace: default
+  annotations:
+    networking.gke.io/load-balancer-type: "Internal"
 spec:
   # type: NodePort
   type: LoadBalancer
