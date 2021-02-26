@@ -59,15 +59,19 @@ endpoint:
 
 ## What I see
 > cluster-allow-reads-when-down no
+
 A shard down will cause whole cluster can't read/write.
 
 > Don't gurantee which are masters
+
 And won't elect new masters.
 
 > --set persistence.enabled=false
+
 Will cause redis can't failover. It relates to `cluster-config-file /bitnami/redis/data/nodes.conf`. Redis need to keep cluster informations.
 
 > bitnami/redis-cluster image will update redis node.conf when start up
+
 redis-cli doesn't support this part.
 
 ## References
