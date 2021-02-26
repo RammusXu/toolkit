@@ -47,7 +47,7 @@ cluster:
   init: true
   ## Number of Redis(TM) nodes to be deployed
   ##
-  nodes: 3
+  nodes: 6
   ## Parameter to be passed as --cluster-replicas to the redis-cli --cluster create
   ## 1 means that we want a replica for every master created
   ##
@@ -149,20 +149,7 @@ redis:
   ## Additional Redis(TM) configuration for the nodes
   ## ref: https://redis.io/topics/config
   ##
-  configmap: |-
-    maxmemory-policy volatile-lru
-
-    appendonly yes
-    aof-use-rdb-preamble yes
-    auto-aof-rewrite-percentage 50
-    auto-aof-rewrite-min-size 64mb
-
-    client-output-buffer-limit pubsub 256mb 256mb 3600
-
-    lazyfree-lazy-eviction yes
-    lazyfree-lazy-expire yes
-    lazyfree-lazy-server-del yes
-    slave-lazy-flush yes
+  configmap:
 
   ## An array to add extra env vars
   ## For example:
@@ -623,7 +610,7 @@ containerSecurityContext:
 
 ## Use password authentication
 ##
-usePassword: false
+usePassword: true
 ## Redis(TM) password
 ## Defaults to a random 10-character alphanumeric string if not set and usePassword is true
 ## ref: https://github.com/bitnami/bitnami-docker-redis#setting-the-server-password-on-first-run
@@ -738,7 +725,7 @@ statefulset:
 ## Prometheus Exporter / Metrics
 ##
 metrics:
-  enabled: true
+  enabled: false
 
   image:
     registry: docker.io
@@ -888,3 +875,4 @@ podSecurityPolicy:
 ## Array with extra yaml to deploy with the chart. Evaluated as a template
 ##
 extraDeploy: []
+

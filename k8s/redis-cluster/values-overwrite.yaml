@@ -1,0 +1,19 @@
+
+redis:
+  configmap: |-
+    maxmemory-policy allkeys-lfu
+    maxmemory 4g
+
+usePassword: false
+
+persistence:
+  # storageClass: ssd
+  accessModes:
+    - ReadWriteOnce
+  size: 32Gi
+
+metrics:
+  enabled: true
+
+sysctlImage:
+  enabled: true

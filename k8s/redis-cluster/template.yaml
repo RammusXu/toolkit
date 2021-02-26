@@ -1823,19 +1823,8 @@ data:
     #
     # Set bgsave child process to cpu affinity 1,10,11
     # bgsave_cpulist 1,10-11
-    maxmemory-policy volatile-lru
-    
-    appendonly yes
-    aof-use-rdb-preamble yes
-    auto-aof-rewrite-percentage 50
-    auto-aof-rewrite-min-size 64mb
-    
-    client-output-buffer-limit pubsub 256mb 256mb 3600
-    
-    lazyfree-lazy-eviction yes
-    lazyfree-lazy-expire yes
-    lazyfree-lazy-server-del yes
-    slave-lazy-flush yes
+    maxmemory-policy allkeys-lfu
+    maxmemory 4g
 ---
 # Source: redis-cluster/templates/scripts-configmap.yaml
 apiVersion: v1
@@ -1958,7 +1947,7 @@ spec:
     matchLabels:
       app.kubernetes.io/name: redis-cluster
       app.kubernetes.io/instance: redis-cluster
-  replicas: 3
+  replicas: 6
   serviceName: redis-cluster-headless
   podManagementPolicy: "Parallel"
   template:
@@ -2012,7 +2001,7 @@ spec:
               /opt/bitnami/scripts/redis-cluster/entrypoint.sh /opt/bitnami/scripts/redis-cluster/run.sh
           env:
             - name: REDIS_NODES
-              value: "redis-cluster-0.redis-cluster-headless redis-cluster-1.redis-cluster-headless redis-cluster-2.redis-cluster-headless "
+              value: "redis-cluster-0.redis-cluster-headless redis-cluster-1.redis-cluster-headless redis-cluster-2.redis-cluster-headless redis-cluster-3.redis-cluster-headless redis-cluster-4.redis-cluster-headless redis-cluster-5.redis-cluster-headless "
             - name: ALLOW_EMPTY_PASSWORD
               value: "yes"
             - name: REDIS_AOF_ENABLED
@@ -2077,6 +2066,17 @@ spec:
               containerPort: 9121
           resources:
             {}
+      initContainers:
+        - name: init-sysctl
+          image: docker.io/bitnami/minideb:buster
+          imagePullPolicy: "Always"
+          resources:
+            {}
+          command:
+            []
+          securityContext:
+            privileged: true
+            runAsUser: 0
       volumes:
         - name: scripts
           configMap:
@@ -2095,7 +2095,7 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: "8Gi"
+            storage: "64Gi"
         
   updateStrategy:
     type: RollingUpdate
@@ -2163,7 +2163,7 @@ spec:
             - name: REDIS_PORT
               value: "6379"
             - name: REDIS_NODES
-              value: "redis-cluster-0.redis-cluster-headless redis-cluster-1.redis-cluster-headless redis-cluster-2.redis-cluster-headless "
+              value: "redis-cluster-0.redis-cluster-headless redis-cluster-1.redis-cluster-headless redis-cluster-2.redis-cluster-headless redis-cluster-3.redis-cluster-headless redis-cluster-4.redis-cluster-headless redis-cluster-5.redis-cluster-headless "
             - name: REDIS_CLUSTER_CREATOR
               value: "yes"
             - name: REDIS_CLUSTER_REPLICAS
