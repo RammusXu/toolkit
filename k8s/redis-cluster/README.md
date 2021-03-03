@@ -2,6 +2,7 @@
 - bitnami/redis-cluster: 4.3.3
 - k3s: v4.0.0
 - gke: v1.18.12-gke.1210
+- gke: v1.17.15-gke.800
 
 ## Start
 ```bash
