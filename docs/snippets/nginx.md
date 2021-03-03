@@ -32,6 +32,17 @@ PID   USER     TIME  COMMAND
    10 nobody    0:00 {openresty} nginx: cache loader process
 ```
 
+## Special Cases
+
+### proxy_pass to a static direction (path)
+> "proxy_pass" cannot have URI part in location given by regular expression
+
+```nginx
+location /go404 {
+    rewrite ^ /404$1 break;
+    proxy_pass http://bk$uri;
+}
+```
 
 ## Reference
 - 常用的 linux 指令集與範例 - https://www.nginx.com/blog/rate-limiting-nginx/
