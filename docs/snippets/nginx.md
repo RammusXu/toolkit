@@ -10,6 +10,15 @@ nginx -s reload
 
 
 ## proxy_cache
+
+### Serve static files
+```nginx
+location ~* \.(jpg|png|css|js|js\.map|svg|json)$ {
+    expires                         max;
+    add_header                      Cache-Control "public";
+}
+```
+
 ### upstream hash
 增刪 server 會重新產生 hash。
 ```nginx
