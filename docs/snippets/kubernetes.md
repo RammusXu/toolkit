@@ -8,6 +8,7 @@ Kubernetes cheatsheet, snippets, troubleshooting, tips, hints
 - [Installation](#installation)
 - [Volumes](#volumes)
 - [StatefulSet](#statefulset)
+- [Container](#container)
 - [Resources](#resources)
 - [PVC](#pvc)
 - [Affinity](#affinity)
@@ -102,6 +103,25 @@ data:
       resources:
         requests:
           storage: 50Gi
+```
+
+## Container
+
+### Multiple line (commands) readinessProbe
+```yaml
+    readinessProbe:
+      exec:
+        command:
+          - sh
+          - -c
+          - |
+            echo hi >> /one
+            echo hi2 >> /one2
+      initialDelaySeconds: 0
+      periodSeconds: 2
+      timeoutSeconds: 5
+      successThreshold: 1
+      failureThreshold: 2
 ```
 
 ## Resources
@@ -292,9 +312,9 @@ spec:
     image: asia.gcr.io/swag-2c052/swag:42ff66b1
     envFrom:
     - configMapRef:
-      name: myconfigmap
+        name: myconfigmap
     - secretRef:
-      name: mysecret
+        name: mysecret
 ```
 
 ### volumeMounts from configmap
