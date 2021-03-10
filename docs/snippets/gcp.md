@@ -13,6 +13,8 @@ kubectl config set-context --current --namespace=dev
 kubectl create clusterrolebinding cluster-admin-binding \
   --clusterrole cluster-admin \
   --user user-account
+
+gcloud container operations list
 ```
 
 Create a regional GKE
