@@ -60,6 +60,15 @@ mongo --port 27019 --eval "rs.reconfig(rs.config(),{force:true})"
 db.getMongo().setReadPref('secondaryPreferred')
 ```
 
+### Auth
+```js
+mongo admin -u root -p 'password123' --authenticationDatabase admin
+mongo localhost/rammus -u rammus -p 'rammus1234' --authenticationDatabase admin
+
+mongo localhost/rammus
+db.auth('rammus','rammus1234')
+```
+
 
 ## Usage
 ```js
@@ -93,13 +102,13 @@ db.getCollection('feat.rammus').insertOne(
 )
 db.getCollection('feat.rammus').update(
     {name:"rammus"},
-    { 
+    {
         $addToSet: {tags: { $each : ["ban","hid","3"]}}
     }
 )
 db.getCollection('feat.rammus').update(
     {name:"rammus"},
-    { 
+    {
         $pull: {tags: { $in : ["ban","3"]}}
     }
 )
@@ -123,7 +132,7 @@ Test
 while true; do kubectl exec -it mongo-mongos-0 -- mongo mongo-mongos:27017/rammus --eval "db.serverStatus().connections;" ; done;
 
 
-while true; do 
+while true; do
   kubectl exec -it mongo-sh0-0 -- mongo mongo-sh0-0.mongo-sh0:27017/rammus --eval "db.serverStatus().connections;"
   kubectl exec -it mongo-sh0-0 -- mongo mongo-sh0-1.mongo-sh0:27017/rammus --eval "db.serverStatus().connections;"
   kubectl exec -it mongo-sh0-0 -- mongo mongo-sh0-2.mongo-sh0:27017/rammus --eval "db.serverStatus().connections;"
@@ -132,7 +141,20 @@ done;
 kubectl exec -it mongo-mongos-0 -- mongo --eval "db.serverStatus().connections;"
 kubectl exec -it mongo-mongos-1 -- mongo --eval "db.serverStatus().connections;"
 kubectl exec -it mongo-mongos-2 -- mongo --eval "db.serverStatus().connections;"
+```
 
+```js
+mongo --eval "db.adminCommand('ping')" localhost:27017
+```
+
+Stats
+```js
+db.serverStatus()
+db.stats()
+
+sh.status()
+rs.status()
+db.runCommand( "isMaster" )
 ```
 
 ## Troubleshooting
