@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: wireguard-client
+  namespace: edge-cluster
+data:
+
+  wg0.conf: |-
+    [Interface]
+    Address = 10.13.13.3
+    PrivateKey = key
+    ListenPort = 51820
+    DNS = 172.21.0.10
+
+    [Peer]
+    PublicKey = key
+    Endpoint = 1.1.1.1:51820
+    AllowedIPs = 0.0.0.0/0

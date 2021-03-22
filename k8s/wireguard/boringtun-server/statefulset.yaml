@@ -1,0 +1,74 @@
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: wireguard
+  namespace: vpn
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wireguard
+  serviceName: wireguard
+  volumeClaimTemplates:
+    - metadata:
+        name: config
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: alicloud-disk-essd
+        resources:
+          requests:
+            storage: 20Gi
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      volumes:
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+      initContainers:
+        - name: set-proc
+          image: rammusxu/boringtun:0.3.0
+          command: ["/bin/bash","-c"]
+          args:
+          - echo 1 > /proc/sys/net/ipv4/ip_forward
+          # - sysctl -w net.ipv4.ip_forward=1
+          securityContext:
+            privileged: true
+      containers:
+        - name: wireguard
+          image: rammusxu/boringtun:0.3.0
+          # command: ["/bin/bash","-c"]
+          # args:
+          # - |
+          #   tail -f /dev/null
+
+          envFrom:
+          - configMapRef:
+              name: wireguard
+          env:
+          - name: SKIP_COMPILE
+            value: "true"
+          securityContext:
+            privileged: true
+            capabilities:
+              add:
+                - NET_ADMIN
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: dev-net-tun
+              mountPath: /dev/net/tun
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"

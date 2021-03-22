@@ -1,0 +1,59 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  namespace: edge-cluster
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wireguard
+
+  template:
+    metadata:
+      labels:
+        app: wireguard
+    spec:
+      volumes:
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+      - name: config
+        configMap:
+          name: wireguard-client
+      containers:
+        - name: wireguard
+          image: masipcat/wireguard-go:latest
+
+          envFrom:
+          - configMapRef:
+              name: wireguard-client
+          env:
+          - name: LOG_LEVEL
+            value: info
+
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: config
+              mountPath: /etc/wireguard/wg0.conf
+              subPath: wg0.conf
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: "100m"
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
+
+        - name: alpine
+          image: alpine
+          command: ["/bin/sh","-c"]
+          args:
+          - |
+            apk add curl bind-tools
+            tail -f /dev/null

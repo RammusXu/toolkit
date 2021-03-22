@@ -1,0 +1,5 @@
+namespace: edge-cluster
+
+resources:
+  - configmap.yaml
+  - deployment.yaml

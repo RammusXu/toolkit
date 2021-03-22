@@ -1,0 +1,6 @@
+namespace: vpn
+
+resources:
+  - configmap.yaml
+  - statefulset.yaml
+  - service.yaml
