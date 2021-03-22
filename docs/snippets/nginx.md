@@ -53,5 +53,13 @@ location /go404 {
 }
 ```
 
+### Append a querystring to redirection
+> If a replacement string includes the new request arguments, the previous request arguments are appended after them
+
+
+```
+rewrite ^ http://test.example.com$uri?test=1 permanent;
+```
+
 ## Reference
 - 常用的 linux 指令集與範例 - https://www.nginx.com/blog/rate-limiting-nginx/
