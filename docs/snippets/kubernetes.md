@@ -37,7 +37,7 @@ spec:
   template:
     spec:
       volumes:
-      - name: plugindir
+      - name: mongo-socket
         emptyDir: {}
 
       containers:
@@ -46,15 +46,12 @@ spec:
         volumeMounts:
         - name: mongo-socket
           mountPath: /tmp
-```
-
-```yaml
-      - name: myconfigmap
-        configMap:
-          name: myconfigmap
-      - name: mysecret
-        secret:
-          secretName: mysecret
+        - name: myconfigmap
+          configMap:
+            name: myconfigmap
+        - name: mysecret
+          secret:
+            secretName: mysecret
 ```
 
 ```yaml
