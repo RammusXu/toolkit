@@ -19,6 +19,7 @@ description: 常用的 linux 指令集與範例
     - [lsblk](#lsblk) - 列出 block devices。
     - [dd](#dd) - 轉換、複製、產生檔案。
     - [tail](#tail) - 印出檔案的最後幾行。
+    - [untar](#untar) - 壓縮、解壓縮檔案。
 - Network:
     - [wget](#wget) - 下載網路資源。
     - [curl](#curl) - 下載網路資源。
@@ -118,6 +119,22 @@ hi
 # echo hi >> busybox-1
 ```
 
+### untar
+壓縮、解壓縮檔案。
+```bash
+wget https://github.com/openresty/headers-more-nginx-module/archive/refs/tags/v0.33.tar.gz
+tar -xf v0.33.tar.gz
+# .
+# ├── headers-more-nginx-module-0.33
+# │   ├── README.markdown
+# │   ├── config
+# │   ├── src
+# │   ├── t
+# │   ├── util
+# │   └── valgrind.suppress
+# └── v0.33.tar.gz
+```
+
 ## Monitoring
 ### Login log
 ```bash
@@ -215,6 +232,13 @@ http localhost:3000 'Accept-Encoding: br, gzip, deflate' -h
 Show ports in use
 ```
 netstat -plnt
+```
+
+### nc
+```bash
+## Check if a port is opened
+/workspace # nc -vz localhost 3000
+localhost (127.0.0.1:3000) open
 ```
 
 ## String(Text) Processing
