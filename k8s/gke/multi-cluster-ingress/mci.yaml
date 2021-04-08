@@ -1,0 +1,46 @@
+apiVersion: networking.gke.io/v1
+kind: MultiClusterIngress
+metadata:
+  name: foobar-ingress
+  namespace: multi-cluster-demo
+spec:
+  template:
+    spec:
+      tls:
+      - secretName: rammus-2020-cf-tls
+      backend:
+        serviceName: default-backend
+        servicePort: 8080
+      rules:
+      - host: foo.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: foo
+                servicePort: 8080
+      - host: bar.example.com
+        http:
+          paths:
+            - backend:
+                serviceName: bar
+                servicePort: 8080
+      - host: mci.rammus-2020.cf
+        http:
+          paths:
+            - backend:
+                serviceName: bar
+                servicePort: 8080
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: rammus-2020-cf
+  namespace: multi-cluster-demo
+spec:
+  secretName: rammus-2020-cf-tls
+  issuerRef:
+    kind: ClusterIssuer
+    name: ci-http01
+  commonName: mci.rammus-2020.cf
+  dnsNames:
+  - mci.rammus-2020.cf
