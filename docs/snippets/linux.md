@@ -20,6 +20,7 @@ description: 常用的 linux 指令集與範例
     - [dd](#dd) - 轉換、複製、產生檔案。
     - [tail](#tail) - 印出檔案的最後幾行。
     - [untar](#untar) - 壓縮、解壓縮檔案。
+    - [fio](#fio) - disk i/o 壓力測試。
 - Network:
     - [wget](#wget) - 下載網路資源。
     - [curl](#curl) - 下載網路資源。
