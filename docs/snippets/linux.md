@@ -10,9 +10,10 @@ description: 常用的 linux 指令集與範例
 
 - Process:
     - [ps](#ps) - 目前的所有 process。
-    - [lsof](#lsof) - 列出 open files
+    - [lsof](#lsof) - 列出 open files。
+    - [screen](#screen) - 在背景執行程序。
 - Linux Kernel:
-    - [sysctl](#sysctl) - 修改 Linux Kernel 參數
+    - [sysctl](#sysctl) - 修改 Linux Kernel 參數。
 - Disk, File system:
     - [ls](#ls) - 列出資料夾內容。
     - [du](#du) - 計算檔案使用空間。
@@ -57,6 +58,21 @@ sshd        882            root    4u  IPv6  19969      0t0  TCP *:22 (LISTEN)
 確定 port 有沒有被佔用
 ```
 lsof -i :22
+```
+
+### screen
+在背景執行程序。
+
+```bash
+screen
+screen -ls
+screen -r 69262.ttys001.mac-mini
+```
+
+熱鍵
+
+```
+ctrl+a d Detach 現在的 screen
 ```
 
 ## Linux Kernel
