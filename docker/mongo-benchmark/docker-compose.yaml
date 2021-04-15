@@ -1,0 +1,42 @@
+version: '3.1'
+
+volumes:
+  mongo:
+  mongo-rs1:
+  mongo-configsvr:
+
+services:
+  mongo:
+    image: mongo:4.4.4
+    command: mongod --bind_ip_all --port 27017 --shardsvr --replSet rs0 --dbpath /data/db
+    hostname: mongo
+    # ports:
+    # - "27017:27017"
+    volumes:
+    - mongo:/data/db
+  mongo-rs1:
+    image: mongo:4.4.4
+    command: mongod --bind_ip_all --port 27017 --shardsvr --replSet rs1 --dbpath /data/db
+    hostname: mongo-rs1
+    # ports:
+    # - "27017:27017"
+    volumes:
+    - mongo-rs1:/data/db
+  mongos:
+    image: mongo:4.4.4
+    command: mongos --bind_ip_all --port 27017 --configdb configReplSet/mongo-configsvr:27019
+    hostname: mongos
+    ports:
+    - "27017:27017"
+    depends_on:
+    - mongo
+    - mongo-configsvr
+  mongo-configsvr:
+    image: mongo:4.4.4
+    command: mongod --bind_ip_all --port 27019 --configsvr --replSet configReplSet --dbpath /data/configdb
+    hostname: mongo-configsvr
+    hostname: mongo-configsvr
+    volumes:
+    - mongo-configsvr:/data/configdb
+    depends_on:
+    - mongo
