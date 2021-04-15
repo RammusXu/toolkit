@@ -53,7 +53,6 @@ def write():
   try:
     doc = db[COLLECTION_NAME].update_one(
       {
-        # "nb": 0,
         "c32": randrange(11, 20),
         "c64": randrange(1000, 20000)
       },
