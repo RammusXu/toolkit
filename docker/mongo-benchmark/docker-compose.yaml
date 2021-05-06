@@ -10,16 +10,16 @@ services:
     image: mongo:4.4.4
     command: mongod --bind_ip_all --port 27017 --shardsvr --replSet rs0 --dbpath /data/db
     hostname: mongo
-    # ports:
-    # - "27017:27017"
+    ports:
+    - "27018:27017"
     volumes:
     - mongo:/data/db
   mongo-rs1:
     image: mongo:4.4.4
     command: mongod --bind_ip_all --port 27017 --shardsvr --replSet rs1 --dbpath /data/db
     hostname: mongo-rs1
-    # ports:
-    # - "27017:27017"
+    ports:
+    - "27019:27017"
     volumes:
     - mongo-rs1:/data/db
   mongos:
@@ -40,3 +40,19 @@ services:
     - mongo-configsvr:/data/configdb
     depends_on:
     - mongo
+
+  # Exporter
+  mongodb_exporter:
+    # image: bitnami/mongodb-exporter:0.20.4
+    image: docker.io/bitnami/mongodb-exporter:0.11.2-debian-10-r113
+    environment:
+      MONGODB_URI: "mongodb://mongo:27017"
+    ports:
+    - "9216:9216"
+
+  mongodb_exporter-mongos:
+    image: docker.io/bitnami/mongodb-exporter:0.11.2-debian-10-r113
+    environment:
+      MONGODB_URI: "mongodb://mongos:27017"
+    ports:
+    - "9217:9216"

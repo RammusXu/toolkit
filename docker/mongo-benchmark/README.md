@@ -37,3 +37,14 @@ db.test.createIndex( { "c32": 1, "c64": 1 } )
 sh.enableSharding("datagen_it_test")
 sh.shardCollection("datagen_it_test.test", { "c32": 1, "c64": 1 } )
 ```
+
+```
+sh.moveChunk("datagen_it_test.test", { c32: 11, c64: 1001 }, "rs1")
+```
+
+
+
+## Helm
+```bash
+helm install bitnami/mongodb-sharded --set metrics.enabled=true -g
+```

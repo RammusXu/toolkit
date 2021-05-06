@@ -8,10 +8,10 @@ from pymongo import MongoClient
 from random import randrange
 
 
-INTERVAL = 1.0
+INTERVAL = 0.1
 
 HOST = 'mongodb://localhost:27017/'
-COLLECTION_NAME = 'test2'
+COLLECTION_NAME = 'test'
 
 client = MongoClient(
   HOST,
@@ -53,21 +53,23 @@ def write():
   try:
     doc = db[COLLECTION_NAME].update_one(
       {
-        "c32": randrange(11, 20),
-        "c64": randrange(1000, 20000)
+        # "c32": randrange(11, 20),
+        # "c64": randrange(1000, 20000)
+        "c32": 11, "c64": 1001
       },
       {
         '$set': {
           "date": datetime.now()
         }
-      }
+      },
+      upsert=True
     )
 
-    print("write ok", datetime.now(), doc.modified_count)
+    print("write ok", datetime.now(), doc.matched_count, doc.modified_count)
 
   except Exception as e:
     print(e)
 
-read()
+# read()
 read_index()
 write()
