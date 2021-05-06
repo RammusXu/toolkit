@@ -1,0 +1,23 @@
+version: '3.1'
+
+volumes:
+  aof-data:
+  rdb-data:
+  nothing-data:
+
+services:
+  cache-p-aof:
+    image: redis:6.2.1-alpine
+    command: redis-server --port 6379 --io-threads 4 --appendonly yes --save "" --maxmemory-policy allkeys-lru --maxmemory 1g --io-threads-do-reads yes
+    volumes:
+      - aof-data:/data
+  cache-p-rdb:
+    image: redis:6.2.1-alpine
+    command: redis-server --port 6379 --io-threads 4 --appendonly yes --maxmemory-policy allkeys-lru --maxmemory 1g --io-threads-do-reads yes
+    volumes:
+      - rdb-data:/data
+  cache-p-nothing:
+    image: redis:6.2.1-alpine
+    command: redis-server --port 6379 --io-threads 4 --save "" --maxmemory-policy allkeys-lru --maxmemory 1g --io-threads-do-reads yes
+    volumes:
+      - nothing-data:/data

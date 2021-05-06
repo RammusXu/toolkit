@@ -1,0 +1,5 @@
+
+```
+SCRIPT LOAD "return 10"
+SCRIPT EXISTS "080c414e64bca1184bc4f6220a19c4d495ac896d"
+```
