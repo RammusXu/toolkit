@@ -460,7 +460,7 @@ ref: https://artifacthub.io/packages/helm/kvaps/nfs-server-provisioner?modal=ins
 helm repo add kvaps https://kvaps.github.io/charts
 helm install nfs-server-provisioner kvaps/nfs-server-provisioner --version 1.2.1
 helm show values kvaps/nfs-server-provisioner --version 1.2.1
-helm show values kvaps/nfs-server-provisioner --version 1.2.1 > value.yaml
+helm show values kvaps/nfs-server-provisioner --version 1.2.1 > values.yaml
 ```
 
 ### Uninstall
@@ -470,10 +470,16 @@ helm uninstall nfs-server-provisioner -n nfs-server
 
 ### Render a chart to a yaml file
 ```
-helm template nfs-server-provisioner kvaps/nfs-server-provisioner \
+helm template nfs-server-provisioner \
+  kvaps/nfs-server-provisioner \
   --version 1.2.1 \
   -f values.yaml \
   -n nfs-server > nfs-server.yaml
+```
+
+## Helmfile
+```
+helmfile apply --skip-deps
 ```
 
 ## Frequent Commands
