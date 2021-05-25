@@ -1,0 +1,51 @@
+## KubernetesExecutor
+executor: KubernetesExecutor
+redis:
+  enabled: false
+rbac:
+  create: true
+serviceaccount:
+  create: true
+
+## Git
+git:
+  dags:
+    enabled: true
+    repositories:
+      - repository: https://[USERNAME]:[USER_PAT]@github.com/[REPO_OWNER/[REPO_NAME]
+        branch: master
+        name: airflow-dags
+        path: dags
+
+
+## postgresql
+# postgresql:
+#   persistence:
+#     storageClass: "-"
+#     size: 100Gi
+
+#   resources:
+#     limits:
+#        cpu: 1
+#        memory: 1Gi
+#     requests:
+#        cpu: 500m
+#        memory: 1Gi
+
+# web:
+#   resources:
+#     limits:
+#        cpu: 2
+#        memory: 2Gi
+#     requests:
+#        cpu: 500m
+#        memory: 2Gi
+
+# scheduler:
+#   resources:
+#     limits:
+#        cpu: 1
+#        memory: 1Gi
+#     requests:
+#        cpu: 100m
+#        memory: 1Gi
