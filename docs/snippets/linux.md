@@ -27,6 +27,7 @@ description: 常用的 linux 指令集與範例
     - [curl](#curl) - 下載網路資源。
     - [httpie](#httpie) - 下載網路資源。RESTful like CLI。
     - [netstat](#netstat)
+    - [ss](#ss) - socket statistics
 - Miscellaneous:
     - [parallel](#parallel) - 並行執行指令。
 
@@ -249,6 +250,13 @@ http localhost:3000 'Accept-Encoding: br, gzip, deflate' -h
 Show ports in use
 ```
 netstat -plnt
+```
+
+### ss
+https://man7.org/linux/man-pages/man8/ss.8.html
+https://wangchujiang.com/linux-command/c/ss.html
+```bash
+ss -ntpl
 ```
 
 ### nc
