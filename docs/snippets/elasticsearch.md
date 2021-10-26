@@ -31,9 +31,25 @@ curl -X GET $URL/_cluster/settings?pretty
 curl -X GET "$URL/_nodes/stats/jvm?pretty"
 curl -X GET "$URL/_nodes/stats/jvm?pretty" |grep heap_used_in_bytes
 
+## Auth
+GET /_security/_authenticate
+
 
 ```
 
+## Index, Aliases
+```
+# PUT /<my-index-{now/d}-000001>
+PUT /%3Cmy-index-%7Bnow%2Fd%7D-000001%3E
+{
+  "aliases": {
+    "my-index": {}
+  }
+}
+
+
+GET _cat/aliases?v=true
+```
 
 ## CRUD
 ```
