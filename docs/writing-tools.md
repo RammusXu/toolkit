@@ -15,4 +15,7 @@ description: 整理一些常用的寫作工具，幫助個人學習或是解釋�
   ```
 
 ## 專案管理
-- [clockify](https://clockify.me): 管理時程、花費多少時間。
+- ~~[clockify](https://clockify.me): 管理時程、花費多少時間。~~(2021)
+- [toggl](https://toggl.com): 管理時程、花費多少時間、有 chrome 插件、有 iOS app、可離線操作。
+- [clickup](https://clickup.com): 專案管理、跟多種工具都可以整合、有 chrome 插件、time tracker
+- [notion](https://www.notion.so/product): 專案管理工具
