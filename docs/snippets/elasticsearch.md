@@ -65,6 +65,17 @@ curl -X GET "$URL/customer/_doc/1?pretty"
 
 curl -X GET "$URL/_cat/indices?v"
 curl -X DELETE $URL/
+
+
+curl -X PUT "$URL/_cluster/settings" -u "elastic:xxx" \
+  -H 'Content-Type: application/json; charset=utf-8' \
+  --data-binary @- << EOF
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": "primaries"
+  }
+}
+EOF
 ```
 
 ## Plugin
@@ -77,8 +88,30 @@ curl -X GET "$URL/_cat/plugins"
 ```
 
 
-## Benchmark
+## Benchmark - esrally
+
+https://esrally.readthedocs.io/en/stable/quickstart.html
+
 ```
-esrally --track=geonames --pipeline=benchmark-only --target-hosts=elasticsearch-client:9200
-esrally --track=pmc --pipeline=benchmark-only --target-hosts=elasticsearch-client:9200
+docker run -d --name esrally --entrypoint tail -v $PWD/ral:/ral elastic/rally -f /dev/null
+docker exec -it esrally bash
+
+esrally list tracks
+esrally info --track=http_logs
+```
+
+```bash
+# --test-mode: run it as fast as possible for testing a track
+# --pipeline=benchmark-only: docker needs this
+
+esrally race --track=http_logs --test-mode \
+    --pipeline=benchmark-only \
+    --target-hosts=192.168.0.1:9200 \
+    --client-options="basic_auth_user:'elastic',basic_auth_password:'xxxxxxxxxxxx'"
+
+esrally race --track=http_logs \
+    --pipeline=benchmark-only \
+    --target-hosts=192.168.0.1:9200 \
+    --client-options="basic_auth_user:'elastic',basic_auth_password:'xxxxxxxxxxxx'"
+
 ```
