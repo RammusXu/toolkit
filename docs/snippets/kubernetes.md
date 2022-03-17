@@ -477,6 +477,11 @@ helm template nfs-server-provisioner \
   -n nfs-server > nfs-server.yaml
 ```
 
+### Cheat sheet
+```
+            value: {{ required "kafkaEndpoint is required" .Values.kafkaEndpoint }}
+```
+
 ## Helmfile
 ```
 helmfile apply --skip-deps

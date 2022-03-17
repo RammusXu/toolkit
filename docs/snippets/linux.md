@@ -226,6 +226,17 @@ curl -X GET "https://httpbin.org/ip" -H "accept: application/json"
 curl https://httpbin.org/ip
 
 curl https://sdk.cloud.google.com | bash -s -- --disable-prompts
+
+
+curl -X PUT "localhost:9200/_cluster/settings" -u "elastic:xxx" \
+  -H 'Content-Type: application/json; charset=utf-8' \
+  --data-binary @- << EOF
+{
+  "persistent": {
+    "cluster.routing.allocation.enable": "primaries"
+  }
+}
+EOF
 ```
 
 ### Get response time
