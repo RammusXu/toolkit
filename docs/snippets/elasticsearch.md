@@ -92,12 +92,18 @@ curl -X GET "$URL/_cat/plugins"
 
 https://esrally.readthedocs.io/en/stable/quickstart.html
 
-```
+```bash
 docker run -d --name esrally --entrypoint tail -v $PWD/ral:/ral elastic/rally -f /dev/null
 docker exec -it esrally bash
 
 esrally list tracks
 esrally info --track=http_logs
+
+# List and compare
+esrally list races
+esrally compare \
+    --baseline=04714e80-9578-4cda-9a79-6d5ffff2c557 \
+    --contender=daa58545-7e0f-4ae1-b47f-c5b7511c69ce
 ```
 
 ```bash
@@ -107,11 +113,17 @@ esrally info --track=http_logs
 esrally race --track=http_logs --test-mode \
     --pipeline=benchmark-only \
     --target-hosts=192.168.0.1:9200 \
+    --track-params="ingest_percentage:1" \
     --client-options="basic_auth_user:'elastic',basic_auth_password:'xxxxxxxxxxxx'"
 
 esrally race --track=http_logs \
     --pipeline=benchmark-only \
     --target-hosts=192.168.0.1:9200 \
+    --track-params="ingest_percentage:1" \
     --client-options="basic_auth_user:'elastic',basic_auth_password:'xxxxxxxxxxxx'"
+
+
+    --include-tasks="index,delete-index,create-index,index-append" \
+    --include-tasks="index,term" \
 
 ```
