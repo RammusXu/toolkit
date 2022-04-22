@@ -78,6 +78,19 @@ curl -X PUT "$URL/_cluster/settings" -u "elastic:xxx" \
 EOF
 ```
 
+## Mapping
+```
+  "http_status": {
+    "type": "text",
+    "fields": {
+      "keyword": {
+        "type": "keyword",
+        "ignore_above": 256
+      }
+    }
+  },
+```
+
 ## Plugin
 ```
 /bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip

@@ -478,8 +478,33 @@ helm template nfs-server-provisioner \
 ```
 
 ### Cheat sheet
+
+- go temlpate: https://masterminds.github.io/sprig/
+
 ```
             value: {{ required "kafkaEndpoint is required" .Values.kafkaEndpoint }}
+```
+
+```
+  template:
+    metadata:
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap-vector.yaml") . | sha256sum }}
+```
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "vector.fullname" . }}-python
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
+data:
+  kibana.py: |-
+    {{ tpl (.Files.Get "conf/test.py") . | nindent 4 }}
+
+  __init__.py: ''
+
 ```
 
 ## Helmfile
