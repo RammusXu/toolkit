@@ -28,6 +28,8 @@ curl -sLO $gist
 See what will generate
 ```bash
 kustomize build github.com/RammusXu/toolkit/k8s/echoserver
+curl https://raw.githubusercontent.com/RammusXu/toolkit/ba463bf8a11929c8018ad76de166ef5441036d0f/k8s/echoserver/deployment.yaml
+curl https://raw.githubusercontent.com/RammusXu/toolkit/master/k8s/echoserver/deployment.yaml
 ```
 
 Apply
@@ -40,8 +42,33 @@ Clean
 kustomize build github.com/RammusXu/toolkit/k8s/echoserver | kubectl delete -f -
 ```
 
+Demo
+```bash
+❯ curl https://raw.githubusercontent.com/RammusXu/toolkit/ba463bf8a11929c8018ad76de166ef5441036d0f/k8s/echoserver/deployment.yaml | kubectl apply -f -
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  5374  100  5374    0     0  12734      0 --:--:-- --:--:-- --:--:-- 12734
+deployment.apps/echoserver created
+service/echoserver created
+configmap/nginx-config created
+
+❯ curl https://raw.githubusercontent.com/RammusXu/toolkit/ba463bf8a11929c8018ad76de166ef5441036d0f/k8s/echoserver/deployment.yaml | kubectl delete -f -
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  5374  100  5374    0     0  12556      0 --:--:-- --:--:-- --:--:-- 12526
+deployment.apps "echoserver" deleted
+service "echoserver" deleted
+configmap "nginx-config" deleted
+```
+
 ## Start server
 ```
 docker run -d --name toolkit -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
 docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+```
+
+or
+
+```
+make start
 ```

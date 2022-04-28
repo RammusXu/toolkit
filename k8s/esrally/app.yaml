@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rally
+  namespace: default
+  labels:
+    name: rally
+spec:
+  containers:
+  - name: rally
+    image: elastic/rally:2.3.1
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: 2
+      limits:
+        memory: 4Gi
+        cpu: 2
+    command: ["/bin/bash","-c"]
+    args:
+      - |
+        sleep 360000
+
+  # nodeSelector:
+  #   kubernetes.io/hostname: "ip-10-1-1-1.ap-northeast-1.compute.internal"
