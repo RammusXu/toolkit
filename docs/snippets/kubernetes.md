@@ -219,6 +219,18 @@ Scheduling:
                     - mongo-sh0
 ```
 
+new:
+```yaml
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - topologyKey: "kubernetes.io/hostname"
+              labelSelector:
+                matchLabels:
+                  app: mongo-sh0
+```
+
 
 ## env
 
