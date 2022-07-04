@@ -1,0 +1,321 @@
+# 1. kubectl create secret generic eck-cert -n qa1 --from-file=ca.crt=./.dev/tls.crt --from-file=ca.key=./.dev/tls.key
+
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  name: qa1
+  namespace: qa1
+spec:
+  version: 8.1.3
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  transport:
+    tls:
+      certificate:
+        secretName: eck-cert
+
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: qa1
+    logs:
+      elasticsearchRefs:
+      - name: qa1
+
+  nodeSets:
+    - name: masters
+      count: 3
+      config:
+        node.roles: ["master"]
+
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 10Gi
+            storageClassName: gp2-expansion
+
+      podTemplate:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: "eks.amazonaws.com/nodegroup"
+                        operator: In
+                        values:
+                          - "qa1-eks"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: "kubernetes.io/hostname"
+                  labelSelector:
+                    matchLabels:
+                      elasticsearch.k8s.elastic.co/cluster-name: qa1
+
+          tolerations:
+            - key: "eck"
+              operator: "Equal"
+              value: "qa"
+              effect: "NoSchedule"
+
+          initContainers:
+            - name: sysctl
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
+
+          containers:
+            - name: elasticsearch
+              env:
+                - name: READINESS_PROBE_PROTOCOL
+                  value: http
+              resources:
+                requests:
+                  memory: 6800Mi
+                  cpu: 1
+                limits:
+                  memory: 6800Mi
+                  cpu: 2
+
+    - name: data
+      count: 2
+      config:
+        node.roles: ["data_frozen", "remote_cluster_client"]
+
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 4096Gi
+            storageClassName: gp2-expansion
+
+      podTemplate:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: "eks.amazonaws.com/nodegroup"
+                        operator: In
+                        values:
+                          - "qa1-eks"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: "kubernetes.io/hostname"
+                  labelSelector:
+                    matchLabels:
+                      elasticsearch.k8s.elastic.co/cluster-name: qa1
+
+          tolerations:
+            - key: "eck"
+              operator: "Equal"
+              value: "qa"
+              effect: "NoSchedule"
+
+          initContainers:
+            - name: sysctl
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
+
+          containers:
+            - name: elasticsearch
+              env:
+                - name: READINESS_PROBE_PROTOCOL
+                  value: http
+              resources:
+                requests:
+                  memory: 6800Mi
+                  cpu: 1
+                limits:
+                  memory: 6800Mi
+                  cpu: 2
+
+    - name: data-hot
+      count: 3
+      config:
+        node.roles: ["data", "remote_cluster_client"]
+
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 12Ti
+            storageClassName: gp2-expansion
+
+      podTemplate:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: "eks.amazonaws.com/nodegroup"
+                        operator: In
+                        values:
+                          - "tf-monitor-cloud-logging-cluster-qa1dh-eks-managed-ondemand-ng"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: "kubernetes.io/hostname"
+                  labelSelector:
+                    matchLabels:
+                      elasticsearch.k8s.elastic.co/cluster-name: qa1
+
+          tolerations:
+            - key: "eck"
+              operator: "Equal"
+              value: "qa-data-hot"
+              effect: "NoSchedule"
+
+          initContainers:
+            - name: sysctl
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
+
+          containers:
+            - name: elasticsearch
+              env:
+                - name: READINESS_PROBE_PROTOCOL
+                  value: http
+              resources:
+                requests:
+                  memory: 58000Mi
+                  cpu: 1
+                limits:
+                  memory: 58000Mi
+                  cpu: 16
+
+    - name: client
+      count: 2
+      config:
+        node.roles: ["ingest", "ml", "transform", "remote_cluster_client"]
+
+      volumeClaimTemplates:
+        - metadata:
+            name: elasticsearch-data
+          spec:
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 50Gi
+            storageClassName: gp2-expansion
+
+      podTemplate:
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: "eks.amazonaws.com/nodegroup"
+                        operator: In
+                        values:
+                          - "qa1-eks"
+            podAntiAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - topologyKey: "kubernetes.io/hostname"
+                  labelSelector:
+                    matchLabels:
+                      elasticsearch.k8s.elastic.co/cluster-name: qa1
+
+          tolerations:
+            - key: "eck"
+              operator: "Equal"
+              value: "qa"
+              effect: "NoSchedule"
+
+          initContainers:
+            - name: sysctl
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              command: ["sh", "-c", "sysctl -w vm.max_map_count=262144"]
+
+          containers:
+            - name: elasticsearch
+              env:
+                - name: READINESS_PROBE_PROTOCOL
+                  value: http
+              resources:
+                requests:
+                  memory: 6800Mi
+                  cpu: 1
+                limits:
+                  memory: 6800Mi
+                  cpu: 2
+---
+# https://www.elastic.co/guide/en/cloud-on-k8s/2.1/k8s-managing-compute-resources.html#k8s-compute-resources-kibana-and-apm
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: qa1
+  namespace: qa1
+spec:
+  version: 8.1.3
+  count: 2
+  http:
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  elasticsearchRef:
+    name: qa1
+    serviceName: qa1-es-co
+
+  monitoring:
+    metrics:
+      elasticsearchRefs:
+      - name: qa1
+    logs:
+      elasticsearchRefs:
+      - name: qa1
+
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          env:
+            - name: NODE_OPTIONS
+              value: "--max-old-space-size=2048"
+          resources:
+            requests:
+              memory: 1Gi
+              cpu: 0.5
+            limits:
+              memory: 2.5Gi
+              cpu: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: qa1-es-co
+  namespace: qa1
+spec:
+  ports:
+    - name: http
+      port: 9200
+      targetPort: 9200
+  selector:
+    elasticsearch.k8s.elastic.co/cluster-name: "qa1"
+    elasticsearch.k8s.elastic.co/node-master: "false"
+    elasticsearch.k8s.elastic.co/node-data_frozen: "false"
