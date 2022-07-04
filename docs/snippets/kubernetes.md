@@ -422,7 +422,8 @@ spec:
 ```yaml
       - name: imagemagick
         image: swaglive/imagemagick:lastest
-        command: ["/bin/sh","-c"]
+        command: ["/bin/sh","-e","-o","pipefail","-c"]
+        # command: ["/bin/sh","-c"]
         args:
         - |
           magick montage -quality 90 -resize 211x292^ -gravity center -crop 211x292+0+0 -geometry +4+4 -tile 7x4 -background none +repage $(cat /tmp/covers.txt) /tmp/montage.jpg
@@ -493,18 +494,22 @@ helm template nfs-server-provisioner \
 
 - go temlpate: https://masterminds.github.io/sprig/
 
-```
+
+#### Show error when value is not defined
+```yaml
             value: {{ required "kafkaEndpoint is required" .Values.kafkaEndpoint }}
 ```
 
-```
+#### Restart deployment when config changes
+```yaml
   template:
     metadata:
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/configmap-vector.yaml") . | sha256sum }}
 ```
 
-```
+#### Render a file to yaml
+```yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -518,6 +523,23 @@ data:
   __init__.py: ''
 
 ```
+
+#### multiple layer variable check
+
+!!! info
+    nil pointer evaluating interface
+    ref: https://github.com/helm/helm/issues/8026#issuecomment-881216078
+
+```yaml
+{{- if (.Values.debug).init }}
+sleep 2d
+{{- end }}
+
+---
+debug:
+  init: true
+```
+
 
 ## Helmfile
 ```

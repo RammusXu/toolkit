@@ -19,7 +19,7 @@ spec:
     command: ["/bin/bash","-c"]
     args:
       - |
-        sleep 360000
+        sleep 14d
 
   # nodeSelector:
   #   kubernetes.io/hostname: "ip-10-1-1-1.ap-northeast-1.compute.internal"

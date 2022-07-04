@@ -78,7 +78,9 @@ curl -X PUT "$URL/_cluster/settings" -u "elastic:xxx" \
 EOF
 ```
 
-## Mapping
+## Dynamic Mapping
+
+https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-templates.html
 ```
   "http_status": {
     "type": "text",
@@ -89,6 +91,42 @@ EOF
       }
     }
   },
+```
+
+```
+{
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "strings_as_keywords": {
+          "match_mapping_type": "string",
+          "mapping": {
+            "type": "keyword"
+            "ignore_above": 256
+          }
+        }
+      }
+    ]
+  }
+}
+
+{
+  "mappings": {
+    "dynamic_templates": [
+      {
+        "longs_as_strings": {
+          "match_mapping_type": "string",
+          "match":   "long_*",
+          "unmatch": "*_text",
+          "mapping": {
+            "type": "long"
+          }
+        }
+      }
+    ]
+  }
+}
+
 ```
 
 ## Plugin
@@ -117,6 +155,15 @@ esrally list races
 esrally compare \
     --baseline=04714e80-9578-4cda-9a79-6d5ffff2c557 \
     --contender=daa58545-7e0f-4ae1-b47f-c5b7511c69ce
+```
+
+tl;dr
+```bash
+esrally race --pipeline=benchmark-only \
+    --track=http_logs --challenge=append-no-conflicts-index-only \
+    --report-file=~/benchmark/eck-$(date -Iminutes) \
+    --target-hosts="http://localhost:9200" \
+    --client-options="basic_auth_user:'elastic',basic_auth_password:'0MVVQ9B1Fq0'"
 ```
 
 ```bash
