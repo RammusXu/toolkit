@@ -129,6 +129,14 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-template
 
 ```
 
+## Backgroud tasks
+```
+GET _tasks?detailed=true&actions=*reindex
+GET _cat/thread_pool/snapshot?v
+GET _cluster/allocation/explain
+POST /_cluster/reroute?retry_failed
+```
+
 ## Plugin
 ```
 /bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v7.0.0/elasticsearch-analysis-ik-7.0.0.zip
