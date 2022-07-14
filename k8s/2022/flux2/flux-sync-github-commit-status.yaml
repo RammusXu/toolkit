@@ -1,0 +1,29 @@
+# Hint:
+# kubectl create secret generic api-token -n flux-system --from-literal=token=<use personal access token>
+
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Provider
+metadata:
+  name: rammus-github-repo
+  namespace: flux-system
+spec:
+  # provider type can be github or gitlab
+  type: github
+  address: https://github.com/RammusXu/logging-eks-gitops
+  secretRef:
+    name: api-token
+
+---
+apiVersion: notification.toolkit.fluxcd.io/v1beta1
+kind: Alert
+metadata:
+  name: rammus-github-repo
+  namespace: flux-system
+spec:
+  providerRef:
+    name: rammus-github-repo
+  eventSeverity: error
+  eventSources:
+    - kind: Kustomization
+      name: '*'
+      namespace: flux-system
