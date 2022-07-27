@@ -1273,8 +1273,7 @@ HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
 ```
 
 ## Reference
-- https://help.github.com/en/actions/reference
+- https://docs.github.com/en/actions
+- runner included sofeware/library https://github.com/actions/virtual-environments
 - https://github.com/actions/toolkit/tree/master/packages/github
 - https://github.com/actions/github-script
-- https://octokit.github.io/rest.js/#usage
-- bin in Ubuntu 18.04 https://github.com/actions/virtual-environments/blob/master/images/linux/Ubuntu1804-README.md
