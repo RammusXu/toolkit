@@ -46,6 +46,8 @@ What I use:
 - source tree
 - vs code
 - docker for desktop
+- [rectangle](https://rectangleapp.com/) - 螢幕排版
+- [Xnip](https://www.xnipapp.com/) - 截圖軟體
 
 ## Setting
   - Touchpad
