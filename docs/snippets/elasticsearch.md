@@ -195,3 +195,32 @@ esrally race --track=http_logs \
     --include-tasks="index,term" \
 
 ```
+
+## Troubles
+
+### Wildcard expressions or all indices are not allowed
+
+
+```
+DELETE partial-*-2022.06*
+```
+
+Need to disable this config
+```
+PUT _cluster/settings
+{
+  "transient": {
+    "action.destructive_requires_name": false
+  }
+}
+```
+
+enable config after deletey
+```
+PUT _cluster/settings
+{
+  "transient": {
+    "action.destructive_requires_name": null
+  }
+}
+```

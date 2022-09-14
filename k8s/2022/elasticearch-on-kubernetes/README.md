@@ -25,6 +25,15 @@ https://www.elastic.co/guide/en/cloud-on-k8s/current/k8s-quickstart.html
       -keyout tls.key \
       -out tls.crt
 
+  kubectl create secret generic eck-cert -n eckpoc \
+      --from-file=ca.crt=tls.crt \
+      --from-file=tls.crt=tls.crt \
+      --from-file=tls.key=tls.key
+
+
+  kubectl create secret generic eck-cert -n eck-q2 \
+      --from-file=ca.crt=./.dev/tls.crt \
+      --from-file=ca.key=./.dev/tls.key
   ## Check
   cat tls.crt | openssl x509 -noout -enddate
   ```
