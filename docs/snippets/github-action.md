@@ -38,6 +38,10 @@ on:
       - master
   repository_dispatch:
     types: [rammus_post]
+
+  # https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
+  schedule:
+    - cron: '0 4 * * 4' # 12:00 UTC+8, Friday
 ```
 
 !!! important
@@ -113,6 +117,7 @@ else
 ```yaml
 if: contains(github.ref, 'refs/tags')
 if: contains(github.event.issue.title, 'Update APK')
+if: contains(github.event.issue.labels.*.name, 'workflow/check-label')
 if: steps.git-diff.outputs.is-diff
 if: steps.set-env.outputs.message == 'hello'
 if: github.ref != 'refs/heads/master'
