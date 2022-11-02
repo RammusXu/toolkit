@@ -26,3 +26,16 @@ virtualenv .venv
         "editor.formatOnSave": true
     },
 ```
+
+
+## Extensions(Plugins)
+### YAML
+https://marketplace.visualstudio.com/items?itemName=redhat.vscode-yaml
+
+Command+Shift+P: Preferences: Open User Settings(JSON)
+```
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml",
+        "editor.formatOnSave": true
+    },
+```
