@@ -36,6 +36,15 @@ on:
   pull_request:
     branches:
       - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+    branches:
+      - "*"
+    paths:
+      - "**.yml"
+      - "**.yaml"
   repository_dispatch:
     types: [rammus_post]
 
