@@ -224,3 +224,15 @@ PUT _cluster/settings
   }
 }
 ```
+
+
+### EC2 debug
+```bash
+systemctl restart elasticsearch
+systemctl cat elasticsearch
+journalctl -u elasticsearch
+
+# Enable start-on-boot
+systemctl enable elasticsearch
+systemctl status elasticsearch
+```
