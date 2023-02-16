@@ -8,6 +8,8 @@ on:
       - mkdocs.yml
       - requirements.txt
 
+  workflow_dispatch:
+
 permissions:
   contents: write
 
