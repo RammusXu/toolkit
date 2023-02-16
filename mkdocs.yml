@@ -8,24 +8,43 @@ repo_url: https://github.com/RammusXu/toolkit
 theme:
   name: material
   icon:
-    logo: fontawesome/solid/toolbox
-  language: 'en'
+    logo: material/toolbox
+  language: en
 
 markdown_extensions:
   - codehilite
-  - pymdownx.superfences
   - pymdownx.magiclink
-  - pymdownx.caret
-  - pymdownx.critic
   - pymdownx.highlight
-  - pymdownx.mark
-  - pymdownx.tabbed
+
+  - pymdownx.superfences
   - admonition
+
+  # https://squidfunk.github.io/mkdocs-material/reference/formatting/
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+
+  # https://squidfunk.github.io/mkdocs-material/reference/content-tabs/#grouping-code-blocks
+  - pymdownx.tabbed:
+      alternate_style: true
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown/#table-of-contents
   - toc:
       permalink: true
+
+  # https://squidfunk.github.io/mkdocs-material/setup/extensions/python-markdown-extensions/?h=pymdownx+emoji#emoji
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji
       emoji_generator: !!python/name:materialx.emoji.to_svg
+
+  # https://squidfunk.github.io/mkdocs-material/reference/diagrams/
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 copyright: |
   <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-nd/4.0/88x31.png" /></a>
@@ -37,13 +56,21 @@ extra:
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/in/rammusxu
   disqus: rammusxu
-
-google_analytics:
-  - 'UA-67048750-3'
-  - 'auto'
+  analytics:
+    provider: google
+    property: G-E7VTEXK0WQ
 
 plugins:
-  - search
-  - git-revision-date-localized
+  - search:
+      lang:
+        - en
+        - zh
+  - git-revision-date-localized:
+      enable_creation_date: true
   - minify:
       minify_html: true
+
+# https://squidfunk.github.io/mkdocs-material/reference/data-tables/#mkdocsyml
+extra_javascript:
+  - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js
+  - javascripts/tablesort.js

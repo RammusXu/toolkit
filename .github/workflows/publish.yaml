@@ -8,15 +8,21 @@ on:
       - mkdocs.yml
       - requirements.txt
 
+permissions:
+  contents: write
+
 jobs:
   deploy:
     name: Deploy docs
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout master
-        uses: actions/checkout@v1
-
-      - name: Deploy docs
-        uses: mhausenblas/mkdocs-deploy-gh-pages@9ed3b4354aa821831ba17a63c55caf73b23e6109
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: 3.x
+      - uses: actions/cache@v2
+        with:
+          key: ${{ github.ref }}
+          path: .cache
+      - run: pip install mkdocs-material
+      - run: mkdocs gh-deploy --force

@@ -134,3 +134,9 @@ metadata:
 [Mac Setup](mac-setup.md)
 [Help](../help.md)
 ```
+## Table
+| name | num | string |
+| ---- | --- | ------ |
+| ram  | 1   | hi     |
+| mus  | 12  | hh     |
+| xu   | 9   | jjj    |
