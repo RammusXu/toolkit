@@ -78,6 +78,62 @@ curl -X PUT "$URL/_cluster/settings" -u "elastic:xxx" \
 EOF
 ```
 
+## Best Practice
+### Index template for log index
+```
+{
+  "index_patterns": [
+    "rammus-log-*"
+  ],
+  "template": {
+    "settings": {
+      "index": {
+        "lifecycle": {
+          "name": "rammus-log",
+          "rollover_alias": "rammus-log"
+        },
+        "routing": {
+          "allocation": {
+            "total_shards_per_node": "1"
+          }
+        },
+        "codec": "best_compression",
+        "refresh_interval": "3m",
+        "number_of_shards": "6",
+        "translog": {
+          "sync_interval": "15s",
+          "durability": "async"
+        },
+        "number_of_replicas": "0",
+        "write": {
+          "wait_for_active_shards": "0"
+        }
+      }
+    },
+    "mappings": {
+      "dynamic_templates": [
+        {
+          "strings": {
+            "mapping": {
+              "type": "keyword"
+            },
+            "match_mapping_type": "string"
+          }
+        }
+      ],
+      "properties": {
+        "timestamp": {
+          "format": "yyyy.MM.dd HH:mm:ss.SSS||yyyy.MM.dd HH:mm:ss||yyyy-MM-dd HH:mm:ss.SSS||yyyy-MM-dd HH:mm:ss||yyyy.MM.dd||yyyy-MM-dd||yyyy-MM||yyyy.MM||epoch_millis||strict_date_optional_time",
+          "type": "date"
+        }
+      }
+    }
+  },
+  "priority": 500
+}
+
+```
+
 ## Dynamic Mapping
 
 https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-templates.html
