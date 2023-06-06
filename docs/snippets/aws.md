@@ -8,6 +8,10 @@ useful awscli, concept
 
 ## awscli
 
+```
+export AWS_PROFILE=dev
+```
+
 ### ec2
 #### tags
 create/update tags
@@ -23,8 +27,11 @@ aws ec2 describe-instances \
     --filters Name=tag:app,Values=kafka
 
 aws ec2 describe-instances \
-    --filters Name=tag:app,Values=kafka
-    --query 'Reservations[*].Instances[*].{Instance:InstanceId,Tags:Tags}' \
+    --filters 'Name=tag:Name,Values=*kafka*'
+
+aws ec2 describe-instances \
+    --filters Name=tag:app,Values=kafka \
+    --query 'Reservations[*].Instances[*].{Instance:InstanceId,Tags:Tags}'
 ```
 more example: https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html
 
