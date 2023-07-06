@@ -37,6 +37,9 @@ GET /_security/_authenticate
 
 ```
 
+## Runbook
+1.
+
 ## Index, Aliases
 ```
 # PUT /<my-index-{now/d}-000001>

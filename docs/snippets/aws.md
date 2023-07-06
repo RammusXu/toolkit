@@ -27,11 +27,16 @@ aws ec2 describe-instances \
     --filters Name=tag:app,Values=kafka
 
 aws ec2 describe-instances \
+    --filters Name=tag:app,Values=kafka \
+    --query 'Reservations[*].Instances[*].{Instance:InstanceId,Tags:Tags}'
+
+aws ec2 describe-instances \
     --filters 'Name=tag:Name,Values=*kafka*'
 
 aws ec2 describe-instances \
-    --filters Name=tag:app,Values=kafka \
-    --query 'Reservations[*].Instances[*].{Instance:InstanceId,Tags:Tags}'
+    --filters 'Name=tag:Name,Values=*kafka_logs*' \
+    --query 'Reservations[*].Instances[*].{Instance:InstanceId,Name:Tags[?Key==`Name`]|[0].Value}' \
+    --output text
 ```
 more example: https://docs.aws.amazon.com/cli/latest/reference/ec2/describe-instances.html
 
