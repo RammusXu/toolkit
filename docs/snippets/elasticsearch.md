@@ -193,6 +193,7 @@ https://www.elastic.co/guide/en/elasticsearch/reference/current/dynamic-template
 GET _tasks?detailed=true&actions=*reindex
 GET _cat/thread_pool/snapshot?v
 GET _cluster/allocation/explain
+GET _cluster/pending_tasks
 POST /_cluster/reroute?retry_failed
 ```
 
